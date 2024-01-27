@@ -1,0 +1,15 @@
+{
+    "summary": "The class contains helper methods for AccessibilityNodeInfo, including getVisibleBoundsInScreen which returns the node's visible bounds on screen clipped to display size, considering null node cases and calculating intersected bounds between node and display rectangle.",
+    "details": [
+        {
+            "comment": "This class contains helper methods for working with AccessibilityNodeInfo. The getVisibleBoundsInScreen method returns the node's visible bounds on screen, clipped to the display size. It takes in an AccessibilityNodeInfo object, and pixel width and height of the display as parameters. If the node is null, it returns null; otherwise, it calculates the intersected bounds between the node's bounds and the display rectangle.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java\":0-34",
+            "content": "package ai.lazero.lazero;\nimport android.graphics.Rect;\nimport android.view.accessibility.AccessibilityNodeInfo;\n/**\n * This class contains static helper methods to work with\n * {@link AccessibilityNodeInfo}\n */\nclass AccessibilityNodeInfoHelper {\n    /**\n     * Returns the node's bounds clipped to the size of the display\n     *\n     * @param node\n     * @param width pixel width of the display\n     * @param height pixel height of the display\n     * @return null if node is null, else a Rect containing visible bounds\n     */\n    static Rect getVisibleBoundsInScreen(AccessibilityNodeInfo node, int width, int height) {\n        if (node == null) {\n            return null;\n        }\n        // targeted node's bounds\n        Rect nodeRect = new Rect();\n        node.getBoundsInScreen(nodeRect);\n        Rect displayRect = new Rect();\n        displayRect.top = 0;\n        displayRect.left = 0;\n        displayRect.right = width;\n        displayRect.bottom = height;\n        if (nodeRect.intersect(displayRect)) {\n            return nodeRect;"
+        },
+        {
+            "comment": "Else block of the function. Returns an empty Rect if not initialized.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java\":35-39",
+            "content": "        } else {\n            return new Rect();\n        }\n    }\n}"
+        }
+    ]
+}

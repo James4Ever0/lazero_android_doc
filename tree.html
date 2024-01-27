@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="github-markdown.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Project structure of: /x00e0d991e368/lazero_android</title>
+    <style>
+        .directory:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        :target {
+            background-color: yellow !important;
+        }
+
+        .folded::before {
+            content: '\25B6';
+            margin-right: 8px;
+            /* Add space between marker and text */
+        }
+
+        .expanded::before {
+            content: '\25BC';
+            margin-right: 8px;
+            /* Add space between marker and text */
+        }
+    </style>
+    <script>
+        function toggleVisibility(element) {
+            let mclass = element.getAttribute("class");
+            if (mclass == "expanded") {
+                element.setAttribute('class', 'folded');
+            } else {
+                element.setAttribute('class', 'expanded');
+            }
+            const siblings = element.parentNode.children;
+            for (const sibling of siblings) {
+                if (sibling !== element) {
+                    sibling.style.display = (sibling.style.display === 'none') ? 'block' : 'none';
+                }
+            }
+        }
+    </script>
+    <style>
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 45px;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 15px;
+            }
+
+            .partial-repository-url {
+                display: none;
+            }
+        }
+
+        ul {
+            list-style: none;
+        }
+        #feeling-lucky:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="markdown-body">
+        <h2>Project structure<span hierarchy="0" class="partial-repository-url"> of: /x00e0d991e368/lazero_android</span><div style="float: right;"><a title="Document index" style="margin:3.5px;" href="index.html"><i class="bi bi-search"></i></a><a title="Feeling lucky" style="margin:3.5px;" id="feeling-lucky" href="#"><i class="bi bi-dice-3"></i></a><a title="Expand tree" style="margin:3.5px;" href="tree.html?full=true" id="expand-tree"><i class="bi bi-caret-down-square"></i></a></div></h2>
+<ul>
+<li><span hierarchy="0" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/"><code>lazero&UnderBar;android</code></strong></span><ul>
+<li><span hierarchy="1" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/"><code>app</code></strong></span><ul>
+<li><span hierarchy="2" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/src/"><code>src</code></strong></span><ul>
+<li><span hierarchy="3" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/src/main/"><code>main</code></strong></span><ul>
+<li><span hierarchy="4" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/src/main/java/"><code>java</code></strong></span><ul>
+<li><span hierarchy="5" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/src/main/java/ai/"><code>ai</code></strong></span><ul>
+<li><span hierarchy="6" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/src/main/java/ai/lazero/"><code>lazero</code></strong></span><ul>
+<li><span hierarchy="7" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/src/main/java/ai/lazero/lazero/"><code>lazero</code></strong> <em>Customizable AI audio app development tools</em></span><ul>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java" id="/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java"><code>AccessibilityNodeInfoDumper&period;java</code></a> <em>AccessibilityNodeInfoDumper generates XML dump of Android accessibility info.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java" id="/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java"><code>AccessibilityNodeInfoHelper&period;java</code></a> <em>Helper methods for AccessibilityNodeInfo, including getVisibleBoundsInScreen.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java" id="/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java"><code>AccessibilityUtil&period;java</code></a> <em>Accessibility utility with settings check and locks.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/Apl.java" id="/app/src/main/java/ai/lazero/lazero/Apl.java"><code>Apl&period;java</code></a> <em>Apl: App connectivity, user presence events, memory management.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java" id="/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java"><code>AppCompatPreferenceActivity&period;java</code></a> <em>Abstract AppCompatPreferenceActivity class with lifecycle handling.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/ByteClass.java" id="/app/src/main/java/ai/lazero/lazero/ByteClass.java"><code>ByteClass&period;java</code></a> <em>ByteClass: Container for boolean screenshot_update, initialized by constructor.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java" id="/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java"><code>HttpPostBytes&period;java</code></a> <em>Handles HTTP POST requests with byte arrays, logs progress, asynchronous streaming.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java" id="/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java"><code>JobSchedulerService&period;java</code></a> <em>Android background job scheduling service with login authentication</em></li>
+<li><span hierarchy="8" class="expanded" onclick="toggleVisibility(this)" ><strong class="directory" id="/app/src/main/java/ai/lazero/lazero/m6/"><code>m6</code></strong> <em>Android audio overlay management and customization</em></span><ul>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/AcService.java" id="/app/src/main/java/ai/lazero/lazero/m6/AcService.java"><code>AcService&period;java</code></a> <em>Background Android accessibility overlay service.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/AdService.java" id="/app/src/main/java/ai/lazero/lazero/m6/AdService.java"><code>AdService&period;java</code></a> <em>Android AccessibilityService for ad handling and features.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/AeService.java" id="/app/src/main/java/ai/lazero/lazero/m6/AeService.java"><code>AeService&period;java</code></a> <em>Root-permissioned accessibility service with threaded gesture control.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/basic_overlay.java" id="/app/src/main/java/ai/lazero/lazero/m6/basic_overlay.java"><code>basic&UnderBar;overlay&period;java</code></a> <em>"basic_overlay" Java class with GestureDetector, tag logging, and touch events.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/basic_overlay_v2.java" id="/app/src/main/java/ai/lazero/lazero/m6/basic_overlay_v2.java"><code>basic&UnderBar;overlay&UnderBar;v2&period;java</code></a> <em>Custom view extends View, handles MotionEvents, and updates position.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java" id="/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java"><code>BubbleService&period;java</code></a> <em>Manages Android overlay views and color changes.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/ConfigClass.java" id="/app/src/main/java/ai/lazero/lazero/m6/ConfigClass.java"><code>ConfigClass&period;java</code></a> <em>Configure audio settings: rate, channels, format.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java" id="/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java"><code>Main7Activity&period;java</code></a> <em>Main7Activity: Screen Sharing Activity with MyPresentation.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/Main8Activity.java" id="/app/src/main/java/ai/lazero/lazero/m6/Main8Activity.java"><code>Main8Activity&period;java</code></a> <em>Android activity class with buttons, Toast, and random message.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/PowerButtonService.java" id="/app/src/main/java/ai/lazero/lazero/m6/PowerButtonService.java"><code>PowerButtonService&period;java</code></a> <em>Power button service with view parameters and keycode logging.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/RecPlayService.java" id="/app/src/main/java/ai/lazero/lazero/m6/RecPlayService.java"><code>RecPlayService&period;java</code></a> <em>Android service for audio recording and playback</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/m6/ViewService.java" id="/app/src/main/java/ai/lazero/lazero/m6/ViewService.java"><code>ViewService&period;java</code></a> <em>Android service for overlay display management</em></li>
+</ul>
+</li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/Main2Activity.java" id="/app/src/main/java/ai/lazero/lazero/Main2Activity.java"><code>Main2Activity&period;java</code></a> <em>Captures Android app specific area screenshot with dependencies.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/Main3Activity.java" id="/app/src/main/java/ai/lazero/lazero/Main3Activity.java"><code>Main3Activity&period;java</code></a> <em>Main3Activity: User Interactions, Content Initialization, Broadcast Receiver</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/Main4Activity.java" id="/app/src/main/java/ai/lazero/lazero/Main4Activity.java"><code>Main4Activity&period;java</code></a> <em>Screenshot management with debugging and retry mechanisms.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/Main5Activity.java" id="/app/src/main/java/ai/lazero/lazero/Main5Activity.java"><code>Main5Activity&period;java</code></a> <em>Android app struggles to display GIFs, employs thread for delay.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/Main6Activity.java" id="/app/src/main/java/ai/lazero/lazero/Main6Activity.java"><code>Main6Activity&period;java</code></a> <em>Manages overlay permissions, UI, power button events, and exceptions.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MainActivity.java" id="/app/src/main/java/ai/lazero/lazero/MainActivity.java"><code>MainActivity&period;java</code></a> <em>AlarmManager-powered app with buttons, audio recording, web scraping.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MainClipActivity.java" id="/app/src/main/java/ai/lazero/lazero/MainClipActivity.java"><code>MainClipActivity&period;java</code></a> <em>MainActivity: FloatingActionButton, clipboard receiver, initializes variables.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MainXActivity.java" id="/app/src/main/java/ai/lazero/lazero/MainXActivity.java"><code>MainXActivity&period;java</code></a> <em>MainXActivity: Android setup, receiver registration, image capture updates.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MyReceiver.java" id="/app/src/main/java/ai/lazero/lazero/MyReceiver.java"><code>MyReceiver&period;java</code></a> <em>MyReceiver handles boot, presence broadcasts and restarts ScreenCap service.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MyService.java" id="/app/src/main/java/ai/lazero/lazero/MyService.java"><code>MyService&period;java</code></a> <em>Manages accessibility and foreground service in Java.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MyService2.java" id="/app/src/main/java/ai/lazero/lazero/MyService2.java"><code>MyService2&period;java</code></a> <em>Foreground service for screen capture and HTTP communication cleanup</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MyServiceClip.java" id="/app/src/main/java/ai/lazero/lazero/MyServiceClip.java"><code>MyServiceClip&period;java</code></a> <em>Android clipboard, HTTP post, notifications tool</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/MyThread.java" id="/app/src/main/java/ai/lazero/lazero/MyThread.java"><code>MyThread&period;java</code></a> <em>Thread class with HTTP POST, sleep, lock check, logging, and thread info.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java" id="/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java"><code>ObjectAndByte&period;java</code></a> <em>Object-Byte serialization/deserialization with error handling</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/RecordAudio.java" id="/app/src/main/java/ai/lazero/lazero/RecordAudio.java"><code>RecordAudio&period;java</code></a> <em>Android audio recording management and control. Unimplemented channel return.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java" id="/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java"><code>ScreenShotFb&period;java</code></a> <em>Android screen capture, pixel format, exceptions. Permission, stream, EOF issues. Unimplemented Bitmap creation method.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/ScreenshotService.java" id="/app/src/main/java/ai/lazero/lazero/ScreenshotService.java"><code>ScreenshotService&period;java</code></a> <em>Android service for web screenshots, antivirus, and restart logic.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/SettingsActivity.java" id="/app/src/main/java/ai/lazero/lazero/SettingsActivity.java"><code>SettingsActivity&period;java</code></a> <em>Manages Android app settings and preferences.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/SimpleService.java" id="/app/src/main/java/ai/lazero/lazero/SimpleService.java"><code>SimpleService&period;java</code></a> <em>Wake lock, foreground service, WebSocketClient init and timeout handling.</em></li>
+<li><a class="file_link" href="index.html?q=/app/src/main/java/ai/lazero/lazero/Status.java" id="/app/src/main/java/ai/lazero/lazero/Status.java"><code>Status&period;java</code></a> <em>Status class defines static status codes for app states.</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+    </article>
+    <script type="text/javascript">
+        function getQueryParams() {
+            var search = window.location.search.substring(1); // Remove leading '?'
+            var queryParams = {};
+            search.split('&').forEach(function (pair) {
+                var parts = pair.split('=');
+                var key = decodeURIComponent(parts[0]);
+                var value = decodeURIComponent(parts[1]);
+                queryParams[key] = value;
+            });
+            return queryParams;
+        }
+
+        const queryParams = getQueryParams(window.location.search);
+        const show_full = queryParams.full == "true";
+        //const is_random = queryParams.random == 'true';
+        function feelingLucky() {
+            var elements = document.getElementsByClassName("file_link");
+            var randomIndex = Math.floor(Math.random() * elements.length);
+            window.location = elements[randomIndex].href;
+        }
+        //if (is_random) {feelingLucky();}
+        document.getElementById("feeling-lucky").onclick = feelingLucky;
+        if (!show_full) {
+            const spans = document.querySelectorAll('span');
+            for (let span of spans) {
+                if (span.getAttribute("hierarchy") == '0') { continue }
+                toggleVisibility(span);
+            }
+        } else {
+            const expand_elem = document.getElementById('expand-tree');
+            expand_elem.setAttribute("href", "tree.html");
+            expand_elem.setAttribute("title", "Undo expand");
+            expand_elem.innerHTML = '<i class="bi bi-caret-up-square"></i>'
+        }
+
+    </script>
+</body>
+
+</html>

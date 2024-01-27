@@ -1,0 +1,545 @@
+{
+    "500": {
+        "file_id": 26,
+        "content": "            }\n            @Override\n            public void onPingReceived(byte[] data) {\n                System.out.println(\"onPingReceived\");\n                // what is this ping thing?\n            }\n            @Override\n            public void onPongReceived(byte[] data) {\n                System.out.println(\"onPongReceived\");\n                // what is pong?\n            }\n            @Override\n            public void onException(Exception e) {\n                System.out.println(e.getMessage());\n                // this will be called.\n                String ts = tsgen();\n                String filename = \"simple_service_\" + ts + \"_error\";\n                System.out.println(filename);\n            }\n            @Override\n            public void onCloseReceived() {\n                System.out.println(\"onCloseReceived\");\n            }\n        };\n        webSocketClient.setConnectTimeout(1000);\n        webSocketClient.setReadTimeout(2000);\n//        webSocketClient.addHeader(\"Origin\", \"http://developer.example.com\");",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:92-123"
+    },
+    "501": {
+        "file_id": 26,
+        "content": "WebSocket client set up with event listeners for ping, pong, exception handling, and close received. Set connect and read timeouts.",
+        "type": "comment"
+    },
+    "502": {
+        "file_id": 26,
+        "content": "        webSocketClient.enableAutomaticReconnection(1000);\n        webSocketClient.connect();\n        // do this over and over.\n        // sending intent to the service? the webshot service.\n    }\n    public boolean thread_start = false;\n    public static String urlFetch(String url) {\n        return JobSchedulerService.loginByGet(url);\n    }\n    // what is this anyway?\n    public PowerManager.WakeLock mWakeLock = null;\n    public Notification note() {\n        String CHANNEL_ID = \"ai.lazero.lazero.SimpleService\";\n        String CHANNEL_NAME = \"SIMPLE\";\n        NotificationChannel notificationChannel = null;\n        // you've got some foreground service. shit then.\n        // do it now?\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {\n            notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);\n            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);\n            notificationManager.createNotificationChannel(notificationChannel);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:124-148"
+    },
+    "503": {
+        "file_id": 26,
+        "content": "This code defines a service that utilizes WebSocketClient for network communication, has methods to fetch URLs and manage notifications, and maintains a WakeLock for power management. It also handles creating a notification channel for a foreground service if the Android version is Oreo or higher.",
+        "type": "comment"
+    },
+    "504": {
+        "file_id": 26,
+        "content": "        }\n        Intent intent = new Intent(this, ScreenshotService.class);\n        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);\n        Notification notification = new Notification.Builder(this, CHANNEL_ID).\n                setContentTitle(\"Lazero\").\n                setContentText(\"Simple Service running.\").\n                setWhen(System.currentTimeMillis()).\n                setSmallIcon(R.drawable.icon).\n                setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)).\n                setContentIntent(pendingIntent).build();\n        return notification;\n    }\n    public void forth() {\n        Notification notification = note();\n        startForeground(2759, notification);\n        Log.v(\"SIMPLE_SERVICE\", \"START_SUCCESS\");\n//        filter.addAction(\"android.provider.Telephony.SMS_RECEIVED\");\n//        filter.addAction(android.telephony.TelephonyManager.ACTION_PHONE_STATE_CHANGED);\n//        filter.addAction(\"your_action_strings\"); //further more",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:149-169"
+    },
+    "505": {
+        "file_id": 26,
+        "content": "Creates a notification for SimpleService, sets content and intent, and starts the foreground service with a specified ID.",
+        "type": "comment"
+    },
+    "506": {
+        "file_id": 26,
+        "content": "//        filter.addAction(\"your_action_strings\"); //further more\n        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);\n        try {\n            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, \"WebCap\");\n//        KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);\n            mWakeLock.acquire();\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n    @Override\n    public IBinder onBind(Intent intent) {\n        // TODO: Return the communication channel to the service.\n        return null;\n//        throw new UnsupportedOperationException(\"Not yet implemented\");\n        // get a new alarm.\n    }\n    public void feedback(String op) {\n        if (webSocketClient != null) {\n            if (op != null) {\n                webSocketClient.send(\"javascript_output: \" + op);\n                System.out.println(\"simple_service_log: output sent.\");\n            }\n        }\n    }\n    public void revive() {\n        Intent intent = new Intent(this, SimpleService.class);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:170-199"
+    },
+    "507": {
+        "file_id": 26,
+        "content": "This code initializes a partial wake lock to keep the screen awake, binds an intent, provides a feedback function to send data via websocket client, and includes a revive method to restart the service.",
+        "type": "comment"
+    },
+    "508": {
+        "file_id": 26,
+        "content": "        PendingIntent pendingIntent = PendingIntent.getForegroundService(getApplicationContext(),\n                0, intent,\n                PendingIntent.FLAG_CANCEL_CURRENT);\n        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);\n// not foreground service?\n        long period = 1000 * 15;\n        // 15 seconds for checking?\n        try {\n            alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,\n                    SystemClock.elapsedRealtime() + period, pendingIntent);\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n    @Override\n    public int onStartCommand(Intent intent, int flags, int startId) {\n        // do it in separate thread. and set an alarm after that.\n        // get intents. or check the content of the intent.\n        String tag;\n        try {\n            tag = intent.getStringExtra(\"tag\");\n            if (tag == null) {\n                tag = null;\n            }\n        } catch (Exception e) {\n            e.printStackTrace();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:200-226"
+    },
+    "509": {
+        "file_id": 26,
+        "content": "This code sets up a foreground service with an alarm that triggers every 15 seconds. The `PendingIntent` is created and an `AlarmManager` instance is obtained from the system service. The `setExactAndAllowWhileIdle` method is used to set the alarm, which wakes up the device periodically for checking or receiving intents.",
+        "type": "comment"
+    },
+    "510": {
+        "file_id": 26,
+        "content": "            System.out.println(\"simple_service_log: may have empty tag?\");\n            tag = null;\n        }\n        if (tag == null) {\n            if (!thread_start) {\n                new Thread(new Runnable() {\n                    @Override\n                    public void run() {\n                        // better not to start sending useless package but to establish a socket connection.\n                        // loop [ connect -> share info async -> break ]\n//                while (true) {\n//                    try {\n                        // one single run? get some suppression?\n                        // do not know yet. waiting for sync?\n                        createWebSocketClient(\"ws://localhost:5000/socket\");\n                        while (true) {\n                            try {\n                                String ts = tsgen();\n                                // just use that thing.\n                                webSocketClient.send(\"some random message after connection \" + ts);\n                            } catch (Exception e) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:227-247"
+    },
+    "511": {
+        "file_id": 26,
+        "content": "The code checks if the 'tag' is null and if thread_start has not yet been set. If both conditions are true, it starts a new thread to establish a socket connection using webSocketClient, sending a message with a timestamp.",
+        "type": "comment"
+    },
+    "512": {
+        "file_id": 26,
+        "content": "                                e.printStackTrace();\n                                System.out.println(\"simple_service_log: <FAILED TO SEND MESSAGE>\");\n                            } finally {\n                                try {\n                                    Thread.sleep(1000);\n                                } catch (Exception e) {\n                                    e.printStackTrace();\n                                    System.out.println(\"simple_service_log: <THREAD IS PROBABLY DEAD>\");\n                                    break;\n                                }\n                            }\n                        }\n                        // this will not work? cause we have too much of it. we've sucked it up.\n//                        try {\n//                            Thread.sleep(1000);\n//                        } catch (Exception e) {\n//                            Log.e(TAG, \"sleep failed\");\n//                            break;\n//                        }\n//                        Long tsLong = System.currentTimeMillis() / 1000;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:248-267"
+    },
+    "513": {
+        "file_id": 26,
+        "content": "This code segment handles potential failures when sending a message and includes a one-second delay before retrying. It also checks if the thread is still alive after the delay to prevent unnecessary retries. The commented-out code block attempts another delay with error handling, but it's marked as not working due to potential issues with too many delays.",
+        "type": "comment"
+    },
+    "514": {
+        "file_id": 26,
+        "content": "//                        String ts = \"packet_\" + tsLong.toString();\n//                        Log.e(TAG, \"SENDING SIMPLE PACKET: \" + ts);\n//                        String a = urlFetch(\"http://localhost:7777/\" + ts);\n//                        if (a != null) {\n//                            Log.i(TAG, a);\n//                        } else {\n//                            Log.i(TAG, \"ERROR\");\n//                        }\n//                    } catch (Exception e) {\n//                        e.printStackTrace();\n//                    }\n//                }\n                    }\n                }).start();\n                thread_start = true;\n            }\n            this.revive();\n        } else {\n            if (tag.equals(\"script_output\")) {\n                // never get this shit.\n                String output = intent.getStringExtra(\"output\");\n                // not null.\n                String ts = tsgen();\n                System.out.println(\"simple_service_exec: [javascript output \" + ts + \" ]\\n\" + output);\n                feedback(output);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:268-292"
+    },
+    "515": {
+        "file_id": 26,
+        "content": "This code starts a thread that executes a function if a specific tag (\"simple_service\") is received in an intent. It sends a packet, retrieves a response, and handles potential errors or success. If the tag \"script_output\" is received, it prints the output and calls a feedback function.",
+        "type": "comment"
+    },
+    "516": {
+        "file_id": 26,
+        "content": "            }\n        }\n        return super.onStartCommand(intent, flags, startId);\n    }\n    @Override\n    public void onCreate() {\n        super.onCreate();\n        this.forth();\n    }\n    @Override\n    public void onDestroy() {\n        this.revive();\n        super.onDestroy();\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:293-309"
+    },
+    "517": {
+        "file_id": 26,
+        "content": "This code is for a service in an Android application. It overrides onStartCommand, onCreate, and onDestroy methods. In onStartCommand, it checks if the intent has a specific action and starts a foreground service if so. In onCreate, it calls a forth method. In onDestroy, it calls a revive method before calling the superclass's onDestroy method.",
+        "type": "comment"
+    },
+    "518": {
+        "file_id": 27,
+        "content": "/app/src/main/java/ai/lazero/lazero/Status.java",
+        "type": "filepath"
+    },
+    "519": {
+        "file_id": 27,
+        "content": "Status class defines five static status codes: STOP, START, READY, NO_READY, and PAUSE. These codes are used to represent different states in the app.",
+        "type": "summary"
+    },
+    "520": {
+        "file_id": 27,
+        "content": "package ai.lazero.lazero;\npublic class Status {\n    public static int STATUS_STOP=0;\n    public static int STATUS_START=4;\n    public static int STATUS_READY=1;\n    public static int STATUS_NO_READY=2;\n    public static int STATUS_PAUSE=3;\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Status.java:1-10"
+    },
+    "521": {
+        "file_id": 27,
+        "content": "Status class defines five static status codes: STOP, START, READY, NO_READY, and PAUSE. These codes are used to represent different states in the app.",
+        "type": "comment"
+    },
+    "522": {
+        "file_id": 28,
+        "content": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java",
+        "type": "filepath"
+    },
+    "523": {
+        "file_id": 28,
+        "content": "AcService is an Android background service for accessibility that uses AccessibilityEvent and WindowManager to create a floating overlay interface. It adjusts appearance, functionality, and ensures ADB interaction using FrameLayout and logging with \"hover_accessibility\" TAG.",
+        "type": "summary"
+    },
+    "524": {
+        "file_id": 28,
+        "content": "package ai.lazero.lazero.m6;\nimport android.accessibilityservice.AccessibilityService;\n//import android.app.Service;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.graphics.Color;\nimport android.graphics.PixelFormat;\nimport android.os.Build;\nimport android.os.IBinder;\nimport android.util.Log;\nimport android.view.Gravity;\nimport android.view.MotionEvent;\nimport android.view.View;\nimport android.view.WindowManager;\nimport android.view.accessibility.AccessibilityEvent;\nimport android.widget.FrameLayout;\nimport android.widget.Toast;\nimport ai.lazero.lazero.AccessibilityUtil;\nimport ai.lazero.lazero.MyService;\nimport ai.lazero.lazero.R;\npublic class AcService extends AccessibilityService {\n    private WindowManager windowManager;\n    public FrameLayout mLayout;\n    //    private basic_overlay button;\n//    //    private WindowManager windowManager0;\n//    private basic_overlay_v2 button0;\n    public AcService() {\n    }\npublic String TAG=\"hover_accessibility\";\n    @Override\n    public void onCreate() {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:1-34"
+    },
+    "525": {
+        "file_id": 28,
+        "content": "AcService is an Android AccessibilityService that extends the base class for accessibility features, allowing it to interact with and manipulate accessible applications on the device. This service creates a floating window using WindowManager and manages its layout using FrameLayout. It also utilizes various Android components like AccessibilityEvent, Toast, and Log for different functionalities within the app. The TAG is set as \"hover_accessibility\" to facilitate logging or debugging purposes.",
+        "type": "comment"
+    },
+    "526": {
+        "file_id": 28,
+        "content": "//        super.onCreate();\n        boolean samplex = AccessibilityUtil.isSettingOpen(AcService.class, this);\n        if (samplex == true) {\n            Log.e(\"XML_service\", \"onCreate!\");\n            super.onCreate();\n            try{\n            showOver();}catch (Exception e){e.printStackTrace();}\n        } else {\n            Log.i(TAG, \"onDestroy: \");\n            Toast.makeText(this, getString(R.string.aby_label) + \"停止了，请重新开启\", Toast.LENGTH_LONG).show();\n            AccessibilityUtil.jumpToSetting(this);\n        }}\n        @Override\n        public int onStartCommand(Intent intent, int flags, int startId) {\n            boolean samplex = AccessibilityUtil.isSettingOpen(AcService.class, this);\n            if (samplex == true) {\n                Log.e(\"XML_service\", \"onCreate!\");\n//                super.onCreate();\n                try{\n                showOver();}catch (Exception e){e.printStackTrace();}\n            } else {\n                Log.i(TAG, \"onDestroy: \");\n                Toast.makeText(this, getString(R.string.aby_label) + \"停止了，请重新开启\", Toast.LENGTH_LONG).show();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:35-58"
+    },
+    "527": {
+        "file_id": 28,
+        "content": "This code is responsible for the creation, destruction, and management of a service. It first checks if the accessibility settings are enabled. If so, it logs an error message and attempts to show an overlay. Otherwise, it displays a toast message informing the user that the service has stopped and advises them to restart it.",
+        "type": "comment"
+    },
+    "528": {
+        "file_id": 28,
+        "content": "                AccessibilityUtil.jumpToSetting(this);\n            }\n        return super.onStartCommand(intent,flags,startId);\n    }\n    @Override\n    public void onDestroy() {\n        super.onDestroy();\n        windowManager.removeView(mLayout);\n//        windowManager.removeView(button);\n    }\n    @Override\n    public void onAccessibilityEvent(AccessibilityEvent event) {}\n    private void showOver() {\n//        this.getWindow().getDecorView();\n        windowManager =  (WindowManager) getSystemService(WINDOW_SERVICE);\n//        View decorView = windowManager.getDecorView();\n//// Hide both the navigation bar and the status bar.\n//// SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as\n//// a general rule, you should design your app to hide the status bar whenever you\n//// hide the navigation bar.\n////        windowManager.getDefaultDisplay();\n//        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION\n//                | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:59-85"
+    },
+    "529": {
+        "file_id": 28,
+        "content": "This code is for a background service that handles accessibility events and shows an overlay on the screen. It uses AccessibilityUtil to navigate to settings, removes its view in onDestroy, and manages system UI flags to hide navigation and status bars.",
+        "type": "comment"
+    },
+    "530": {
+        "file_id": 28,
+        "content": "//        decorView.setSystemUiVisibility(uiOptions);\n        mLayout = new FrameLayout(this);\n        mLayout.setBackgroundColor(Color.GREEN);\n        mLayout.setAlpha((float)0.2);\n        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();\n        lp.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;\n        lp.format = PixelFormat.TRANSLUCENT;\n        lp.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | WindowManager.LayoutParams.FIRST_SYSTEM_WINDOW;\n//        lp.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;\n        lp.width = WindowManager.LayoutParams.MATCH_PARENT;\n        lp.height = WindowManager.LayoutParams.MATCH_PARENT;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:86-97"
+    },
+    "531": {
+        "file_id": 28,
+        "content": "Creating a translucent overlay view with fullscreen visibility, adjustable alpha value and matching parent dimensions using accessibility overlay type.",
+        "type": "comment"
+    },
+    "532": {
+        "file_id": 28,
+        "content": "        lp.gravity = Gravity.TOP;\n        mLayout.setOnTouchListener(new View.OnTouchListener() {\n            @Override\n            public boolean onTouch(View v, MotionEvent event) {\n                // Here I'm getting the touch events on the overlay I added\n                // get the track!\n                System.out.println(\"{ACCWINDOW} \"+event.toString());\n                return true;\n            }\n//            @Override\n//            public boolean dispatchTouchEvent(MotionEvent event){\n//\n//            }\n        });\n//        mLayout.dispatchWindowSystemUiVisiblityChanged();\n//        mLayout.\n        windowManager.addView(mLayout, lp);\n        // get a new tracker here.\n        // check dispatch?\n//        button = new basic_overlay(this,\"blue\");\n////        button = new Button(this);\n//        button.setBackgroundColor(Color.BLUE);\n//        button.setAlpha((float)0.5);\n////        button.setBackgroundColor(Color.BLACK);\n//        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);\n//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:98-123"
+    },
+    "533": {
+        "file_id": 28,
+        "content": "Code adds a layout with touch listener to receive events and possibly displays a button for interacting with the overlay.",
+        "type": "comment"
+    },
+    "534": {
+        "file_id": 28,
+        "content": "//        layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;\n//// what is accessibility_overlay anyway?\n//        layoutParams.width = 100;\n//        layoutParams.height = 100;\n//        layoutParams.x = 0 ;\n//        layoutParams.y = 0 ;\n//        layoutParams.gravity = Gravity.LEFT | Gravity.TOP ;\n////        layoutParams.gravity = Gravity.BOTTOM;\n//        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;\n////        layoutParams.flags = WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;\n////        layoutParams.flags=WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;\n//        layoutParams.format = PixelFormat.RGBA_8888 | PixelFormat.TRANSLUCENT;\n//// check if works.\n//\n//        button0 = new basic_overlay_v2(this,\"red\",layoutParams,button,windowManager);\n////        button = new Button(this);\n//        button0.setBackgroundColor(Color.RED);\n//        button0.setAlpha((float)0.2);\n////        button.setBackgroundColor(Color.BLACK);\n//        //this is really working? can adb work it out?",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:124-143"
+    },
+    "535": {
+        "file_id": 28,
+        "content": "This code is setting up a floating button on top of the screen using WindowManager.LayoutParams. It adjusts the position, size, and appearance of the button. The type \"accessibility_overlay\" refers to an overlay specifically meant for accessibility features. The flags can be adjusted for different functionalities like focusability, touch modality, etc. The button is created with a specific color and transparency level. The code checks if the setup works and if ADB can interact with it.",
+        "type": "comment"
+    },
+    "536": {
+        "file_id": 28,
+        "content": "////        windowManager0 = (WindowManager) getSystemService(WINDOW_SERVICE);\n//        WindowManager.LayoutParams layoutParam = new WindowManager.LayoutParams();\n//        layoutParam.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;\n//// what is accessibility_overlay anyway?\n//        layoutParam.width = WindowManager.LayoutParams.WRAP_CONTENT;\n//        layoutParam.height = WindowManager.LayoutParams.WRAP_CONTENT;\n//        layoutParam.x = 0 ;\n//        layoutParam.y = 0 ;\n//        layoutParam.gravity = Gravity.RIGHT | Gravity.TOP ;\n////        layoutParams.gravity = Gravity.BOTTOM;\n//        layoutParam.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;\n////        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;\n////        layoutParam.flags = WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;\n////        layoutParams.flags=WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:144-157"
+    },
+    "537": {
+        "file_id": 28,
+        "content": "The code sets up an overlay window for accessibility purposes. It creates a WindowManager.LayoutParams object to specify the type, positioning, and flags for the overlay. The type is set to \"accessibility_overlay\" which may be used for assistive technologies or other accessibility features. The layout parameters include WRAP_CONTENT for width and height, and the window will be positioned at the top right of the screen and be non-touchable, watchable outside, and not focusable.",
+        "type": "comment"
+    },
+    "538": {
+        "file_id": 28,
+        "content": "//        // WE'LL SET A FLOATING BUBBLE.\n//        layoutParam.format = PixelFormat.RGBA_8888 | PixelFormat.TRANSLUCENT;\n//\n//\n//        /*\n//        spliter?\n//        */\n//\n//// check if works.\n////windowManager.\n//        windowManager.addView(button, layoutParams);\n//        windowManager.addView(button0, layoutParam);\n    }\n    @Override\n    public void onInterrupt() {\n        // create accessibility view anyway?\n    }\n//    @Override\n//    public IBinder onBind(Intent intent) {\n//        // TODO: Return the communication channel to the service.\n//        throw new UnsupportedOperationException(\"Not yet implemented\");\n//    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java:158-182"
+    },
+    "539": {
+        "file_id": 28,
+        "content": "Creates a floating bubble with RGBA_8888 and TRANSLUCENT formats, adds views to the WindowManager.",
+        "type": "comment"
+    },
+    "540": {
+        "file_id": 29,
+        "content": "/app/src/main/java/ai/lazero/lazero/m6/AdService.java",
+        "type": "filepath"
+    },
+    "541": {
+        "file_id": 29,
+        "content": "The Android AccessibilityService code handles accessibility features, settings, ad display, window management, gesture recognition, and logging. The \"showOver\" method starts a new thread for dispatching gestures, while onInterrupt() creates an accessibility view and onBind() requires implementing communication channels.",
+        "type": "summary"
+    },
+    "542": {
+        "file_id": 29,
+        "content": "        package ai.lazero.lazero.m6;\nimport android.accessibilityservice.AccessibilityService;\nimport android.accessibilityservice.GestureDescription;\nimport android.content.Intent;\nimport android.graphics.Color;\nimport android.graphics.Path;\nimport android.graphics.PixelFormat;\nimport android.util.DisplayMetrics;\nimport android.util.Log;\nimport android.view.Gravity;\nimport android.view.MotionEvent;\nimport android.view.View;\nimport android.view.WindowManager;\nimport android.view.accessibility.AccessibilityEvent;\nimport android.widget.FrameLayout;\nimport android.widget.Toast;\nimport ai.lazero.lazero.AccessibilityUtil;\nimport ai.lazero.lazero.R;\n//import android.app.Service;\npublic class AdService extends AccessibilityService {\n//    private WindowManager windowManager;\n    public boolean checker = false;\n//    public FrameLayout mLayout;\n    public Thread thread = null;\n    //    private basic_overlay button;\n//    //    private WindowManager windowManager0;\n//    private basic_overlay_v2 button0;\n    public AdService() {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AdService.java:1-32"
+    },
+    "543": {
+        "file_id": 29,
+        "content": "This code is for an AccessibilityService in Android, which extends the base class to provide accessibility features. It includes imports from various android packages and classes specific to this service. The class contains variables such as windowManager, mLayout, thread, button, and button0, suggesting it may handle windows and layouts, and have a running thread for some functionality. The constructor initializes these variables.",
+        "type": "comment"
+    },
+    "544": {
+        "file_id": 29,
+        "content": "    }\npublic String TAG=\"hover_accessibility\";\n    @Override\n    public void onCreate() {\n//        super.onCreate();\n        boolean samplex = AccessibilityUtil.isSettingOpen(AdService.class, this);\n        if (samplex == true) {\n            Log.e(\"XML_service\", \"onCreate!\");\n            super.onCreate();\n            try{\n            showOver();}catch (Exception e){e.printStackTrace();}\n        } else {\n            Log.i(TAG, \"onDestroy: \");\n            Toast.makeText(this, getString(R.string.aby_label) + \"停止了，请重新开启\", Toast.LENGTH_LONG).show();\n            AccessibilityUtil.jumpToSetting(this);\n        }}\n        @Override\n        public int onStartCommand(Intent intent, int flags, int startId) {\n            boolean samplex = AccessibilityUtil.isSettingOpen(AdService.class, this);\n            if (samplex == true) {\n                Log.e(\"XML_service\", \"onCreate!\");\n//                super.onCreate();\n                try{\n                showOver();}catch (Exception e){e.printStackTrace();}\n            } else {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AdService.java:33-58"
+    },
+    "545": {
+        "file_id": 29,
+        "content": "This code is an Android service responsible for displaying ads. It checks if the accessibility settings are enabled and performs different actions accordingly. If enabled, it logs a message, calls showOver() method to display ads, and creates a toast notification. If not enabled, it shows a toast with a message asking the user to reopen the setting. The code also utilizes AccessibilityUtil class for checking and jumping to settings.",
+        "type": "comment"
+    },
+    "546": {
+        "file_id": 29,
+        "content": "                Log.i(TAG, \"onDestroy: \");\n                Toast.makeText(this, getString(R.string.aby_label) + \"停止了，请重新开启\", Toast.LENGTH_LONG).show();\n                AccessibilityUtil.jumpToSetting(this);\n            }\n        return super.onStartCommand(intent,flags,startId);\n    }\n    @Override\n    public void onDestroy() {\n        super.onDestroy();\n//        windowManager.removeView(mLayout);\n        if (thread!=null){thread=null;}\n//        windowManager.removeView(button);\n    }\n    @Override\n    public void onAccessibilityEvent(AccessibilityEvent event) {}\npublic void dpGesture(){\n    DisplayMetrics displayMetrics = getResources().getDisplayMetrics();\n    int middleYValue = displayMetrics.heightPixels / 2;\n    final int leftSideOfScreen = displayMetrics.widthPixels / 4;\n    final int rightSizeOfScreen = leftSideOfScreen * 3;\n    GestureDescription.Builder gestureBuilder = new GestureDescription.Builder();\n    Path path = new Path();\n//    if (event.getText() != null && event.getText().toString().contains(\"1\")) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AdService.java:59-85"
+    },
+    "547": {
+        "file_id": 29,
+        "content": "On destroy method overrides and removes the window manager views and nullifies thread. GestureDescription.Builder creates a path for gesture recognition based on screen dimensions and possibly text input conditions.",
+        "type": "comment"
+    },
+    "548": {
+        "file_id": 29,
+        "content": "        //Swipe left\n        path.moveTo(rightSizeOfScreen, middleYValue);\n//        path.lineTo(leftSideOfScreen, middleYValue);\n//    } else {\n//        //Swipe right\n//        path.moveTo(leftSideOfScreen, middleYValue);\n//        path.lineTo(rightSizeOfScreen, middleYValue);\n//    }\n    gestureBuilder.addStroke(new GestureDescription.StrokeDescription(path, 100, 50));\n    dispatchGesture(gestureBuilder.build(), new GestureResultCallback() {\n        @Override\n        public void onCompleted(GestureDescription gestureDescription) {\n            Log.w(TAG,\"Gesture Completed\");\n            super.onCompleted(gestureDescription);\n        }\n    }, null);\n}\npublic void startThread(){\n    thread = new Thread(new Runnable() {\n        @Override\n        public void run() {\n            while (true) {\n                try {\n                    Thread.sleep(1000);\n                } catch (Exception e) {\n                    e.printStackTrace();\n                }\n                dpGesture();\n            }\n        }\n    });\n    thread.start();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AdService.java:86-118"
+    },
+    "549": {
+        "file_id": 29,
+        "content": "This code is responsible for continuously performing a swipe gesture in either direction, creating and dispatching a GestureDescription object to represent the swipe, logging when the gesture is completed using Log.w, and initiating a new thread for continuous execution of the gesture function.",
+        "type": "comment"
+    },
+    "550": {
+        "file_id": 29,
+        "content": "}\n    private void showOver() {\n        if (!this.checker){\n            this.checker = true;\n            if (thread == null) {\nstartThread();\n            }else{\n                thread = null;\n                startThread();\n            }\n        }else if (!thread.isAlive()){\n            thread = null;\n            startThread();\n        }\n// start a separate thread for dispatching gesture.\n    }\n    @Override\n    public void onInterrupt() {\n        // create accessibility view anyway?\n    }\n//    @Override\n//    public IBinder onBind(Intent intent) {\n//        // TODO: Return the communication channel to the service.\n//        throw new UnsupportedOperationException(\"Not yet implemented\");\n//    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AdService.java:119-145"
+    },
+    "551": {
+        "file_id": 29,
+        "content": "This method \"showOver\" checks if the checker variable is false and whether thread is null. If so, it starts a new thread for dispatching gesture. Otherwise, it resets the thread and restarts it. The onInterrupt() method seems to create an accessibility view, while the onBind() method requires implementing communication channel but isn't currently implemented.",
+        "type": "comment"
+    },
+    "552": {
+        "file_id": 30,
+        "content": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java",
+        "type": "filepath"
+    },
+    "553": {
+        "file_id": 30,
+        "content": "The AeService class is a root-permissioned accessibility service that handles windows, threads, input events, and state management for messages, counters, unblocking, key events, power button, and logging. It controls onStartCommand() and onDestroy() methods and manages gesture dispatching in separate threads.",
+        "type": "summary"
+    },
+    "554": {
+        "file_id": 30,
+        "content": "package ai.lazero.lazero.m6;\nimport android.accessibilityservice.AccessibilityService;\nimport android.accessibilityservice.GestureDescription;\nimport android.content.Intent;\nimport android.graphics.Path;\nimport android.support.design.widget.Snackbar;\nimport android.util.DisplayMetrics;\nimport android.util.Log;\nimport android.view.KeyEvent;\nimport android.view.accessibility.AccessibilityEvent;\nimport android.widget.Toast;\nimport java.io.DataOutputStream;\nimport java.util.Date;\nimport ai.lazero.lazero.AccessibilityUtil;\nimport ai.lazero.lazero.R;\nimport static ai.lazero.lazero.MainActivity.upgradeRootPermission;\n//import android.app.Service;\npublic class AeService extends AccessibilityService {\n    //    private WindowManager windowManager;\n    public boolean checker = false;\n    public int counter = 0;\n    public boolean simplex = false;\n    public Thread thread = null;\n    public String TAG = \"blocker_accessibility\";\n    public static String[] blocker = {\"cd /dev/input && mkdir ../dummy\", \"cd /dev/input && ln -n event1 ../dummy/event1 \", \"cd /dev/input && rm -rf event1\"};",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:1-31"
+    },
+    "555": {
+        "file_id": 30,
+        "content": "Class AeService extends AccessibilityService and defines various variables for window management, thread management, and logging. It also includes an array called blocker which contains commands to interact with device input events. This service likely handles accessibility features related to event management and blocking.",
+        "type": "comment"
+    },
+    "556": {
+        "file_id": 30,
+        "content": "    public static String[] unblocker = {\"cd /dev/input && ln -n ../dummy/event1 event1\"};\n    public long historical = 0;\n    //    private basic_overlay button;\n    //    //    private WindowManager windowManager0;\n    //    private basic_overlay_v2 button0;\n    public AeService() {\n    }\n    //    public FrameLayout mLayout;\n    public static boolean RootPermission(String[] pkgCodePath) {\n        Process process = null;\n        DataOutputStream os = null;\n        try {\n//                String cmd = pkgCodePath;\n            process = Runtime.getRuntime().exec(\"su\"); //切换到root帐号\n            os = new DataOutputStream(process.getOutputStream());\n            for (String cmd : pkgCodePath) {\n                //Do your stuff here\n                os.writeBytes(cmd + \"\\n\");\n                Thread.sleep(100);\n                os.flush();\n            }\n            Thread.sleep(100);\n            os.writeBytes(\"exit\\n\");\n            Thread.sleep(100);\n            os.flush();\n            process.waitFor();\n            // not doing shit.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:32-60"
+    },
+    "557": {
+        "file_id": 30,
+        "content": "Code snippet aims to execute commands with root permissions using su (Switch User) command, allowing for further operations within the AeService class. The process involves establishing a connection to the root user, passing commands through DataOutputStream, and terminating the su process.",
+        "type": "comment"
+    },
+    "558": {
+        "file_id": 30,
+        "content": "        } catch (Exception e) {\n            return false;\n        } finally {\n            try {\n                if (os != null) {\n                    os.close();\n                }\n                process.destroy();\n            } catch (Exception e) {\n            }\n        }\n        return true;\n    }\n    @Override\n    public void onCreate() {\n        //        super.onCreate();\n        boolean samplex = AccessibilityUtil.isSettingOpen(AeService.class, this);\n        if (samplex == true) {\n            Log.e(\"XML_service\", \"onCreate!\");\n            boolean k = upgradeRootPermission(getPackageCodePath());\n            simplex = k;\n            super.onCreate();\n//                    if (k == true) {\n//                        Snackbar.make(view, \"Root acquire success\", Snackbar.LENGTH_LONG)\n//                                .setAction(\"Action\", null).show();\n//                    } else {\n//                        Snackbar.make(view, \"Failed to acquire root\", Snackbar.LENGTH_LONG)\n//                                .setAction(\"Action\", null).show();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:61-90"
+    },
+    "559": {
+        "file_id": 30,
+        "content": "The code handles exception and performs cleanup operations in case of an error. It attempts to close the output stream (os) and destroys the process. If successful, it logs a message and proceeds to check for root permission using AccessibilityUtil's isSettingOpen method, passing the current class and context as arguments. The result is stored in boolean variable \"simplex\". If the setting is open, it calls upgradeRootPermission with getPackageCodePath() and updates \"simplex\" accordingly. It then calls super.onCreate().",
+        "type": "comment"
+    },
+    "560": {
+        "file_id": 30,
+        "content": "//                    }\n//                    try{\n//                    showOver();}catch (Exception e){e.printStackTrace();}\n        } else {\n            Log.i(TAG, \"onDestroy: \");\n            Toast.makeText(this, getString(R.string.aby_label) + \"停止了，请重新开启\", Toast.LENGTH_LONG).show();\n            AccessibilityUtil.jumpToSetting(this);\n        }\n    }\n    public boolean getStat(long limit) {\n        Date date = new Date();\n        long current = date.getTime();\n        if (historical == 0) {\n            historical = current;\n            return true;\n        } else {\n            long subtract = current - historical;\n            historical = current;\n            if (subtract <= limit) {\n                return true;\n            } else {\n                return false;\n            }\n        }\n    }\n    @Override\n    public boolean onKeyEvent(KeyEvent event) {\n        int action = event.getAction();\n        int keyCode = event.getKeyCode();\n        if (action == KeyEvent.ACTION_UP) {\n            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:91-123"
+    },
+    "561": {
+        "file_id": 30,
+        "content": "This code defines an `AeService` class, which contains a method `onKeyEvent()` that handles the volume up button events. It also includes a `getStat(long limit)` method to check if a certain time limit has been exceeded. If the service is not destroyed, it shows a toast message and prompts the user to restart the service; otherwise, it logs an info message.",
+        "type": "comment"
+    },
+    "562": {
+        "file_id": 30,
+        "content": "                if (simplex) {\n                    if (counter >= 0) {\n                        if (getStat(500)) {\n                            if (counter < 3) {\n                                counter++;\n                            }\n                        } else {\n                            counter = 0;\n                        }\n                    } else {\n                        counter = 0;\n                    }\n                    if (counter == 3) {\n                        Log.d(\"Hello\", \"UNBLOCKER TRIGGERED\");\n                        if (thread == null) {\n                            thread = null;\n                            thread = new Thread(new Runnable() {\n                                @Override\n                                public void run() {\n                                    RootPermission(unblocker);\n                                }\n                            });\n                            thread.start();\n                            checker = true;\n                        } else if (thread != null && !thread.isAlive()) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:124-148"
+    },
+    "563": {
+        "file_id": 30,
+        "content": "This code is managing a counter and checking a status to trigger an unblocker function. If the \"simplex\" condition is met, it increments a counter if certain conditions are satisfied. Once the counter reaches 3, it logs a message and starts a new thread to execute the \"RootPermission\" function from the \"unblocker\" variable.",
+        "type": "comment"
+    },
+    "564": {
+        "file_id": 30,
+        "content": "                            thread = null;\n                            thread = new Thread(new Runnable() {\n                                @Override\n                                public void run() {\n                                    RootPermission(unblocker);\n                                }\n                            });\n                            thread.start();\n                            checker = true;\n                        } else {\n                            Log.d(\"Hello\", \"FAILED TO TRIGGER\");\n                        }\n                        Log.d(\"Hello\", \"KeyUp\");\n                    }\n                } else {\n                    Log.d(\"Hello\", \"No Root Permission\");\n                }\n            } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {\n                if (simplex) {\n                    if (counter <= 0) {\n                        if (getStat(500)) {\n                            if (counter > -3) {\n                                counter--;\n                            }\n                        } else {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:149-173"
+    },
+    "565": {
+        "file_id": 30,
+        "content": "This code checks for specific key events, such as KEYCODE_VOLUME_UP or KEYCODE_VOLUME_DOWN. If the device has root permission and these keys are pressed while the app is in simplex mode, it starts a new thread to run RootPermission method, which appears to be related to obtaining root access on the device. If there's no root permission or if the condition isn't met, it logs appropriate messages. The code also keeps track of a counter and checks a stat with an ID of 500.",
+        "type": "comment"
+    },
+    "566": {
+        "file_id": 30,
+        "content": "                            counter = 0;\n                        }\n                    } else {\n                        counter = 0;\n                    }\n                    if (counter == -3) {\n                        Log.d(\"Hello\", \"BLOCKER TRIGGERED\");\n                        if (thread == null) {\n                            thread = null;\n                            thread = new Thread(new Runnable() {\n                                @Override\n                                public void run() {\n                                    RootPermission(blocker);\n                                }\n                            });\n                            thread.start();\n                            checker = true;\n                        } else if (thread != null && !thread.isAlive()) {\n                            thread = null;\n                            thread = new Thread(new Runnable() {\n                                @Override\n                                public void run() {\n                                    RootPermission(blocker);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:174-196"
+    },
+    "567": {
+        "file_id": 30,
+        "content": "This code resets the counter to 0 and checks if it equals -3, triggering a log message. If a thread is null or not alive, it creates a new thread to execute the RootPermission function.",
+        "type": "comment"
+    },
+    "568": {
+        "file_id": 30,
+        "content": "                                }\n                            });\n                            thread.start();\n                            checker = true;\n                        } else {\n                            Log.d(\"Hello\", \"FAILED TO TRIGGER\");\n                        }\n                    }\n                    Log.d(\"Hello\", \"KeyDown\");\n                } else {\n                    Log.d(\"Hello\", \"No Root Permission\");\n                }\n            }\n//            return true;\n            return super.onKeyEvent(event);\n        } else {\n            // block the power key?\n            return super.onKeyEvent(event);\n        }\n    }\n    @Override\n    public int onStartCommand(Intent intent, int flags, int startId) {\n        boolean samplex = AccessibilityUtil.isSettingOpen(AeService.class, this);\n        if (samplex == true) {\n            Log.e(\"XML_service\", \"onCreate!\");\n            boolean k = upgradeRootPermission(getPackageCodePath());\n            simplex = k;\n            //                super.onCreate();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:197-226"
+    },
+    "569": {
+        "file_id": 30,
+        "content": "Service handling power button events, checking root permission and accessibility settings.",
+        "type": "comment"
+    },
+    "570": {
+        "file_id": 30,
+        "content": "//                        try{\n//                        showOver();}catch (Exception e){e.printStackTrace();}\n        } else {\n            Log.i(TAG, \"onDestroy: \");\n            Toast.makeText(this, getString(R.string.aby_label) + \"停止了，请重新开启\", Toast.LENGTH_LONG).show();\n            AccessibilityUtil.jumpToSetting(this);\n        }\n        return super.onStartCommand(intent, flags, startId);\n    }\n    @Override\n    public void onDestroy() {\n        super.onDestroy();\n        //        windowManager.removeView(mLayout);\n//                if (thread!=null){thread=null;}\n        //        windowManager.removeView(button);\n    }\n    @Override\n    public void onAccessibilityEvent(AccessibilityEvent event) {\n    }\n    private void showOver() {\n//                if (!this.checker){\n//                    this.checker = true;\n//                    if (thread == null) {\n//        startThread();\n//                    }else{\n//                        thread = null;\n//                        startThread();\n//                    }",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:227-259"
+    },
+    "571": {
+        "file_id": 30,
+        "content": "The code is a part of the onStartCommand() method in an Accessibility service. It checks if the service has been started and displays a message or stops it based on the condition. The onDestroy() method removes the view and stops the thread. The showOver() method starts or stops the thread depending on its current state.",
+        "type": "comment"
+    },
+    "572": {
+        "file_id": 30,
+        "content": "//                }else if (!thread.isAlive()){\n//                    thread = null;\n//                    startThread();\n//                }\n        // start a separate thread for dispatching gesture.\n    }\n    @Override\n    public void onInterrupt() {\n        // create accessibility view anyway?\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java:260-273"
+    },
+    "573": {
+        "file_id": 30,
+        "content": "Code checks if the thread is not alive, and if so, sets thread to null and starts a new one. It handles gesture dispatching in a separate thread. If interrupted, it considers creating an accessibility view.",
+        "type": "comment"
+    },
+    "574": {
+        "file_id": 31,
+        "content": "/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java",
+        "type": "filepath"
+    },
+    "575": {
+        "file_id": 31,
+        "content": "BubbleService manages overlay views and color changes in Android, utilizing WindowManager and LayoutParams to create a red button on top of an overlay view while adjusting transparency and setting layout parameters for the floating bubble.",
+        "type": "summary"
+    },
+    "576": {
+        "file_id": 31,
+        "content": "package ai.lazero.lazero.m6;\nimport android.app.Service;\nimport android.content.Intent;\nimport android.graphics.Color;\nimport android.graphics.PixelFormat;\nimport android.os.IBinder;\nimport android.view.Gravity;\nimport android.view.WindowManager;\npublic class BubbleService extends Service {\n    private WindowManager windowManager;\n    private basic_overlay button;\n    //    private WindowManager windowManager0;\n    private basic_overlay_v2 button0;\n    @Override\n    public IBinder onBind(Intent intent) {\n        return null;\n    }\n    @Override\n    public void onCreate() {\n        super.onCreate();\n        showOver();\n    }\n    @Override\n    public void onDestroy() {\n        super.onDestroy();\n        windowManager.removeView(button0);\n        windowManager.removeView(button);\n    }\n    private void showOver() {\n        button = new basic_overlay(this,\"blue\");\n//        button = new Button(this);\n        button.setBackgroundColor(Color.BLUE);\n        button.setAlpha((float)0.5);\n//        button.setBackgroundColor(Color.BLACK);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java:1-41"
+    },
+    "577": {
+        "file_id": 31,
+        "content": "The code defines a Service class, BubbleService, which manages the creation and removal of two overlay views (button and button0). The service shows the overlays on top of other app windows. It sets their colors and alpha values, with the overlay color initially set to blue and later potentially set to black.",
+        "type": "comment"
+    },
+    "578": {
+        "file_id": 31,
+        "content": "        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);\n        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();\n        layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;\n// what is accessibility_overlay anyway?\n        layoutParams.width = 100;\n        layoutParams.height = 100;\n        layoutParams.x = 0 ;\n        layoutParams.y = 0 ;\n        layoutParams.gravity = Gravity.LEFT | Gravity.TOP ;\n//        layoutParams.gravity = Gravity.BOTTOM;\n        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;\n//        layoutParams.flags = WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;\n//        layoutParams.flags=WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;\n        layoutParams.format = PixelFormat.RGBA_8888 | PixelFormat.TRANSLUCENT;\n// check if works.\n        button0 = new basic_overlay_v2(this,\"red\",layoutParams,button,windowManager);\n//        button = new Button(this);\n//        getWin\n        button0.setBackgroundColor(Color.RED);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java:42-61"
+    },
+    "579": {
+        "file_id": 31,
+        "content": "The code sets up a window overlay using the WindowManager and LayoutParams in Android. It specifies the type, dimensions, position, and flags for the overlay. The basic_overlay_v2 class is instantiated with these parameters to create a red button on top of the overlay.",
+        "type": "comment"
+    },
+    "580": {
+        "file_id": 31,
+        "content": "        button0.setAlpha((float)0.2);\n//        button.setBackgroundColor(Color.BLACK);\n//        windowManager0 = (WindowManager) getSystemService(WINDOW_SERVICE);\n        WindowManager.LayoutParams layoutParam = new WindowManager.LayoutParams();\n        layoutParam.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;\n// what is accessibility_overlay anyway?\n        layoutParam.width = WindowManager.LayoutParams.WRAP_CONTENT;\n        layoutParam.height = WindowManager.LayoutParams.WRAP_CONTENT;\n        layoutParam.x = 0 ;\n        layoutParam.y = 0 ;\n        layoutParam.gravity = Gravity.RIGHT | Gravity.TOP ;\n//        layoutParams.gravity = Gravity.BOTTOM;\n        layoutParam.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;\n//        layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;\n//        layoutParam.flags = WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java:62-76"
+    },
+    "581": {
+        "file_id": 31,
+        "content": "This code sets the alpha of a button, potentially adjusting its transparency. It defines the layout parameters for a window manager, including type (application overlay), dimensions, position, and flags for interactivity. The flags include being not touchable, watchable outside touch, and not focusable.",
+        "type": "comment"
+    },
+    "582": {
+        "file_id": 31,
+        "content": "//        layoutParams.flags=WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;\n        // WE'LL SET A FLOATING BUBBLE.\n        layoutParam.format = PixelFormat.RGBA_8888 | PixelFormat.TRANSLUCENT;\n        /*\n        spliter?\n        */\n// check if works.\n//windowManager.\n        windowManager.addView(button, layoutParams);\n        windowManager.addView(button0, layoutParam);\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java:77-93"
+    },
+    "583": {
+        "file_id": 31,
+        "content": "Set floating bubble layout parameters and add views to window manager.",
+        "type": "comment"
+    },
+    "584": {
+        "file_id": 32,
+        "content": "/app/src/main/java/ai/lazero/lazero/m6/ConfigClass.java",
+        "type": "filepath"
+    },
+    "585": {
+        "file_id": 32,
+        "content": "This class represents audio configuration settings with rate, channel configuration, and audio format. It provides a constructor to initialize these properties.",
+        "type": "summary"
+    },
+    "586": {
+        "file_id": 32,
+        "content": "package ai.lazero.lazero.m6;\npublic class ConfigClass {\n    public int rate;\n    public short channelConfig;\n    public short audioFormat;\n    public ConfigClass(int rate, short channelConfig, short audioFormat){\n        this.audioFormat = audioFormat;\n        this.rate = rate;\n        this.channelConfig = channelConfig;\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/ConfigClass.java:1-12"
+    },
+    "587": {
+        "file_id": 32,
+        "content": "This class represents audio configuration settings with rate, channel configuration, and audio format. It provides a constructor to initialize these properties.",
+        "type": "comment"
+    },
+    "588": {
+        "file_id": 33,
+        "content": "/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java",
+        "type": "filepath"
+    },
+    "589": {
+        "file_id": 33,
+        "content": "Main7Activity extends Activity, sets content view, initializes mPresentation and populates TextViews. Creates 500x500 VirtualDisplay, shows MyPresentation if valid, requires permissions/MediaProjection token for screen sharing, handles launch or error messages.",
+        "type": "summary"
+    },
+    "590": {
+        "file_id": 33,
+        "content": "package ai.lazero.lazero.m6;\nimport android.app.Activity;\nimport android.app.Presentation;\nimport android.content.Context;\nimport android.hardware.display.DisplayManager;\nimport android.hardware.display.VirtualDisplay;\nimport android.os.Bundle;\nimport android.util.DisplayMetrics;\nimport android.util.Log;\nimport android.view.Display;\nimport android.view.Menu;\nimport android.view.Surface;\nimport android.view.View;\nimport android.widget.TextView;\nimport ai.lazero.lazero.R;\npublic class Main7Activity extends Activity {\n    private MyPresentation mPresentation = null;\n    public String TAG = \"BLITZ\";\n    /*\n     * This code is not production ready. Do not use\n     * for anything other than test projects.\n     */\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main7);\n        populate(findViewById(R.id.main), getWindowManager()\n                .getDefaultDisplay());\n//        Surface sf = (Surface) findViewById(R.id.main).findViewById(R.id.surface);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java:1-33"
+    },
+    "591": {
+        "file_id": 33,
+        "content": "Main7Activity extends Activity class and sets the content view. It initializes the mPresentation variable and includes a populate method that takes a View and a Display as parameters. The code also mentions an unsupported Surface object declaration, but it's commented out.",
+        "type": "comment"
+    },
+    "592": {
+        "file_id": 33,
+        "content": "        multiInit();\n    }\n    @Override\n    public boolean onCreateOptionsMenu(Menu menu) {\n        getMenuInflater().inflate(R.menu.activity_main7, menu);\n        return true;\n    }\n    private static void populate(View v, Display display) {\n        DisplayMetrics metrics = new DisplayMetrics();\n        display.getMetrics(metrics);\n        float density = metrics.density;\n        TextView actual =\n                (TextView) v.findViewById(R.id.actual);\n        if (actual != null) {\n            actual.setText(String.format(\"%dx%d\",\n                    metrics.widthPixels,\n                    metrics.heightPixels));\n        }\n        TextView df =\n                (TextView) v.findViewById(R.id.density_factor);\n        if (df != null) {\n            df.setText(String.format(\"%f\", density));\n        }\n        TextView dp =\n                (TextView) v.findViewById(R.id.device_pixels);\n        if (dp != null) {\n            dp.setText(String.format(\"%dx%d\",\n                    ((int) ((float) metrics.widthPixels / density)),",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java:34-63"
+    },
+    "593": {
+        "file_id": 33,
+        "content": "This code inflates the menu and populates TextViews with display metrics like width, height, density, and device pixels in Main7Activity.",
+        "type": "comment"
+    },
+    "594": {
+        "file_id": 33,
+        "content": "                    ((int) ((float) metrics.heightPixels / density))));\n        }\n    }\n    private void multiInit() {\n        VirtualDisplay vd = createVd();\n        try {\n            if (vd != null) {\n                Display display = vd.getDisplay();\n                mPresentation = new MyPresentation(this, display);\n                mPresentation.show();\n                Log.e(TAG, \"blitz service launched\");\n            } else {\n                Log.e(TAG, \"blitz service failed\");\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n            Log.e(TAG, \"blitz service error\");\n        }\n    }\n//        DisplayManager dm =\n//                (DisplayManager) getSystemService(DISPLAY_SERVICE);\n////        DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC;\n////        DisplayManager.DIS\n//        if (dm != null) {\n//            Display[] displays = dm.getDisplays(DisplayManager.)\n////                    dm.getDisplays(\n////                            DisplayManager.DISPLAY_CATEGORY_PRESENTATION);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java:64-91"
+    },
+    "595": {
+        "file_id": 33,
+        "content": "The code initializes a virtual display, creates an instance of MyPresentation and shows it if the virtual display is not null. It also logs messages for successful launch, failure, or error.",
+        "type": "comment"
+    },
+    "596": {
+        "file_id": 33,
+        "content": "//            for (Display display : displays) {\n//                mPresentation = new MyPresentation(this, display);\n//                mPresentation.show();\n//            }\n    //there is no such thing.\n    public VirtualDisplay createVd() {\n        DisplayManager dm =\n                (DisplayManager) getSystemService(DISPLAY_SERVICE);\n        if (dm != null) {\n            VirtualDisplay vd = dm.createVirtualDisplay(\"virtual_display\", 500, 500, 200, null, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC);\n            if (vd != null) {\n                return vd;\n            }\n        }\n        return null;\n    }\n//    Requires CAPTURE_VIDEO_OUTPUT or CAPTURE_SECURE_VIDEO_OUTPUT permission, or an appropriate MediaProjection token in order to create a screen sharing virtual display.\n    public class MyPresentation extends Presentation {\n        public MyPresentation(Context outerContext,\n                              Display display) {\n            super(outerContext, display);\n        }\n        @Override\n        protected void onCreate(Bundle savedInstanceState) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java:92-118"
+    },
+    "597": {
+        "file_id": 33,
+        "content": "Method creates a VirtualDisplay with dimensions 500x500 and refresh rate 200. It requires specific permissions or MediaProjection token to create the virtual display for screen sharing purposes.",
+        "type": "comment"
+    },
+    "598": {
+        "file_id": 33,
+        "content": "            super.onCreate(savedInstanceState);\n            setContentView(R.layout.activity_main7);\n            populate(findViewById(R.id.main),\n                    getDisplay());\n        }\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java:119-125"
+    },
+    "599": {
+        "file_id": 33,
+        "content": "The code extends the Main7Activity class, overrides onCreate method, sets the layout, and calls the populate function with required parameters.",
+        "type": "comment"
+    }
+}

@@ -1,0 +1,548 @@
+{
+    "400": {
+        "file_id": 22,
+        "content": "                // how to get it?\n                // cannot do nothing.\n            }\n        }).start();}\n        else{\n            Log.e(\"AUDIO CHANNEL\",\"NOT INITIALIZED -> CHECK FOR PERMISSIONS LIKE SYSTEM APPS\");\n        }\n    }\n    /**\n     * 停止录音\n     */\n    public void stopRecord() {\n        Log.d(\"AudioRecorder\",\"===stopRecord===\");\n        if (status == Status.STATUS_NO_READY || status == Status.STATUS_READY) {\n            Log.e(\"ERROR\",\"录音尚未开始\");\n        } else {\n            audioRecord.stop();\n            status = Status.STATUS_STOP;\n            release();\n        }\n    }\n    /**\n     * 取消录音\n     */\n    public void cancel() {\n        filesName.clear();\n        fileName = null;\n        // assign to null to clear all.\n        if (audioRecord != null) {\n            audioRecord.release();\n            audioRecord = null;\n        }\n        status = Status.STATUS_NO_READY;\n    }\n    /**\n     * 释放资源\n     */\n    public void release() {\n        Log.d(\"AudioRecorder\",\"===release===\");\n        //假如有暂停录音\n        // shall use byte[] array.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:288-330"
+    },
+    "401": {
+        "file_id": 22,
+        "content": "This code snippet is part of an Android audio recording class. It provides methods to start, stop, and cancel audio recordings. The `startRecord()` method checks for necessary permissions and initializes the audio recorder if they are granted. If not, it logs an error message. The `stopRecord()` method stops the currently running audio recording, sets the status to \"STOP\", and releases resources. The `cancel()` method clears recorded file names, nulls audioRecorder, and sets status to \"NO_READY\". Finally, the `release()` method logs a debug message and optionally releases resources if they are not paused.",
+        "type": "comment"
+    },
+    "402": {
+        "file_id": 22,
+        "content": "        try {\n            if (filesName.size() > 0) {\n//                List<byte[]> filePaths = new ArrayList<>();\n                for (byte[] fileNamex : filesName) {\n//                    filePaths.add(fileNamex);\n//                    System.out\n                    Log.e(\"AUDIO FILE CAPTURED\",String.valueOf(fileNamex.length));\n                }\n                //清除\n                filesName.clear();\n                // just check. not playing.\n                //将多个pcm文件转化为wav文件\n//                mergePCMFilesToWAVFile(filePaths);\n            } else {\n                //这里由于只要录音过filesName.size都会大于0,没录音时fileName为null\n                //会报空指针 NullPointerException\n                // 将单个pcm文件转化为wav文件\n                //Log.d(\"AudioRecorder\", \"=====makePCMFileToWAVFile======\");\n                //makePCMFileToWAVFile();\n                // nothing here.\n            }\n        } catch (IllegalStateException e) {\n            throw new IllegalStateException(e.getMessage());\n        }\n        if (audioRecord != null) {\n            audioRecord.release();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:331-358"
+    },
+    "403": {
+        "file_id": 22,
+        "content": "Code tries to merge audio files into a single WAV file if the list of captured audio files is not empty. If the list is empty, it attempts to convert a single PCM file to a WAV file. If any exceptions occur during these processes, they are thrown as IllegalStateException. The code also releases the audio recording instance at the end.",
+        "type": "comment"
+    },
+    "404": {
+        "file_id": 22,
+        "content": "            audioRecord = null;\n        }\n        status = Status.STATUS_NO_READY;\n    }\n// just a useless demo.\n    public void init_buffer(int bufferSize_common){\n        fileName=null;\n        byte[] allByteArray = new byte[bufferSize_common*500];\n        fileName = ByteBuffer.wrap(allByteArray);\n    }\n    /**\n     * 将音频信息写入文件\n     * @param listener 音频流的监听\n     */\n    private void writeDataTOFile(int bufferSizeInBytes) {\n        // new一个byte数组用来存一些字节数据，大小为缓冲区大小\n        byte[] audiodata = new byte[bufferSizeInBytes];\n//        FileOutputStream fos = null;\n        int readsize = 0;\n        try {\n            byte[] currentFileName = fileName.array();\n            if (status == Status.STATUS_PAUSE) {\n                init_buffer(bufferSizeInBytes);\n//                currentFileName += filesName.size();\n            }\n            filesName.add(currentFileName);\n        } catch (Exception e) {\n            Log.e(\"AudioRecorder\", e.getMessage());\n//            throw new IllegalStateException(e.getMessage());\n        } /*catch (Exception e) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:359-388"
+    },
+    "405": {
+        "file_id": 22,
+        "content": "This code initializes an audio recording and handles different statuses. It sets the audioRecord to null when not ready, creates a buffer for storing audio data, and writes recorded audio data to files. However, there are potential errors and exceptions that may need handling.",
+        "type": "comment"
+    },
+    "406": {
+        "file_id": 22,
+        "content": "            Log.e(\"AudioRecorder\", e.getMessage());\n        }*/\n        // send you some bitches.\n        //将录音状态设置成正在录音状态\n        status = Status.STATUS_START;\n        while (status == Status.STATUS_START) {\n            Log.e(\"AUDIO WORKER\",\"ONE LOOP\");\n            readsize = audioRecord.read(audiodata, 0, bufferSizeInBytes);\n            // from .. to ..\n            if ( AudioRecord.ERROR_INVALID_OPERATION != readsize && fileName !=null) {\n                try {\n//                    fos.write(audiodata);\n                    fileName.put(audiodata.clone());\n                } catch (Exception e) {\n                    Log.e(\"AudioRecorder\", e.getMessage());\n                }\n            }\n        }\n        // now everything is done.\n        // where is the noise?\n        try {\n//            if (fos != null) {\n            Log.d(\"AUDIO RECORD\",\"DONE\");\n//                fos.close();// 关闭写入流\n//            }\n        } catch (Exception e) {\n            Log.e(\"AudioRecorder\", e.getMessage());\n        }\n    }\n// this is a service.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:389-418"
+    },
+    "407": {
+        "file_id": 22,
+        "content": "This code is for an audio recording service. It sets the status to recording and enters a loop where it reads audio data from the AudioRecord object and writes it to a file named by fileName until the status changes. Upon completion, it attempts to close the file output stream. If any exception occurs during this process, it logs the error message.",
+        "type": "comment"
+    },
+    "408": {
+        "file_id": 22,
+        "content": "    // there are potential bugs under comments.\n    // fuck them all.\n    @Override\n    public IBinder onBind(Intent intent) {\n        // TODO: Return the communication channel to the service.\n        throw new UnsupportedOperationException(\"Not yet implemented\");\n        // why the first one won't work? need system rights?\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:419-427"
+    },
+    "409": {
+        "file_id": 22,
+        "content": "This method needs to return a communication channel for the service, but it is currently unimplemented and throws an exception. The developer might be experiencing issues with the first implementation attempt and may require system rights or further investigation.",
+        "type": "comment"
+    },
+    "410": {
+        "file_id": 23,
+        "content": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java",
+        "type": "filepath"
+    },
+    "411": {
+        "file_id": 23,
+        "content": "The ScreenShotFb class initializes Android screen capture, handles pixel format and exceptions but faces permission, stream, and EOF issues. An unimplemented method creates a Bitmap from a byte array using BitmapFactory and Options for file exceptions.",
+        "type": "summary"
+    },
+    "412": {
+        "file_id": 23,
+        "content": "/**\n * ScreenShotFb.java\n * 版权所有(C) 2014\n * 创建者:cuiran 2014-4-3 下午4:55:23\n */\npackage ai.lazero.lazero;\nimport android.graphics.Bitmap;\nimport android.graphics.PixelFormat;\n// do you like what you see?\nimport java.io.DataInputStream;\nimport java.io.DataOutputStream;\nimport java.io.FileInputStream;\nimport java.io.FileNotFoundException;\nimport java.io.IOException;\nimport java.nio.ByteBuffer;\n/**\n * FrameBuffer中获取Android屏幕截图\n * @author cuiran\n * @version 1.0.0\n */\npublic class ScreenShotFb {\n    private static final String TAG=\"ScreenShotFb\";\n//    final static String FB0FILE1 = \"/dev/graphics/fb0\";\n// no such thing.\n//    static File fbFile;\n    //程序入口\n// problem of the colors.\n// usually the end is 0.\n    public static void init(int a, int b,int c){\n        try {\n//            DisplayMetrics dm = new DisplayMetrics();\n//            Display display = activity.getWindowManager().getDefaultDisplay();\n//            display.getMetrics(dm);\n            screenWidth = a; // 屏幕宽（像素，如：480px）\n            screenHeight = b; // 屏幕高（像素，如：800p）",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java:1-42"
+    },
+    "413": {
+        "file_id": 23,
+        "content": "This code snippet initializes a class called ScreenShotFb for capturing Android screen shots using FrameBuffer. It sets the screen width and height variables, likely for further processing or image manipulation purposes. However, it seems to have some issues with color handling and file paths.",
+        "type": "comment"
+    },
+    "414": {
+        "file_id": 23,
+        "content": "            pixelformat = c;\n            PixelFormat localPixelFormat1 = new PixelFormat();\n            PixelFormat.getPixelFormatInfo(pixelformat, localPixelFormat1);\n            int depth = localPixelFormat1.bytesPerPixel;// 位深\n//            LogUtil.i(TAG, \"deepth=\"+depth);\n            // whatever.\n            // get the thing?\n            piex = new byte[screenHeight * screenWidth*depth] ;// 像素\n            colors = new int[screenHeight * screenWidth];\n        }catch(Exception e){\n//            LogUtil.e(TAG, \"Exception error\",e);\n            e.printStackTrace();\n        }\n    }\n    static DataInputStream dStream=null;\n    static byte[] piex=null;\n    static int[] colors =null;\n    static int screenWidth;\n    static int screenHeight;\n    static int pixelformat;\n    public static int bytesToInt(byte[] b) {\n        return   b[0] & 0xFF |\n                (b[1] & 0xFF) << 8 |\n                (b[2] & 0xFF) << 16 |\n                (b[3] & 0xFF) << 24;\n    }\n    //    public static int bytesToInt(byte[] bs) {\n//        int a = 0;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java:43-73"
+    },
+    "415": {
+        "file_id": 23,
+        "content": "This code initializes pixel format, sets up arrays for pixels and colors, and defines a method to convert bytes to an integer. It also handles potential exceptions during the process.",
+        "type": "comment"
+    },
+    "416": {
+        "file_id": 23,
+        "content": "//        for (int i =0 ; i <= bs.length - 1; i++) {\n//            a += bs[i] * Math.pow(255, bs.length - i - 1);\n//        }\n//        return a;\n//    }\n    public static synchronized Bitmap getScreenShotBitmap() {\n        FileInputStream buf = null;\n        try {\n            Process p=Runtime.getRuntime().exec(\"su\");\n            DataOutputStream dos=new DataOutputStream(p.getOutputStream());\n            dStream =new DataInputStream(p.getInputStream());\n            String cmd=\"screencap\";\n            dos.writeBytes(cmd+\"\\n\");\n            dos.flush();\n//            fbFile = new File(FB0FILE1);\n//            buf = new FileInputStream(fbFile);// 读取文件内容\n            //does that work?\n//            dStream=new DataInputStream(buf);\n            // separate thread. setting it on the go.\n            int[] config=new int[4];\n            // nu such byte?\n            for(int k = 0;k<4;k++){byte[] xb=new byte[4]; dStream.read(xb);config[k]=bytesToInt(xb);\n//                System.out.println(xb[0]);System.out.println(xb[1]);System.out.println(xb[2]);System.out.println(xb[3]);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java:74-96"
+    },
+    "417": {
+        "file_id": 23,
+        "content": "This code is obtaining a screenshot on an Android device using su privileges. It executes \"screencap\" command and reads the resulting file data to obtain the image as a Bitmap. The code then converts the received byte values into integers for further processing.",
+        "type": "comment"
+    },
+    "418": {
+        "file_id": 23,
+        "content": "//                System.out.println(String.valueOf(k)+\":\"+String.valueOf(config[k])+\"|\");\n            }\n                init(config[0],config[1],config[2]);\n            dStream.readFully(piex);\n            // it is closed!\n            // what the heck is going on?\n            dStream.close();\n            dos.close();\n            p.destroy();\n            // 将rgb转为色值\n            // permission denied.\n            // EOF?\n            // so what???\n            // get root access.\n//            System.out.println(\"sample_log\");System.out.println(\"sample_log\");System.out.println(\"sample_log\");\n//            System.out.println(\"_length_of_plex_\"+String.valueOf(piex.length));\n//            this is not good.\n//            PixelFormat.getPixelFormatInfo(PixelFormat.RGBA_8888);\n            // this is not intended.\n//            for(int i=0;i<piex.length;i+=2)\n//            {if (i%100000==0){System.out.println(String.valueOf(i)+\"_\");}\n//                colors[i/2]= (int)0xff000000 +\n//                        (int) (((piex[i+1]) << (16))&0x00f80000)+",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java:97-119"
+    },
+    "419": {
+        "file_id": 23,
+        "content": "The code is attempting to read pixel data from an image file and convert the RGB values to color values. It encounters issues with permissions, a closed stream, and potential EOF (End Of File). The code also includes debugging statements and loop iterations for every two pixels. However, it seems incomplete or unfinished as it contains comments such as \"this is not good\" and \"this is not intended\".",
+        "type": "comment"
+    },
+    "420": {
+        "file_id": 23,
+        "content": "//                        (int) (((piex[i+1]) << 13)&0x0000e000)+\n//                        (int) (((piex[i]) << 5)&0x00001A00)+\n//                        (int) (((piex[i]) << 3)&0x000000f8);\n//            }\n// this is the fucking awful data structure.\n            // how to do it?\n            // this config is not right.\n            // shall we use EVAL?\n            // 得到屏幕bitmap\n//            // unimplemented.\n            Bitmap stitchBmp = Bitmap.createBitmap(screenWidth,screenHeight,Bitmap.Config.ARGB_8888);\n            stitchBmp.copyPixelsFromBuffer(ByteBuffer.wrap(piex));\n            return stitchBmp;\n//            BitmapFactory.Options op = new BitmapFactory.Options();\n//            op.inPreferredConfig = Bitmap.Config.ARGB_8888;\n//            // unimplemented.\n//            return BitmapFactory.decodeByteArray(piex,0,piex.length,op);\n////            return BitmapFactory.decodeStream(dStream);\n//            return Bitmap.createBitmap(colors, screenWidth, screenHeight,\n//                    Bitmap.Config.RGB_565);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java:120-139"
+    },
+    "421": {
+        "file_id": 23,
+        "content": "This code appears to be creating a Bitmap from a byte array using the ARGB_8888 configuration. The current approach is deemed \"fucking awful\" and there seems to be confusion on whether EVAL should be used or not. An alternative method involving BitmapFactory and Options is mentioned but remains unimplemented. A stitchBmp is created by copying pixel values from the byte array using Bitmap.createBitmap and wrapping the byte array in a ByteBuffer. The return statement then returns this stitchBmp.",
+        "type": "comment"
+    },
+    "422": {
+        "file_id": 23,
+        "content": "        } catch (FileNotFoundException e) {\n//            LogUtil.e(TAG, \"FileNotFoundException error\",e);\n            e.printStackTrace();\n        } catch (IOException e) {\n//            LogUtil.e(TAG, \"IOException error\",e);\n            e.printStackTrace();\n        }catch (Exception e) {\n//            LogUtil.e(TAG, \"Exception error\",e);\n            e.printStackTrace();\n        }\n        finally {\n            if(buf!=null){\n                try {\n                    buf.close();\n                } catch (IOException e) {\n                    // TODO Auto-generated catch block\n                    e.printStackTrace();\n                }\n            }\n        }\n        return null;\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java:140-163"
+    },
+    "423": {
+        "file_id": 23,
+        "content": "This code is handling potential file not found and I/O exceptions within a function. It logs the error and prints stack trace before closing the buffer if it's not null. The function returns null upon completion.",
+        "type": "comment"
+    },
+    "424": {
+        "file_id": 24,
+        "content": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java",
+        "type": "filepath"
+    },
+    "425": {
+        "file_id": 24,
+        "content": "The code implements an Android service for web screenshots, logs info, handles exceptions, and manages components like receivers and threads while also including antivirus functions and restart logic.",
+        "type": "summary"
+    },
+    "426": {
+        "file_id": 24,
+        "content": "package ai.lazero.lazero;\n//package dev.protium.rest;\nimport android.app.Notification;\nimport android.app.NotificationChannel;\nimport android.app.NotificationManager;\nimport android.app.PendingIntent;\nimport android.app.Service;\nimport android.content.BroadcastReceiver;\nimport android.content.Context;\nimport android.content.Intent;\n//import android.content.SharedPreferences;\nimport android.content.IntentFilter;\nimport android.graphics.Bitmap;\n//import android.os.AsyncTask;\nimport android.graphics.BitmapFactory;\nimport android.os.Build;\nimport android.os.Handler;\n//import android.os.HandlerThread;\nimport android.os.IBinder;\nimport android.os.Looper;\nimport android.os.Message;\n//import android.os.Process;\n// initialize and keep it up.\n// another keep-up daemon set and ready.\nimport android.os.Environment;\nimport android.os.PowerManager;\nimport android.preference.PreferenceManager;\nimport android.support.v4.app.ActivityCompat;\nimport android.util.Log;\nimport android.webkit.ValueCallback;\nimport android.webkit.WebView;\nimport android.webkit.WebViewClient;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:1-33"
+    },
+    "427": {
+        "file_id": 24,
+        "content": "This code is for a Service in the Lazero Android app, utilizing various Android framework components like NotificationManager, BroadcastReceiver, PendingIntent, WebViewClient, and more. It handles notifications, manages web views, and interacts with system services such as PowerManager to ensure smooth functioning of the application.",
+        "type": "comment"
+    },
+    "428": {
+        "file_id": 24,
+        "content": "import android.widget.Toast;\nimport android.os.Binder;\nimport java.io.BufferedOutputStream;\nimport java.io.File;\nimport java.io.FileOutputStream;\n//import java.io.IOException;\nimport java.io.PrintWriter;\nimport java.io.OutputStream;\nimport java.util.concurrent.TimeUnit;\nimport java.io.*;\nimport java.net.URLDecoder;\nimport im.delight.android.webview.AdvancedWebView;\n//import android.graphics.*;\n//import java.util.*;\n//import com.squareup.okhttp.*;\npublic class ScreenshotService extends Service {\n    public static ScreenshotService instance;\n    ////    }\n    public boolean timelock;\n    public boolean getTimelock() {\n        if (instance != null) {\n            if (!instance.timelock) {\n                instance.timelock = true;\n                new Thread(new Runnable() {\n                    @Override\n                    public void run() {\n                        try {\n                            Thread.sleep(500);\n                        } catch (Exception e) {\n                            e.printStackTrace();\n                        }",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:34-68"
+    },
+    "429": {
+        "file_id": 24,
+        "content": "This code defines a `ScreenshotService` class that extends `Service`, and it seems to handle taking screenshots, with a timelock feature. The timelock is used to prevent the service from being called too frequently. It also uses threading for waiting before executing the main task.",
+        "type": "comment"
+    },
+    "430": {
+        "file_id": 24,
+        "content": "                        instance.timelock = false;\n                    }\n                }).start();\n                return true;\n            } else {\n                return false;\n            }\n        } else {\n            return false;\n        }\n    }\n    public Handler handler = new Handler();\n    public PowerManager.WakeLock mWakeLock = null;\n    public final BroadcastReceiver receiver = new BroadcastReceiver() {\n        @Override\n        public void onReceive(Context context, Intent intent) {\n            String a = intent.getAction();\n            // whatever. must be not null.\n            if (a.equals(\"ai.lazero.lazero.r\")) {\n                Log.e(TAG, \"MASTURBATION\");\n            } else if (instance.webview != null && instance.mServiceHandler != null) {\n                if (a.equals(\"ai.lazero.lazero.webdump\")) {\n                    Log.i(TAG, \"dumping html\");\n                    instance.mServiceHandler.viewSource();\n                } else if (a.equals(\"ai.lazero.lazero.webshot\")) {\n                    instance.mServiceHandler.takeWebviewScreenshot();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:69-96"
+    },
+    "431": {
+        "file_id": 24,
+        "content": "This code handles broadcast receivers and checks for specific actions. If a certain action is detected, it logs the event (\"MASTURBATION\") or triggers methods in the mServiceHandler to dump HTML or take a screenshot of the webview. The code also manages a timelock boolean and a wake lock.",
+        "type": "comment"
+    },
+    "432": {
+        "file_id": 24,
+        "content": "                } else if (a.equals(\"ai.lazero.lazero.javascript\")) {\n                    System.out.println(\"DO_HAVE_JAVASCRIPT\");\n                    if (instance.getTimelock()) {\n                        if (instance.webview != null) {\n                            String script = intent.getStringExtra(\"script\");\n                            if (script != null) {\n                                // this api is somehow shitty. do we need to add comma after that thing?\n                                // no exception shown.\n                                // how to enable webview debug mode?\n                                instance.webview.evaluateJavascript(script, new ValueCallback<String>() {\n                                    @Override\n                                    public void onReceiveValue(String value) {\n                                        // send to another intent?\n                                        // do not put it back immediately.\n                                        // quota. must have quota.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:97-111"
+    },
+    "433": {
+        "file_id": 24,
+        "content": "This code checks if a specific action is triggered and executes JavaScript within a webview if the condition is met. The JavaScript code is received through an intent extra called \"script\". It also mentions some issues with the API, enabling webview debug mode, and handling the returned value.",
+        "type": "comment"
+    },
+    "434": {
+        "file_id": 24,
+        "content": "//                                        new Thread(new Runnable() {\n//                                            @Override\n//                                            public void run() {\n                                        Intent iin = new Intent(ScreenshotService.this, SimpleService.class);\n                                        iin.putExtra(\"tag\", \"script_output\");\n                                        if (value != null) {\n                                            iin.putExtra(\"output\", value);\n                                        } else {\n                                            iin.putExtra(\"output\", \"\");\n                                        }\n//                                sendBroadcast(iin);\n                                        startForegroundService(iin);\n                                        // maybe not running?\n//                                            }\n//                                        }).start();\n                                        // value is the result returned by the Javascript as JSON",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:112-127"
+    },
+    "435": {
+        "file_id": 24,
+        "content": "This code initiates a new thread and creates an intent to launch the SimpleService class. If there is a non-null \"value\" (result of Javascript execution), it adds this output as an extra in the intent; otherwise, it adds an empty string. Finally, it starts the foreground service using the created intent.",
+        "type": "comment"
+    },
+    "436": {
+        "file_id": 24,
+        "content": "                                    }\n                                });\n                            }\n                        }\n                    }\n                }\n            } else {\n                Log.e(TAG, \"currently not receiving broadcast. webview not started\");\n            }\n        }\n    };\n    public Notification note() {\n        String CHANNEL_ID = \"ai.lazero.lazero.ScreenshotService\";\n        String CHANNEL_NAME = \"DEBUG\";\n        NotificationChannel notificationChannel = null;\n        // you've got some foreground service. shit then.\n        // do it now?\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {\n            notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);\n            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);\n            notificationManager.createNotificationChannel(notificationChannel);\n        }\n        Intent intent = new Intent(this, ScreenshotService.class);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:128-151"
+    },
+    "437": {
+        "file_id": 24,
+        "content": "This code initializes a notification channel for the foreground service when SDK version is Oreo or higher. It creates a new NotificationChannel and registers it with the system using the notification manager, providing a high importance level. The intent of this service is to receive broadcasts, and if not currently receiving any, logs an error message indicating that the webview has not been started yet.",
+        "type": "comment"
+    },
+    "438": {
+        "file_id": 24,
+        "content": "        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);\n        Notification notification = new Notification.Builder(this, CHANNEL_ID).\n                setContentTitle(\"Lazero\").\n                setContentText(\"WebScreenshot running.\").\n                setWhen(System.currentTimeMillis()).\n                setSmallIcon(R.drawable.icon).\n                setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)).\n                setContentIntent(pendingIntent).build();\n        return notification;\n    }\n    //}\n    public void antivirus() {\n//        handler.removeCallbacks(task);\n        // what is this task?\n        handler.removeCallbacksAndMessages(null);\n    }\n    //    public void viewSource(){};\n//    public void takeWebviewScreenshot(){};\n    public final String TAG = \"WebpageScreenshotService\";\n    public ServiceHandler mServiceHandler;\n    public StringBuilder inject_js_final = new StringBuilder();\n    //    inject_js_final.append(\"\");\n// type into that tiny shit.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:152-178"
+    },
+    "439": {
+        "file_id": 24,
+        "content": "This code creates a notification for the Lazero app, indicating that the WebScreenshot feature is running. It also provides a method to stop an unspecified task and handles JavaScript injection for taking webview screenshots. The ServiceHandler and StringBuilder variables are used for handling asynchronous tasks and storing final JavaScript code, respectively.",
+        "type": "comment"
+    },
+    "440": {
+        "file_id": 24,
+        "content": "    public void revive() {\n        Intent intentZ = new Intent(\"ai.lazero.lazero.r\");\n        sendBroadcast(intentZ);\n        Intent intentSelf = new Intent(ScreenshotService.this, ScreenshotService.class);\n//        startService(intentSelf);\n        startForegroundService(intentSelf);\n        // call it masturbation.\n    }\n    // or initialize a websocket service. execute random javascript code. catch exceptions.\n    // not running at all?\n    public Thread heartThread;\n    //    public WebView webview;\n    public AdvancedWebView webview;\n    //    public class AppServiceBinder extends Binder {\n//        AppService getService() {\n//            return  AppService.this;\n//        }\n//    }\n    // Handler that receives messages from the thread\n    public final class ServiceHandler extends Handler {\n        public int currentStartId;\n        // this is within the servicehandler.\n        public boolean webviewScreenshotTaken = false;\n        public boolean websiteIconTaken = false;\n        public ServiceHandler(Looper looper) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:179-206"
+    },
+    "441": {
+        "file_id": 24,
+        "content": "This code snippet defines a `revive()` method in the `ScreenshotService` class, which seems to handle service initialization and webview interactions. It creates an intent for starting the service and uses `startForegroundService()` to start it. The class also includes a `Thread` for a heartbeat, an instance of `AdvancedWebView`, and a custom `Handler` with boolean flags for screenshot status and website icon status.",
+        "type": "comment"
+    },
+    "442": {
+        "file_id": 24,
+        "content": "            super(looper);\n        }\n        @Override\n        public void handleMessage(final Message msg) {\n            currentStartId = msg.arg1;\n            Intent intent = (Intent) msg.obj;\n            // not publicly registered.\n            String command;\n            if (intent != null) {\n                command = intent.getStringExtra(\"intent\");\n            }\n            webview = new AdvancedWebView(ScreenshotService.this);\n            Log.i(TAG, \"Creating WebView\");\n            //without this toast message, screenshot will be blank, dont ask me why...\n            Toast.makeText(ScreenshotService.this, \"Save completed.\", Toast.LENGTH_SHORT).show();\n// only one instance. no multiple webview?\n            // This is important, so that the webview will render and we don't get blank screenshot\n            webview.setDrawingCacheEnabled(true);\n            //width and height of your webview and the resulting screenshot\n            int width = 1920;\n            int height = 1080;\n            webview.measure(width, height);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:207-231"
+    },
+    "443": {
+        "file_id": 24,
+        "content": "This code initializes a webview for screenshot capture and sets drawing cache to be enabled. It measures the webview with specified width and height, and displays a toast message indicating save completion.",
+        "type": "comment"
+    },
+    "444": {
+        "file_id": 24,
+        "content": "            webview.layout(0, 0, width, height);\n            boolean javaScriptEnabled = PreferenceManager.getDefaultSharedPreferences(ScreenshotService.this).getBoolean(\"enable_javascript\", true);\n            webview.getSettings().setJavaScriptEnabled(true);\n// check for flutter code.\n            webview.getSettings().setAllowFileAccessFromFileURLs(true);\n            webview.getSettings().setAllowUniversalAccessFromFileURLs(true);\n// now let's implement the websocket. evaluate the thing.\n            // thought you can do this in xposed framework.\n            // and the worker.\n//            webview.loadUrl(intent.getStringExtra(Database.FILE_LOCATION));\n            // replace the call man.\n            String baidu_url = \"https://www.baidu.com\";\n            webview.loadUrl(baidu_url);\n            // just pass it to the thing.\n            Log.i(TAG, \"Loading URL: \" + baidu_url);\n            webview.setWebViewClient(new MyWebViewClient() {\n                @Override\n                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:232-252"
+    },
+    "445": {
+        "file_id": 24,
+        "content": "The code enables JavaScript, sets permissions for file access, and loads a URL (Baidu.com in this case) into the WebView. It also logs the loaded URL and sets a custom WebViewClient to handle potential errors.",
+        "type": "comment"
+    },
+    "446": {
+        "file_id": 24,
+        "content": "                    Log.w(TAG, \"Recieved error from WebView, description: \" + description + \", Failing url: \" + failingUrl);\n                    //without this method, your app may crash...\n                }\n                @Override\n                public void onPageFinished(WebView view, String url) {\n                    Log.i(TAG, \"Page finished, getting thumbnail\");\n                    view.loadUrl(\"javascript:\" + inject_js_final.toString());\n                    // shall be running a ws client here.\n//                    viewSource();\n                    // this could be changed.\n//                    takeWebviewScreenshot(intent.getStringExtra(Database.THUMBNAIL));\n//                    takeWebviewScreenshot();\n// just launch it by the way.\n                }\n            });\n//            }else if (webview!=null){if(command.equals(\"screenshot\")){takeWebviewScreenshot();}\n//            else if(command.equals(\"dumpSource\")){viewSource();}}else {//do something to restart the view.\n//                Log.e(TAG, \"webview not started.\");",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:253-271"
+    },
+    "447": {
+        "file_id": 24,
+        "content": "This code is handling web view events in a Android application. It logs errors, finishes loading pages, and handles commands to take screenshots or dump source code. The code also includes logic for restarting the web view if it hasn't been started yet.",
+        "type": "comment"
+    },
+    "448": {
+        "file_id": 24,
+        "content": "//                // use some broadcast mechanism. do not use normal intent sender. it will be destroyed.\n//            }\n//            // use broadcast receiver.\n        }\n        // do another message receiver.\n        // disassemble the whole process.\n        // not sending intent. receiving broadcast.\n        public class MyWebViewClient extends WebViewClient {\n            //            @Override\n            public boolean shouldOverrideUrlLoading(WebView view, String url) {\n                if (url.startsWith(\"source://\")) {\n                    try {\n                        String html = URLDecoder.decode(url, \"UTF-8\").substring(9);\n                        Log.i(TAG, \"TRYING TO SAVE HTML.\");\n                        saveHTMLToFile(html);\n                    } catch (UnsupportedEncodingException e) {\n                        Log.e(\"example\", \"failed to decode source\", e);\n                    }\n                    webview.getSettings().setJavaScriptEnabled(true);\n                    // this is shit.\n                    return true;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:272-293"
+    },
+    "449": {
+        "file_id": 24,
+        "content": "This code is implementing a WebViewClient that overrides the shouldOverrideUrlLoading method. It checks if the loaded URL starts with \"source://\" and decodes the HTML content before saving it to a file. JavaScript is enabled, and this implementation might not be optimal as mentioned in the comment.",
+        "type": "comment"
+    },
+    "450": {
+        "file_id": 24,
+        "content": "                }\n                // For all other links, let the WebView do it's normal thing\n                return false;\n            }\n        }\n        // start a websocket server.\n        public void viewSource() {\n            if (webview != null) {\n//        webview.getSettings().setJavaScriptEnabled(true);\n                webview.loadUrl(\n                        \"javascript:this.document.location.href = 'source://' + encodeURI(document.documentElement.outerHTML);\");\n            } else {\n                Log.i(TAG, \"WEBVIEW NULL CANNOT DUMP\");\n            }\n        }\n        // execute javascript and get result.\n        public void takeWebviewScreenshot() {\n//            final String outputFileLocation\n            new Thread(new Runnable() {\n                @Override\n                public void run() {\n                    try {\n                        TimeUnit.MILLISECONDS.sleep(1000);  //allow webview to render, otherwise screenshot may be blank or partial\n                    } catch (InterruptedException e) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:294-319"
+    },
+    "451": {
+        "file_id": 24,
+        "content": "This code snippet contains methods to take a screenshot of the webview, view source code, and handle links. It enables JavaScript in the webview, loads the \"source://\" URL with encoded outerHTML, and allows time for rendering before taking a screenshot.",
+        "type": "comment"
+    },
+    "452": {
+        "file_id": 24,
+        "content": "                        //should never happen\n                        Log.e(TAG, \"InterruptedException when taking webview screenshot \", e);\n                    }\n                    // no saving. just print the length instead. or send intent?\n//                    saveBitmapToFile(webview.getDrawingCache(), new File(outputFileLocation));\n                    saveBitmapToFile(webview.getDrawingCache());\n                    // this is shit. maybe not as fluent as android p.\n                    webviewScreenshotTaken = true;\n                    // already dead by then.\n                    Log.i(TAG, \"SCREENSHOT SAVED.\");\n                    // do not stop.\n                    // do it in another thread. the listener thread.\n//                    stopService();\n                }\n            }).start();\n        }\n        public void saveHTMLToFile(String bitmap) {\n            if (bitmap == null) {\n                Log.i(TAG, \"html is empty.\");\n                return;\n            }\n//            outputFile.getParentFile().mkdirs();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:320-342"
+    },
+    "453": {
+        "file_id": 24,
+        "content": "Code handles InterruptedException when taking webview screenshot, and instead of saving the bitmap to a file, it prints the length or sends an intent. WebviewScreenshotTaken is set to true, but the service doesn't stop, as it should be done in another thread. The method saveHTMLToFile checks if the input bitmap is empty and logs a message if it is.",
+        "type": "comment"
+    },
+    "454": {
+        "file_id": 24,
+        "content": "            try {\n                File sdCard = Environment.getExternalStorageDirectory();\n                File directory = new File(sdCard.getAbsolutePath() + \"/lazero/flutter/html\");\n//                dir.mkdirs();\n                if (!directory.exists()) {\n                    directory.mkdirs();\n                }\n//                Timestamp timestamp = TimeStamp(System.currentTimeMillis());\n                // method reloaded.\n                Long tsLong = System.currentTimeMillis() / 1000;\n                String ts = tsLong.toString();\n                String filename = \"baidu_html-\" + ts + \".html\";\n//            File file = new File(directory, filename);\n                // passing in a file object.\n//            OutputStream out = new BufferedOutputStream(new FileOutputStream(file));\n                PrintWriter out = new PrintWriter(directory + \"/\" + filename);\n                out.print(bitmap);\n//            out.\n//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);\n                // no logcat here.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:343-362"
+    },
+    "455": {
+        "file_id": 24,
+        "content": "Creates a directory for HTML files on the external storage and writes compressed bitmap to a file named with a timestamp.",
+        "type": "comment"
+    },
+    "456": {
+        "file_id": 24,
+        "content": "                // make directory?\n                // /sdcard/lazero/flutter/web\n////                bitmap.\n//                ByteArrayOutputStream stream = new ByteArrayOutputStream();\n//                bitmap.compress(Bitmap.CompressFormat.JPEG,80,stream);\n//                byte[] byteArray = stream.toByteArray();\n//                String length=\"BITMAP SIZE: \"+String.valueOf(byteArray.length);\n//                Log.i(TAG,length);\n//                Log.i(TAG,\"hello world\");\n//print()\n                out.flush();\n                out.close();\n                Log.i(TAG, \"saved html to file\");\n                // not at this step.\n            } catch (Exception e) {\n                Log.e(TAG, \"IoException while saving html to file\", e);\n            }\n//            Log.i(TAG, \"Saved Bitmap to file: \" + outputFile.getPath());\n        }\n        public void saveBitmapToFile(Bitmap bitmap) {\n            if (bitmap == null) {\n                Log.i(TAG, \"bitmap is empty.\");\n                return;\n            }\n//            outputFile.getParentFile().mkdirs();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:363-388"
+    },
+    "457": {
+        "file_id": 24,
+        "content": "This code snippet compresses a bitmap into a JPEG format and saves it to a file located at \"/sdcard/lazero/flutter/web\". It handles possible exceptions during the saving process.",
+        "type": "comment"
+    },
+    "458": {
+        "file_id": 24,
+        "content": "            try {\n                File sdCard = Environment.getExternalStorageDirectory();\n                File directory = new File(sdCard.getAbsolutePath() + \"/lazero/flutter/web\");\n//                dir.mkdirs();\n                if (!directory.exists()) {\n                    directory.mkdirs();\n                }\n//                Timestamp timestamp = TimeStamp(System.currentTimeMillis());\n                // method reloaded.\n                Long tsLong = System.currentTimeMillis() / 1000;\n                String ts = tsLong.toString();\n                String filename = \"baidu_screenshot-\" + ts + \".png\";\n                File file = new File(directory, filename);\n                // passing in a file object.\n                OutputStream out = new BufferedOutputStream(new FileOutputStream(file));\n                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);\n                // no logcat here.\n                // make directory?\n                // /sdcard/lazero/flutter/web\n////                bitmap.\n//                ByteArrayOutputStream stream = new ByteArrayOutputStream();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:389-409"
+    },
+    "459": {
+        "file_id": 24,
+        "content": "Creates a directory for screenshots, checks if it exists and creates it if not, then generates a timestamp-based filename for the screenshot, uses a bitmap to compress and write it to the file in the specified directory.",
+        "type": "comment"
+    },
+    "460": {
+        "file_id": 24,
+        "content": "//                bitmap.compress(Bitmap.CompressFormat.JPEG,80,stream);\n//                byte[] byteArray = stream.toByteArray();\n//                String length=\"BITMAP SIZE: \"+String.valueOf(byteArray.length);\n//                Log.i(TAG,length);\n//                Log.i(TAG,\"hello world\");\n//print()\n                Log.i(TAG, \"web screenshot saved\");\n                // do not do extra things. null pointers.\n                out.flush();\n                out.close();\n            } catch (Exception e) {\n                Log.e(TAG, \"IoException while saving bitmap to file\", e);\n            }\n//            Log.i(TAG, \"Saved Bitmap to file: \" + outputFile.getPath());\n        }\n        // do not start that service. make it into a work instead of service.\n        public void stopService() {\n            if (heartThread != null) {\n                heartThread = null;\n            }\n            if (websiteIconTaken && webviewScreenshotTaken) {\n                Log.i(TAG, \"Service stopped, with startId \" + currentStartId + \" completed\");",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:410-432"
+    },
+    "461": {
+        "file_id": 24,
+        "content": "This code snippet is responsible for saving a web screenshot and stopping the service. It compresses the bitmap into JPEG format, logs information about its size, flushes and closes the output stream. If an IOException occurs during saving, it logs the error. The stopService() method stops the service if all conditions are met and logs that the service has been stopped with a specific startId.",
+        "type": "comment"
+    },
+    "462": {
+        "file_id": 24,
+        "content": "                stopSelf(currentStartId);\n            }\n        }\n    }\n    // send to external things or simply save to sdcard. just generate a random number and make some folders.\n    @Override\n    public void onCreate() {\n        this.timelock = false;\n        super.onCreate();\n        instance = this;\n        instance.coreLogic();\n        // shall get main looper?\n    }\n    public void forth() {\n        Notification notification = note();\n        startForeground(1759, notification);\n        Log.v(\"SERVICE\", \"START_SUCCESS\");\n//        filter.addAction(\"android.provider.Telephony.SMS_RECEIVED\");\n//        filter.addAction(android.telephony.TelephonyManager.ACTION_PHONE_STATE_CHANGED);\n//        filter.addAction(\"your_action_strings\"); //further more\n//        filter.addAction(\"your_action_strings\"); //further more\n        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);\n        try {\n            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, \"WebCap\");\n//        KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:433-459"
+    },
+    "463": {
+        "file_id": 24,
+        "content": "This code represents the creation and management of a service in an Android application. It starts by creating a singleton instance of the class, then initializes some variables and calls the coreLogic() method. The forth() method creates a notification and starts the foreground service. It also sets up a wake lock to keep the device awake while the service is running.",
+        "type": "comment"
+    },
+    "464": {
+        "file_id": 24,
+        "content": "            mWakeLock.acquire();\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n    public void coreLogic() {\n        this.forth();\n        IntentFilter filter = new IntentFilter();\n        filter.addAction(\"ai.lazero.lazero.webdump\");\n        filter.addAction(\"ai.lazero.lazero.webshot\");\n        filter.addAction(\"ai.lazero.lazero.javascript\");\n        filter.addAction(\"ai.lazero.lazero.r\");\n        registerReceiver(receiver, filter);\n        heartThread = new Thread(new Runnable() {\n            @Override\n            public void run() {\n                while (true) {\n                    try {\n                        Thread.sleep(1000);\n                    } catch (Exception e) {\n                        Log.e(TAG, \"sleep falied\");\n                        break;\n                    }\n                    if (webview != null) {\n                        Long tsLong = System.currentTimeMillis() / 1000;\n                        String ts = tsLong.toString();\n                        Log.e(TAG, \"WEBVIEW PRESENT \" + ts);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:460-487"
+    },
+    "465": {
+        "file_id": 24,
+        "content": "This code acquires a wake lock, registers receivers for specific actions, and starts a heart thread that checks for the presence of a webview every second.",
+        "type": "comment"
+    },
+    "466": {
+        "file_id": 24,
+        "content": "                    } else {\n                        Log.e(TAG, \"DEAD WEBVIEW\");\n                    }\n                }\n            }\n            ;\n        }\n        );\n//        heartThread.run();\n        heartThread.start();\n        // just not this thread.\n//        HandlerThread thread = new HandlerThread(\"WebpageScreenshotService\", Process.THREAD_PRIORITY_BACKGROUND);\n//        thread.start();\n//        thread.get\n//        mServiceHandler = new ServiceHandler(thread.getMainLooper());\n//        mServiceHandler = new ServiceHandler(thread.getLooper());\n        mServiceHandler = new ServiceHandler(Looper.getMainLooper()); // working\n    }\n    @Override\n    public int onStartCommand(Intent intent, int flags, int startId) {\n        Log.i(TAG, \"WEB QUEST RECEIVED\");\n        Message msg = mServiceHandler.obtainMessage();\n        msg.arg1 = startId;\n        msg.obj = intent;\n        mServiceHandler.sendMessage(msg);\n        flags = START_STICKY;\n//        handler.removeCallbacks(task);\n//        handler.removeCallbacksAndMessages(null);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:488-519"
+    },
+    "467": {
+        "file_id": 24,
+        "content": "Creating and starting a HandlerThread for the main looper, setting up ServiceHandler with it, receiving intent, sending message to handler, using START_STICKY flag.",
+        "type": "comment"
+    },
+    "468": {
+        "file_id": 24,
+        "content": "//        handler.postDelayed(task,5000);\n//        handler.post(task);\n        return super.onStartCommand(intent, flags, startId);\n    }\n    public class ScreenshotServiceBinder extends Binder {\n        ScreenshotService getService() {\n            return ScreenshotService.this;\n        }\n    }\n    public final IBinder binder = new ScreenshotServiceBinder();\n    // but without cookie manager and more. not a browser.\n    @Override\n    public IBinder onBind(Intent intent) {\n        return binder;\n    }\n    @Override\n    public void onDestroy() {\n        // do it at last.\n        unregisterReceiver(receiver);\n        antivirus();\n        instance.revive();\n        Log.i(TAG, \"SENDING RESTART WEB SERVICE SIGNAL\");\n        // do nothing here.\n        // skip self receiving.\n        mServiceHandler.stopService();\n        if (mWakeLock.isHeld()) {\n            mWakeLock.release();\n        }\n        // send that signal.\n        super.onDestroy();\n        // it will be dead anyway.\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java:520-557"
+    },
+    "469": {
+        "file_id": 24,
+        "content": "Service class with binder for binding to the service, handling onDestroy method by unregistering receiver, calling antivirus function, reviving instance, sending a restart signal, stopping self-receiving, releasing wake lock, and finally calling super.onDestroy().",
+        "type": "comment"
+    },
+    "470": {
+        "file_id": 25,
+        "content": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java",
+        "type": "filepath"
+    },
+    "471": {
+        "file_id": 25,
+        "content": "This code manages Android app settings, preferences, and ringtones while organizing the SettingsActivity. It uses fragments for General and Notification preferences, suggests decoding functionality in a service, and updates values with two-pane UI support following Android Design guidelines.",
+        "type": "summary"
+    },
+    "472": {
+        "file_id": 25,
+        "content": "package ai.lazero.lazero;\nimport android.annotation.TargetApi;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.content.res.Configuration;\nimport android.media.Ringtone;\nimport android.media.RingtoneManager;\nimport android.net.Uri;\nimport android.os.Build;\nimport android.os.Bundle;\nimport android.preference.ListPreference;\nimport android.preference.Preference;\nimport android.preference.PreferenceActivity;\nimport android.support.v7.app.ActionBar;\nimport android.preference.PreferenceFragment;\nimport android.preference.PreferenceManager;\nimport android.preference.RingtonePreference;\nimport android.text.TextUtils;\nimport android.view.MenuItem;\nimport java.util.List;\n/**\n * A {@link PreferenceActivity} that presents a set of application settings. On\n * handset devices, settings are presented as a single list. On tablets,\n * settings are split by category, with category headers shown to the left of\n * the list of settings.\n * <p>\n * See <a href=\"http://developer.android.com/design/patterns/settings.html\">",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:1-30"
+    },
+    "473": {
+        "file_id": 25,
+        "content": "This code is a PreferenceActivity, presenting application settings. On handsets, the settings are displayed as one list. On tablets, the settings are categorized, with headers shown to the left of the list. The code imports necessary classes and interfaces for handling preferences, ringtones, and actions.",
+        "type": "comment"
+    },
+    "474": {
+        "file_id": 25,
+        "content": " * Android Design: Settings</a> for design guidelines and the <a\n * href=\"http://developer.android.com/guide/topics/ui/settings.html\">Settings\n * API Guide</a> for more information on developing a Settings UI.\n */\npublic class SettingsActivity extends AppCompatPreferenceActivity {\n//whatever, just get me a welcome thing.\n    /**\n     * A preference value change listener that updates the preference's summary\n     * to reflect its new value.\n     */\n    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {\n        @Override\n        public boolean onPreferenceChange(Preference preference, Object value) {\n            String stringValue = value.toString();\n            if (preference instanceof ListPreference) {\n                // For list preferences, look up the correct display value in\n                // the preference's 'entries' list.\n                ListPreference listPreference = (ListPreference) preference;\n                int index = listPreference.findIndexOfValue(stringValue);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:31-50"
+    },
+    "475": {
+        "file_id": 25,
+        "content": "This code defines a class for an Android settings activity, and includes a listener that updates the preference's summary when its value changes.",
+        "type": "comment"
+    },
+    "476": {
+        "file_id": 25,
+        "content": "                // Set the summary to reflect the new value.\n                preference.setSummary(\n                        index >= 0\n                                ? listPreference.getEntries()[index]\n                                : null);\n            } else if (preference instanceof RingtonePreference) {\n                // For ringtone preferences, look up the correct display value\n                // using RingtoneManager.\n                if (TextUtils.isEmpty(stringValue)) {\n                    // Empty values correspond to 'silent' (no ringtone).\n                    preference.setSummary(R.string.pref_ringtone_silent);\n                } else {\n                    Ringtone ringtone = RingtoneManager.getRingtone(\n                            preference.getContext(), Uri.parse(stringValue));\n                    if (ringtone == null) {\n                        // Clear the summary if there was a lookup error.\n                        preference.setSummary(null);\n                    } else {\n                        // Set the summary to reflect the new ringtone display",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:52-73"
+    },
+    "477": {
+        "file_id": 25,
+        "content": "Sets the summary based on index value, if greater than or equal to 0, it sets the summary to the corresponding entry from the list preference. If the stringValue is empty, it sets the summary to \"pref_ringtone_silent\". Otherwise, it gets the ringtone using RingtoneManager and updates the summary accordingly.",
+        "type": "comment"
+    },
+    "478": {
+        "file_id": 25,
+        "content": "                        // name.\n                        String name = ringtone.getTitle(preference.getContext());\n                        preference.setSummary(name);\n                    }\n                }\n            } else {\n                // For all other preferences, set the summary to the value's\n                // simple string representation.\n                preference.setSummary(stringValue);\n            }\n            return true;\n        }\n    };\n    /**\n     * Helper method to determine if the device has an extra-large screen. For\n     * example, 10\" tablets are extra-large.\n     */\n    private static boolean isXLargeTablet(Context context) {\n        return (context.getResources().getConfiguration().screenLayout\n                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;\n    }\n    /**\n     * Binds a preference's summary to its value. More specifically, when the\n     * preference's value is changed, its summary (line of text below the\n     * preference title) is updated to reflect the value. The summary is also",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:74-101"
+    },
+    "479": {
+        "file_id": 25,
+        "content": "This code snippet is a part of an Android application. It sets the summary for a preference based on its value, and if it's a ringtone, it gets the title from the ringtone object to display as the summary. The helper methods check if the device has an extra-large screen.",
+        "type": "comment"
+    },
+    "480": {
+        "file_id": 25,
+        "content": "     * immediately updated upon calling this method. The exact display format is\n     * dependent on the type of preference.\n     *\n     * @see #sBindPreferenceSummaryToValueListener\n     */\n    private static void bindPreferenceSummaryToValue(Preference preference) {\n        // Set the listener to watch for value changes.\n        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);\n        // Trigger the listener immediately with the preference's\n        // current value.\n        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,\n                PreferenceManager\n                        .getDefaultSharedPreferences(preference.getContext())\n                        .getString(preference.getKey(), \"\"));\n    }\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setupActionBar();\n    }\n    /**\n     * Set up the {@link android.app.ActionBar}, if the API is available.\n     */\n    private void setupActionBar() {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:102-128"
+    },
+    "481": {
+        "file_id": 25,
+        "content": "This code binds a preference summary to its value, triggering the listener immediately with the preference's current value. It also sets up an ActionBar if the API is available.",
+        "type": "comment"
+    },
+    "482": {
+        "file_id": 25,
+        "content": "        ActionBar actionBar = getSupportActionBar();\n        if (actionBar != null) {\n            // Show the Up button in the action bar.\n            actionBar.setDisplayHomeAsUpEnabled(true);\n        }\n    }\n    /**\n     * {@inheritDoc}\n     */\n    @Override\n    public boolean onIsMultiPane() {\n        return isXLargeTablet(this);\n    }\n    /**\n     * {@inheritDoc}\n     */\n    @Override\n    @TargetApi(Build.VERSION_CODES.HONEYCOMB)\n    public void onBuildHeaders(List<Header> target) {\n        loadHeadersFromResource(R.xml.pref_headers, target);\n    }\n    /**\n     * This method stops fragment injection in malicious applications.\n     * Make sure to deny any unknown fragments here.\n     */\n    protected boolean isValidFragment(String fragmentName) {\n        return PreferenceFragment.class.getName().equals(fragmentName)\n                || GeneralPreferenceFragment.class.getName().equals(fragmentName)\n                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)\n                || NotificationPreferenceFragment.class.getName().equals(fragmentName);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:129-161"
+    },
+    "483": {
+        "file_id": 25,
+        "content": "This code fragment is for the SettingsActivity in Lazero Android app. It sets up action bar and handles various methods like onIsMultiPane, onBuildHeaders, and a security check with isValidFragment to ensure proper functioning of preferences.",
+        "type": "comment"
+    },
+    "484": {
+        "file_id": 25,
+        "content": "    }\n    /**\n     * This fragment shows general preferences only. It is used when the\n     * activity is showing a two-pane settings UI.\n     */\n    @TargetApi(Build.VERSION_CODES.HONEYCOMB)\n    public static class GeneralPreferenceFragment extends PreferenceFragment {\n        @Override\n        public void onCreate(Bundle savedInstanceState) {\n            super.onCreate(savedInstanceState);\n            addPreferencesFromResource(R.xml.pref_general);\n            setHasOptionsMenu(true);\n            // Bind the summaries of EditText/List/Dialog/Ringtone preferences\n            // to their values. When their values change, their summaries are\n            // updated to reflect the new value, per the Android Design\n            // guidelines.\n            bindPreferenceSummaryToValue(findPreference(\"example_text\"));\n            bindPreferenceSummaryToValue(findPreference(\"example_list\"));\n        }\n        @Override\n        public boolean onOptionsItemSelected(MenuItem item) {\n            int id = item.getItemId();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:162-186"
+    },
+    "485": {
+        "file_id": 25,
+        "content": "This code defines a settings activity and a GeneralPreferenceFragment for Android. It creates a general preferences fragment, adds preferences from an XML resource file, binds preference summary to values, and handles options menu selection.",
+        "type": "comment"
+    },
+    "486": {
+        "file_id": 25,
+        "content": "            if (id == android.R.id.home) {\n                startActivity(new Intent(getActivity(), SettingsActivity.class));\n                return true;\n            }\n            return super.onOptionsItemSelected(item);\n        }\n    }\n// but what about decoding?\n    // write it in the service. do not use some standalone shit.\n    // well, you want to keep buffer there. right?\n    // like video thing!\n    /**\n     * This fragment shows notification preferences only. It is used when the\n     * activity is showing a two-pane settings UI.\n     */\n    @TargetApi(Build.VERSION_CODES.HONEYCOMB)\n    public static class NotificationPreferenceFragment extends PreferenceFragment {\n        @Override\n        public void onCreate(Bundle savedInstanceState) {\n            super.onCreate(savedInstanceState);\n            addPreferencesFromResource(R.xml.pref_notification);\n            setHasOptionsMenu(true);\n            // Bind the summaries of EditText/List/Dialog/Ringtone preferences\n            // to their values. When their values change, their summaries are",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:187-211"
+    },
+    "487": {
+        "file_id": 25,
+        "content": "This code is handling the action for the home button in the SettingsActivity, which starts a new activity and returns true. The comment suggests implementing decoding functionality within the service, keeping the buffer there like video processing, and mentions a NotificationPreferenceFragment class extending PreferenceFragment.",
+        "type": "comment"
+    },
+    "488": {
+        "file_id": 25,
+        "content": "            // updated to reflect the new value, per the Android Design\n            // guidelines.\n            bindPreferenceSummaryToValue(findPreference(\"notifications_new_message_ringtone\"));\n        }\n        @Override\n        public boolean onOptionsItemSelected(MenuItem item) {\n            int id = item.getItemId();\n            if (id == android.R.id.home) {\n                startActivity(new Intent(getActivity(), SettingsActivity.class));\n                return true;\n            }\n            return super.onOptionsItemSelected(item);\n        }\n    }\n    /**\n     * This fragment shows data and sync preferences only. It is used when the\n     * activity is showing a two-pane settings UI.\n     */\n    @TargetApi(Build.VERSION_CODES.HONEYCOMB)\n    public static class DataSyncPreferenceFragment extends PreferenceFragment {\n        @Override\n        public void onCreate(Bundle savedInstanceState) {\n            super.onCreate(savedInstanceState);\n            addPreferencesFromResource(R.xml.pref_data_sync);\n            setHasOptionsMenu(true);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:212-238"
+    },
+    "489": {
+        "file_id": 25,
+        "content": "This code snippet is from the SettingsActivity class in the Lazero Android app. It updates a preference value based on user input, handles navigation back to the activity using an intent, and defines a DataSyncPreferenceFragment for two-pane settings UI.",
+        "type": "comment"
+    },
+    "490": {
+        "file_id": 25,
+        "content": "            // Bind the summaries of EditText/List/Dialog/Ringtone preferences\n            // to their values. When their values change, their summaries are\n            // updated to reflect the new value, per the Android Design\n            // guidelines.\n            bindPreferenceSummaryToValue(findPreference(\"sync_frequency\"));\n        }\n        @Override\n        public boolean onOptionsItemSelected(MenuItem item) {\n            int id = item.getItemId();\n            if (id == android.R.id.home) {\n                startActivity(new Intent(getActivity(), SettingsActivity.class));\n                return true;\n            }\n            return super.onOptionsItemSelected(item);\n        }\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java:240-257"
+    },
+    "491": {
+        "file_id": 25,
+        "content": "This code binds the summary of EditText/List/Dialog/Ringtone preferences to their values, updating the summaries when values change according to Android Design guidelines. It also handles options item selection by starting an activity and returning true.",
+        "type": "comment"
+    },
+    "492": {
+        "file_id": 26,
+        "content": "/app/src/main/java/ai/lazero/lazero/SimpleService.java",
+        "type": "filepath"
+    },
+    "493": {
+        "file_id": 26,
+        "content": "The `SimpleService` class handles timestamps, broadcasts, and WebSocket clients. It includes features for sending intents, exception management, event listeners, and timeout handling. The service initializes wake lock, foreground service with alarm, URLs, and notifications using WebSocketClient.",
+        "type": "summary"
+    },
+    "494": {
+        "file_id": 26,
+        "content": "package ai.lazero.lazero;\nimport android.app.AlarmManager;\nimport android.app.Notification;\nimport android.app.NotificationChannel;\nimport android.app.NotificationManager;\nimport android.app.PendingIntent;\nimport android.app.Service;\n//import android.content.BroadcastReceiver;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.graphics.BitmapFactory;\nimport android.os.Build;\nimport android.os.IBinder;\nimport android.os.PowerManager;\nimport android.os.SystemClock;\nimport android.util.Log;\nimport java.net.URI;\nimport java.net.URISyntaxException;\nimport tech.gusavila92.websocketclient.WebSocketClient;\npublic class SimpleService extends Service {\n    public String tsgen() {\n        Long tsLong = System.currentTimeMillis() / 1000;\n        String ts = tsLong.toString();\n        return ts;\n    }\n//\n//    public final BroadcastReceiver receiver = new BroadcastReceiver() {\n//        @Override\n//        public void onReceive(Context context, Intent intent) {\n//            String a = intent.getAction();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:1-34"
+    },
+    "495": {
+        "file_id": 26,
+        "content": "This code defines a `SimpleService` class that extends `Service`. It includes a method `tsgen()` to generate a timestamp string and defines a `BroadcastReceiver` for handling broadcasts. The `BroadcastReceiver` overrides the `onReceive()` method to process incoming intents.",
+        "type": "comment"
+    },
+    "496": {
+        "file_id": 26,
+        "content": "//            if (a.equals(\"\")){}\n//        }\n//    }\n    private String TAG = \"simple_service\";\n    private WebSocketClient webSocketClient;\n    public void javascriptRelay(String script) {\n        Intent iit = new Intent(\"ai.lazero.lazero.javascript\");\n        iit.putExtra(\"script\", script);\n        sendBroadcast(iit);\n        System.out.println(\"simple_service_log: Sending Javascript Execution Request\");\n    }\n    private void createWebSocketClient(String link) {\n        URI uri;\n        try {\n            uri = new URI(link);\n        } catch (URISyntaxException e) {\n            e.printStackTrace();\n            return;\n        }\n        // we're gonna send something to the place.\n        // this is auto gc. seems fun.\n        webSocketClient = new WebSocketClient(uri) {\n            @Override\n            public void onOpen() {\n                System.out.println(\"onOpen\");\n                webSocketClient.send(\"Hello, World!\");\n            }\n            @Override\n            public void onTextReceived(String message) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:35-67"
+    },
+    "497": {
+        "file_id": 26,
+        "content": "The code defines a `javascriptRelay` method that sends a Javascript execution request by broadcasting an intent with the provided script. It also includes a `createWebSocketClient` method that creates a WebSocketClient instance using the provided link URI. The WebSocketClient extends a class and overrides its `onOpen` and `onTextReceived` methods to handle connection open event and received text, respectively.",
+        "type": "comment"
+    },
+    "498": {
+        "file_id": 26,
+        "content": "                System.out.println(\"onTextReceived\");\n                String ts = tsgen();\n//                String filename = \"simple_service_\" + ts + \"_error\";\n                System.out.println(\"simple_service_string_recv\" + ts + message);\n                if (message != null) {\n                    javascriptRelay(message);\n                }\n                // pretend it is valid javascript.\n                // register another broadcast receiver? send it back to the central.\n            }\n            @Override\n            public void onBinaryReceived(byte[] data) {\n                System.out.println(\"onBinaryReceived\");\n                int length;\n                try {\n                    length = data.length;\n                } catch (Exception e) {\n                    e.printStackTrace();\n                    System.out.println(\"simple_service_log: <MAY HAVE NULL BYTE ARRAY>\");\n                    length = 0;\n                }\n                String ts = tsgen();\n                System.out.println(\"simple_service_bytes_recv: length \" + ts + \" \" + String.valueOf(length));",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/SimpleService.java:68-91"
+    },
+    "499": {
+        "file_id": 26,
+        "content": "The code snippet handles text and binary data received by a service. It generates a timestamp, logs the received messages with the timestamp, and if not null, forwards the message through javascriptRelay() function. If the byte array is null or empty, it catches the exception and logs a warning.",
+        "type": "comment"
+    }
+}

@@ -1,0 +1,547 @@
+{
+    "300": {
+        "file_id": 17,
+        "content": "        Log.i(TAG, \"onDestroy: \");\n        byteClass.screenshot_update = false;\n        myThread.interrupt();\n        myThread = null;\n        Toast.makeText(this, getString(R.string.aby_label) + \"停止了，请重新开启\", Toast.LENGTH_LONG).show();\n        // 服务停止，重新进入系统设置界面\n//        AccessibilityUtil accessibilityUtil = new AccessibilityUtil();\n        // root access button?\n        AccessibilityUtil.jumpToSetting(this);\n    }\n    @Override\n    public int onStartCommand(Intent intent, int flags, int startId) {\n        threadDisable = true;\n        try {\n            Thread.sleep(300);\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n        flags = START_STICKY;\n//        handler.removeCallbacks(task);\n//        handler.removeCallbacksAndMessages(null);\n//        handler.postDelayed(task, 500);\n//        handler.post(task);\n        // maybe this task really works.\n        // what is that task?\n        // is this task really working?\n        // get the message?\n////        PendingIntent notificationIntent",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:212-240"
+    },
+    "301": {
+        "file_id": 17,
+        "content": "onDestroy() method is called when the service is stopped or system resources are low. The code interrupts and nullifies the thread, shows a toast message, and redirects to system settings. AccessibilityUtil.jumpToSetting() is used for accessing system settings. The task might work but its functionality isn't clear in this context.",
+        "type": "comment"
+    },
+    "302": {
+        "file_id": 17,
+        "content": "//        Intent notificationIntentX = new Intent();\n//        PendingIntent notificationIntent = PendingIntent.getActivity(this, 0, notificationIntentX, 0);\n////        Intent notificationIntent = new Intent();\n//        Notification noti = new Notification.Builder(this)\n//                .setContentTitle(\"Title\")\n//                .setContentText(\"Message\")\n//                .setSmallIcon(R.drawable.icon)\n//                .setContentIntent(notificationIntent)\n//                .build();\n//        startForeground(123456, noti);\n//        main();\n        // well, why restart every now and then?\n        return super.onStartCommand(intent, flags, startId);\n    }\n/*\n    public StringBuilder recycle(AccessibilityNodeInfo info, StringBuilder sb) {\n        // use try blocks.\n        try {\n            sb.append(\"child widget----------------------------\" + info.getClassName());\n            sb.append(\"\\n\");\n            sb.append(\"showDialog:\" + info.canOpenPopup());\n            sb.append(\"\\n\");\n            sb.append(\"Text：\" + info.getText().toString());",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:241-263"
+    },
+    "303": {
+        "file_id": 17,
+        "content": "This code initializes a notification with title \"Title\", message \"Message\", and an icon, then starts the service in the foreground using ID 123456. The method returns the result of onStartCommand, which is responsible for handling the service lifecycle.",
+        "type": "comment"
+    },
+    "304": {
+        "file_id": 17,
+        "content": "//        info.setTextSelection(0,1024*1024);\n////        info.selec\n//        info.\n            // record the audio. play it back? as a service.\n            sb.append(\"\\n\");\n            sb.append(\"windowId:\" + info.getWindowId());\n            // what the fuck.\n            sb.append(\"\\n\");\n            if (info.getChildCount() != 0) {\n                for (int i = 0; i < info.getChildCount(); i++) {\n                    if (info.getChild(i) != null) {\n                        recycle(info.getChild(i), sb);\n                    }\n                }\n            }\n        } catch (Exception e) {\n            Log.e(\"ACCESSIBILITY RECYCLE\", e.toString());\n        }\n        return sb;\n    }*/\n/*\n    public String util() {\n        StringBuilder sb = new StringBuilder();\n        try {\n            AccessibilityNodeInfo rootNode = getRootInActiveWindow();\n            System.out.println(rootNode.toString());\n            sending(rootNode.toString());\n            sb = recycle(rootNode, sb);\n            System.gc();\n            return sb.toString();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:264-293"
+    },
+    "305": {
+        "file_id": 17,
+        "content": "This code appears to be part of a service that recycles accessibility information from the Android AccessibilityNodeInfo. It appends windowId and iteratively processes child nodes, recursively calling the recycle function for each child node. In case of exceptions, it logs an error message. The returned StringBuilder contains the recycled information.",
+        "type": "comment"
+    },
+    "306": {
+        "file_id": 17,
+        "content": "            // print it out first?\n//        List<AccessibilityNodeInfo> cv = new ArrayList<>();\n//        cv.add(rootNode);\n//        walkNodes(cv);\n        } catch (Exception e) {\n            e.printStackTrace();\n            System.gc();\n        }\n//        System.gc();\n        return \"SHIT HERE.\";\n    }*/\n// it is of some use?\n/*\n    public String disaster() {\n        // use reflection.\n        // not to print anything please.\n//        Display.D\n//        Reflection.unseal(base);\n        try {\n            AccessibilityNodeInfo rootNode = getRootInActiveWindow();\n            // this one?\n            if (rootNode != null) {\n//            rootNode.\n                System.out.println(rootNode.toString());\n//            sending(rootNode.toString());\n                Context context = getApplicationContext();\n                ArrayList<Integer> k = getMetrics(context);\n//            int width = getMetrics(context).widthPixels;\n//            int height = getMetrics(context).heightPixels;\n//            int rotation=get\n                // either use a better dumper or else?",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:294-324"
+    },
+    "307": {
+        "file_id": 17,
+        "content": "This code appears to be part of an Android service, attempting to interact with the accessibility node structure. The developer is trying to obtain the root node in the active window and print its information. However, there are some issues with reflection and unsealing the base. The code also includes a method for retrieving metrics but seems incomplete or inaccurate in certain areas.",
+        "type": "comment"
+    },
+    "308": {
+        "file_id": 17,
+        "content": "                // not at this step.\n//        Class cls= Class.forName(\"android.hardware.display.DisplayManagerGlobal\");\n//        Constructor<?> constructor = cls.getConstructor(Context.class);\n//        Object obj = constructor.newInstance(this);\n//        Method method = cls.getMethod(\"getRealDisplay\", new Class[]{int.class});\n//        Display display =\n//                (Display) method.invoke(cls.newInstance(),Display.DEFAULT_DISPLAY);\n//        int rotation = display.getRotation();\n//        Point size = new Point();\n                // always no zero argument constructor.\n//        display.getSize(size);\n                String formal = AccessibilityNodeInfoDumper.dumpWindowToString(rootNode, (int) k.get(0), (int) k.get(1), (int) k.get(2));\n//\n                return formal;\n            } else {\n//                Log.e(\"NORMAL DUMP\", e.toString());\n                return \"\";\n            }\n            // there must be something wrong with it.\n        } catch (Exception e) {\n            e.printStackTrace();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:325-345"
+    },
+    "309": {
+        "file_id": 17,
+        "content": "This code attempts to retrieve the display rotation and size, then dumps the window contents as a string. It handles exceptions that might occur during this process.",
+        "type": "comment"
+    },
+    "310": {
+        "file_id": 17,
+        "content": "            Log.e(\"NORMAL DUMP\", e.toString());\n            return \"\";\n//        return \"\";\n            // there will be much problems. should not only logging the rootnode.\n        }\n    }*/\n    @Override\n    public void onAccessibilityEvent(AccessibilityEvent event) {\n        //another thread.\n//        new Thread(new Runnable() {\n//            @Override\n//            public void run() {\n//                Log.e(TAG, \"event type printed!\");\n//                // or whatever fucking shit is going on. just start another thread instead.\n//                // it is working somehow.\n//                // not at all.\n//                int eventType = event.getEventType();\n//                System.out.println(eventType);\n//                Log.e(TAG, \"event type printed!\");\n////        sending(\"ACCESSIBILITY EVENTS!\");\n//                // there is no such thing.\n//                try {\n//                    Log.e(TAG, \"ACCESSING ROOT NODE\");\n//                    //获取根节点\n//                    // shit. it is dynamic.\n//                    // think about a walker somehow.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:346-372"
+    },
+    "311": {
+        "file_id": 17,
+        "content": "The code snippet is within a function and seems to handle an AccessibilityEvent. It logs the event type, but has issues with dynamic root nodes and suggests using another thread for handling these events. The author mentions the need for a walker-like approach to handle the dynamic nature of the root node.",
+        "type": "comment"
+    },
+    "312": {
+        "file_id": 17,
+        "content": "////            AccessibilityNodeInfo rootNode = getRootInActiveWindow();\n//                    // this one shall be replaced.\n//                    // but how do we call this thing?\n//                    List<AccessibilityWindowInfo> windows = getWindows();\n//                    List<AccessibilityNodeInfo> result = new ArrayList<>();\n//                    // do a loop here.\n//                    // does this really works?\n//                    StringBuilder nodeBuff = new StringBuilder();\n//                    for (AccessibilityWindowInfo window : windows) {\n//                        AccessibilityNodeInfo root = window.getRoot();\n//                        if (root == null) {\n//                            Log.e(TAG, String.format(\"Skipping null root node for window: %s\", window.toString()));\n//                            continue;\n//                        }\n//                        result.add(root);\n//                    }\n//                    for (AccessibilityNodeInfo rootNode : result) {\n//                        if (rootNode != null) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:373-390"
+    },
+    "313": {
+        "file_id": 17,
+        "content": "This code retrieves a list of windows and their root nodes. It checks for null root nodes, skips them, and adds non-null root nodes to a result list. Finally, it loops through the result list, checking if each root node is not null.",
+        "type": "comment"
+    },
+    "314": {
+        "file_id": 17,
+        "content": "//                            String rootByte = null;\n//                            try {\n//                                Context context = getApplicationContext();\n//                                ArrayList<Integer> k = getMetrics(context);\n//                                rootByte = AccessibilityNodeInfoDumper.dumpWindowToString(rootNode, k.get(0), k.get(1), k.get(2));\n//                            } catch (Exception e) {\n//                                e.printStackTrace();\n//                            }\n//                            if (rootByte != null) {\n//                                nodeBuff.append(rootByte);\n//                            }\n//                        }\n//                    }\n//                    if (nodeBuff != null) {\n////        getResources().getConfiguration().orientation,\n////        getWindows();\n//                        // windows -> root -> finally get the thing.\n//                        httpPostBytes.payload_self = nodeBuff.toString().getBytes();\n//                        byteClass.screenshot_update = true;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:391-409"
+    },
+    "315": {
+        "file_id": 17,
+        "content": "This code block retrieves the window content as a string and appends it to nodeBuff if successful. If nodeBuff is not null, it sets httpPostBytes.payload_self with its byte representation and updates byteClass.screenshot_update flag.",
+        "type": "comment"
+    },
+    "316": {
+        "file_id": 17,
+        "content": "//                    } else {\n//                        Log.e(TAG, \"NULL ROOT NODE. CONSIDER ALTERNATIVE?\");\n////                return \"\";\n//                    }\n//                } catch (Exception e) {\n//                    e.printStackTrace();\n//                    Log.e(TAG, \"ERROR WHEN ACCESSING ROOT NODE. CONSIDER ALTERNATIVE?\");\n//                }\n//                switch (eventType) {\n//                    case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:  //收到通知栏消息\n//                        Log.e(TAG, \"TYPE_NOTIFICATION_STATE_CHANGED\");\n//                        break;\n//                    case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:    //界面状态改变\n////                util();\n//                        Log.e(TAG, \"TYPE_WINDOW_STATE_CHANGED\");\n//                        break;\n//                    case AccessibilityEvent.TYPE_VIEW_CLICKED:   //点击事件\n//                        Log.e(TAG, \"TYPE_VIEW_CLICKED\");\n//                        break;\n//                    case AccessibilityEvent.CONTENT_CHANGE_TYPE_TEXT: //文本改变",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:410-429"
+    },
+    "317": {
+        "file_id": 17,
+        "content": "This code handles different event types in an AccessibilityEvent. It catches exceptions when accessing the root node and suggests considering alternative methods. The events include TYPE_NOTIFICATION_STATE_CHANGED, TYPE_WINDOW_STATE_CHANGED, TYPE_VIEW_CLICKED, and CONTENT_CHANGE_TYPE_TEXT. The event type determines which action to take, such as logging a message or calling util().",
+        "type": "comment"
+    },
+    "318": {
+        "file_id": 17,
+        "content": "//                        Log.e(TAG, \"CONTENT_CHANGE_TYPE_TEXT\");\n//                        break;\n//                    //省略其他的一堆可以监听的事件\n//                }//what is the deal?\n//            }\n//        }).start();\n    }\n    @Override\n    public void onInterrupt() {\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService.java:430-442"
+    },
+    "319": {
+        "file_id": 17,
+        "content": "This code is part of a service that handles various content change types and initiates a new task in the background. The specific event being monitored here is CONTENT_CHANGE_TYPE_TEXT, which triggers when text content changes.",
+        "type": "comment"
+    },
+    "320": {
+        "file_id": 18,
+        "content": "/app/src/main/java/ai/lazero/lazero/MyService2.java",
+        "type": "filepath"
+    },
+    "321": {
+        "file_id": 18,
+        "content": "The MyService2 class extends Service and uses Android libraries to handle foreground service notifications for screen capturing, HTTP communication with retrying and error handling. The code provided is part of a service's onDestroy method responsible for cleanup, thread stopping, and shutting down the service.",
+        "type": "summary"
+    },
+    "322": {
+        "file_id": 18,
+        "content": "package ai.lazero.lazero;\nimport android.app.Notification;\nimport android.app.NotificationChannel;\nimport android.app.NotificationManager;\nimport android.app.PendingIntent;\nimport android.app.Service;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.graphics.Bitmap;\nimport android.graphics.BitmapFactory;\nimport android.os.Build;\nimport android.os.Handler;\nimport android.os.IBinder;\nimport android.os.PowerManager;\nimport android.util.Log;\nimport android.view.Gravity;\nimport android.widget.Toast;\n// for commandline it is a bit of easier to deal with. just use custom buffer reader to do the task.\n// but for this shit, the screen parser will just crash.\nimport java.io.ByteArrayOutputStream;\npublic class MyService2 extends Service {\n    public Bitmap bmp = ScreenShotFb.getScreenShotBitmap();\n    private Handler handler = new Handler();\n    public boolean threadDisable = false;\n    public ByteClass byteClass=new ByteClass(false);\n    public HttpPostBytes httpPostBytes;\n    public MyThread myThread;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:1-29"
+    },
+    "323": {
+        "file_id": 18,
+        "content": "The code declares a class named MyService2 which extends Service and includes imports for various Android libraries and classes, such as NotificationManager, PendingIntent, BitmapFactory, Handler, PowerManager, and Toast. It also initializes some variables including a Bitmap object called bmp. The class seems to involve screen shots, notifications, handlers, thread management, and communication with an HTTP server.",
+        "type": "comment"
+    },
+    "324": {
+        "file_id": 18,
+        "content": "    ////    public MyService2() {\n    // allow app running in background.\n//    private HttpPostBytes httpPostBytes;\n    // receive buttons.\n    public static MyService2 instance;\n    ////    }\n    public PowerManager.WakeLock mWakeLock = null;\n    public Notification note(){\n        String CHANNEL_ID = \"ai.lazero.lazero.Screencap\";\n        String CHANNEL_NAME = \"SCREENSHOT\";\n        NotificationChannel notificationChannel = null;\n        // you've got some foreground service. shit then.\n        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){\n            notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);\n            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);\n            notificationManager.createNotificationChannel(notificationChannel);\n        }\n        Intent intent = new Intent(this, MyService2.class);\n        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, intent, 0);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:30-48"
+    },
+    "325": {
+        "file_id": 18,
+        "content": "Initializes the MyService2 class, creates a wake lock for keeping the app running in background, and sets up a notification channel for a foreground service.",
+        "type": "comment"
+    },
+    "326": {
+        "file_id": 18,
+        "content": "        Notification notification = new Notification.Builder(this,CHANNEL_ID).\n                setContentTitle(\"Lazero\").\n                setContentText(\"Screencap service running.\").\n                setWhen(System.currentTimeMillis()).\n                setSmallIcon(R.drawable.icon).\n                setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher)).\n                setContentIntent(pendingIntent).build();\n        return notification;\n    }\n//public void persistant(Class k,String t0,String t1, String t2,int t3){\n//    Notification notification = new Notification(R.drawable.icon, t0,System.currentTimeMillis());\n//    Intent notificationIntent = new Intent(this, k);\n//    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);\n////    notification.setLatestEventInfo(this,t1,t2, pendingIntent);\n////    notification.notify(t1,t2);\n//    startForeground(t3, notification);\n//}\npublic void antivirus(){\n    handler.removeCallbacks(task);\n    handler.removeCallbacksAndMessages(null);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:50-69"
+    },
+    "327": {
+        "file_id": 18,
+        "content": "Method returns a notification with title \"Lazero\" and text \"Screencap service running.\" using the CHANNEL_ID. It includes small and large icons, sets content intent as pendingIntent, and builds the notification.",
+        "type": "comment"
+    },
+    "328": {
+        "file_id": 18,
+        "content": "}\npublic void mainLoop(){\n    System.out.println(\"new screenshot captured\");\n//                    serviceLogger(\"new screenshot captured\",-50,50);\n    Log.v(\"SERVICE\", \"screenshot captured\");\n//                    Bitmap bmp=((BitmapDrawable)order_con_pic.getDrawable()).getBitmap();\n//                    Intent intent=new Intent();\n//                    intent.setAction(\"ai.lazero\n    Intent intent = new Intent();\n// .\");\n    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_INCLUDE_STOPPED_PACKAGES);\n    // is it because of this intent?\n    intent.setAction(\"ai.lazero.lazero.MyService2\");\n//                    Intent intent=getIntent();\n    //  check what the fuck is going on?\n    //or the quality of picture?\n    ByteArrayOutputStream baos = new ByteArrayOutputStream();\n    bmp.compress(Bitmap.CompressFormat.WEBP, 45, baos);\n    byte[] bitmapByte = baos.toByteArray();\n//    }\n    // we need this back.\n//    try{\n////    HttpPostBytes\n//}\n    httpPostBytes.payload_self=bitmapByte;\n    byteClass.screenshot_update=true;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:70-96"
+    },
+    "329": {
+        "file_id": 18,
+        "content": "The code seems to be a part of a service that captures screenshots. It prints a message when a new screenshot is captured, logs it with the \"SERVICE\" tag, and creates an intent for an action related to the service. The screenshot is compressed into a byte array and assigned as payload_self for further use. The code also mentions trying to execute HttpPostBytes, which might involve sending this captured screenshot over HTTP.",
+        "type": "comment"
+    },
+    "330": {
+        "file_id": 18,
+        "content": "    bmp = null;\n    bmp = ScreenShotFb.getScreenShotBitmap();\n    // here is the thing.\n//                    Intent intent=new Intent();\n    intent.putExtra(\"count\", bitmapByte);\n    int v = 0;\n    while (v < 3) {\n        try {\n            sendBroadcast(intent);\n            Log.v(\"VISIBLE SERVICE\", \"SENDING BMP\");\n            v = 3;\n            break;\n        } catch (Exception e) {\n            e.printStackTrace();\n            v = v + 1;\n        }\n    }\n    //killed just in place.\n    // don't know why.\n    // and here's the problem.\n//                   is it here?\n    // does not make sense.\n    System.gc();\n}\n    private Runnable task = new Runnable(){\n        @Override\n        public void run(){\n            mainLoop();\n            handler.postDelayed(this,3000);\n        }\n    };\n// fucking shit. get the command? or reinit the whole thing?\n@Override\npublic int onStartCommand(Intent intent, int flags, int startId) {\n    threadDisable = true;\n    try{Thread.sleep(3000);}catch (Exception e){e.printStackTrace();}\n    flags = START_STICKY;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:98-135"
+    },
+    "331": {
+        "file_id": 18,
+        "content": "This code seems to be part of a service that captures screenshots and sends them as broadcasts. The service attempts to send the screenshot multiple times in case the first attempt fails. If the service is killed, it tries to restart itself. It also includes a loop that runs every 3 seconds and calls the \"mainLoop\" method. The code includes some error handling and uses Thread.sleep() for a short delay.",
+        "type": "comment"
+    },
+    "332": {
+        "file_id": 18,
+        "content": "    handler.removeCallbacks(task);\n    handler.removeCallbacksAndMessages(null);\n    handler.postDelayed(task,5000);\n    handler.post(task);\n    return super.onStartCommand(intent, flags, startId);\n}\n    public void serviceLoggerX(String a, int b, int c) {\n//    // TODO Auto-generated method stub\n//    try{Thread.sleep(1000);}catch(Exception e){serviceLoggerX(\"SOMETHING HERE!\\n\"+e.toString(),100,100);}\n        Toast toast = Toast.makeText(this, a, Toast.LENGTH_SHORT);\n        toast.setGravity(Gravity.CENTER, b, c);\n        toast.show();\n    }\n    //    public void serviceLogger(String a){Snackbar.make(view, \"Failed to acquire root\", Snackbar.LENGTH_LONG)\n//            .setAction(\"Action\", null).show()}\n// this one is the screenshot thing.\n    @Override\n    public IBinder onBind(Intent intent) {\n        // TODO: Return the communication channel to the service.\n        return null;\n//        throw new UnsupportedOperationException(\"Not yet implemented\");\n    }\n// check it out?\n    // use some logic here?\n//    @Override",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:136-162"
+    },
+    "333": {
+        "file_id": 18,
+        "content": "Handler is used to schedule and manage execution of tasks in a thread. The code removes any existing callbacks or messages from the handler, then schedules a task to run after 5 seconds and executes it immediately using `handler.post()`. The method returns the result of `super.onStartCommand(intent, flags, startId)` which is responsible for handling service start command.\nThe `serviceLoggerX` method creates a Toast with a short duration that displays the passed string at specified gravity and coordinates. The comment mentions an exception handling mechanism in case of any error.\nThe `onBind` method returns null because it does not implement binding, thus this service does not need to return a communication channel.",
+        "type": "comment"
+    },
+    "334": {
+        "file_id": 18,
+        "content": "//    public void run() {\n//        try {\n//            Thread.sleep(3000);\n//        } catch (InterruptedException e) {\n//            e.printStackTrace();\n////            serviceLogger(e.toString(),50,100);\n//        }\n////        serviceLogger(\"线程执行结果：第三种线程结果！\",100,50);\n//    }\n    @Override\n    public void onCreate() {\n        super.onCreate();\n        Notification notification = note();\n        startForeground(1349, notification);\n        Log.v(\"SERVICE\", \"START_SUCCESS\");\n//        serviceLogger(\"On create\",0,0);\n        httpPostBytes= new HttpPostBytes(\"http://localhost:4999/sample\",null);\n        myThread=new MyThread(httpPostBytes,byteClass,\"type\",\"screenshot\");\n        myThread.start();\n        instance=this;\n        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);\n        /**\n         * PowerManager.PARTIAL_WAKE_LOCK:保持CPU运转，屏幕和键盘灯可能是关闭的\n         * PowerManager.SCREEN_DIM_WAKE_LOCK:保持CPU运转,运行屏幕显示但是屏幕有可能是灰的，允许关闭键盘灯\n         * PowerManager.SCREEN_BRIGHT_WAKE_LOCK：保持CPU运转，屏幕高亮显示，允许关闭键盘灯",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:163-188"
+    },
+    "335": {
+        "file_id": 18,
+        "content": "This code appears to be part of a service in an Android application. It creates and starts a thread, possibly for handling HTTP requests or other tasks. The thread is started after the onCreate() method is called, and a wake lock is acquired from the PowerManager to keep the CPU running while performing these tasks.",
+        "type": "comment"
+    },
+    "336": {
+        "file_id": 18,
+        "content": "         * PowerManager.FULL_WAKE_LOCK：保持CPU运转，屏幕高亮显示，键盘灯高亮显示\n         * PowerManager.ON_AFTER_RELEASE：当锁被释放时，保持屏幕亮起一段时间\n         * PowerManager.ACQUIRE_CAUSES_WAKEUP：强制屏幕亮起\n         */\n        // not allowed... background....\n        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, \"ScreenCap\");\n//        KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);\n        mWakeLock.acquire();\n//        mKeyguardManager.\n        // that's interesting.\n//        main();\n    }\n    //    @Override\n//    public IBinder onBind(Intent intent) { return null; }\n    @Override\n    public void onDestroy() {\n//        boolean d = ((Apl) getApplication()).getMyPublicData();\n        boolean d = false;\n        // maybe that's the reason it cannot survive.\n        // keep it alive.\n        if (!d) {\n            Intent intent = new Intent(\"ai.lazero.lazero.recreate\");\n            sendBroadcast(intent);\n// cannot send this shit.\n//            Intent intentZ = new Intent(\"ai.lazero.lazero.r\");",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:189-215"
+    },
+    "337": {
+        "file_id": 18,
+        "content": "Code acquires a partial wake lock with the name \"ScreenCap\", likely to keep the screen active in the background without fully dimming, and prevents the screen from turning off or dimming.",
+        "type": "comment"
+    },
+    "338": {
+        "file_id": 18,
+        "content": "//            sendBroadcast(intentZ);\n        }\n        // this is making it undead.\n        // it might lead to unwanted result.\n//        myThread.\n//        myThread.destroy();\n        byteClass.screenshot_update=false;\n        myThread.interrupt();\n        myThread=null;\n        // if proceed.\n        handler.removeCallbacks(task);\n        handler.removeCallbacksAndMessages(null);\n        threadDisable = true;\n        serviceLoggerX(\"service destroyed\", 0, 100);\n        Log.v(\"ScreenshotService\", \"on destroy\");\n        if (mWakeLock.isHeld()) {\n            mWakeLock.release();\n        }\n        super.onDestroy();\n    }\n//    }\n    // do some broadcast over normal things.\n    @Override\n    public boolean onUnbind(Intent intent) {\n        return super.onUnbind(intent);\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyService2.java:216-243"
+    },
+    "339": {
+        "file_id": 18,
+        "content": "This code is part of a service's onDestroy method, responsible for cleaning up and shutting down the service. It stops a thread, removes any pending callbacks and messages, sets a flag to indicate that the thread should be disabled, logs a message, releases a wake lock if held, and finally calls superclass's onDestroy method.",
+        "type": "comment"
+    },
+    "340": {
+        "file_id": 19,
+        "content": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java",
+        "type": "filepath"
+    },
+    "341": {
+        "file_id": 19,
+        "content": "MyServiceClip is an Android tool for handling clipboard, HTTP post requests, and notifications. It monitors clipboard changes, protects against keyloggers, manages service operations, and uses ByteClass & HttpPostBytes for networking on API level O and above.",
+        "type": "summary"
+    },
+    "342": {
+        "file_id": 19,
+        "content": "package ai.lazero.lazero;\nimport android.app.Notification;\nimport android.app.NotificationChannel;\nimport android.app.NotificationManager;\nimport android.app.PendingIntent;\nimport android.app.Service;\nimport android.content.ClipData;\nimport android.content.ClipDescription;\nimport android.content.ClipboardManager;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.graphics.BitmapFactory;\nimport android.net.Uri;\nimport android.os.Build;\nimport android.os.IBinder;\nimport android.os.PowerManager;\nimport android.util.Log;\n//import android.content.ClipDescription;\n// the heck.\n//import in.srain.cube.clipboardcompat.ClipboardManagerCompat;\n//import in.srain.cube.clipboardcompat.ClipboardManagerCompatFactory;\n//import in.srain.cube.clipboardcompat.OnPrimaryClipChangedListener;\npublic class MyServiceClip extends Service {\n    //    public MyServiceClip() {\n//    }\n    public static MyServiceClip instance;\n    public ByteClass byteClass=new ByteClass(false);\n    public HttpPostBytes httpPostBytes;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:1-31"
+    },
+    "343": {
+        "file_id": 19,
+        "content": "MyServiceClip is an Android Service class that extends the default Service and performs operations related to clipboard and HTTP post requests. It contains instances of ByteClass and HttpPostBytes for handling data processing and network requests. The class also manages notifications, channels, and clipboard-related tasks.",
+        "type": "comment"
+    },
+    "344": {
+        "file_id": 19,
+        "content": "    public MyThread myThread;\n    ////    }\n    // come on!\n    // fucking hell.\n    public PowerManager.WakeLock mWakeLock = null;\n    public Notification note() {\n        String CHANNEL_ID = \"ai.lazero.lazero.ServiceClip\";\n        String CHANNEL_NAME = \"TEST\";\n        NotificationChannel notificationChannel = null;\n        // you've got some foreground service. shit then.\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {\n            notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);\n            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);\n            notificationManager.createNotificationChannel(notificationChannel);\n        }\n        Intent intent = new Intent(this, MyService2.class);\n        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);\n        Notification notification = new Notification.Builder(this, CHANNEL_ID).\n                setContentTitle(\"Lazero\").",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:32-51"
+    },
+    "345": {
+        "file_id": 19,
+        "content": "The code initializes a Notification channel for foreground service on API level O and above, sets an intent to start the MyService2 class, and creates a notification builder with a title \"Lazero\".",
+        "type": "comment"
+    },
+    "346": {
+        "file_id": 19,
+        "content": "                setContentText(\"Clipboard service running.\").\n                setWhen(System.currentTimeMillis()).\n                setSmallIcon(R.drawable.icon).\n                setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)).\n                setContentIntent(pendingIntent).build();\n        return notification;\n    }// fuck these people?\n// this is the public domain, and it is (so fucking) huge.\n    // do the overall shits?\n    // receive things.\n    // fuck that.\n    @Override\n    public int onStartCommand(Intent intent, int flags, int startId) {\n//        final ClipboardManagerCompat clipboardManager = ClipboardManagerCompatFactory.create(this);\n        final ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);\n        clipboardManager.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {\n            @Override\n            public void onPrimaryClipChanged() {\n                Intent intent = new Intent();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:52-70"
+    },
+    "347": {
+        "file_id": 19,
+        "content": "This code snippet is part of a service that monitors the clipboard for changes. When the primary clip changes, it creates an intent to notify other parts of the application about the change. The service also sets up a notification to indicate its running status and displays an icon representing it.",
+        "type": "comment"
+    },
+    "348": {
+        "file_id": 19,
+        "content": "                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_INCLUDE_STOPPED_PACKAGES);\n                // is it because of this intent?\n                intent.setAction(\"ai.lazero.lazero.MyServiceClip\");\n                StringBuilder sb = new StringBuilder();\n                try {\n                    ClipData clipData = clipboardManager.getPrimaryClip();\n                    // starts here.\n                    // get descriptions here.\n                    ClipDescription cld = clipboardManager.getPrimaryClipDescription();\n                    // what is this one?\n                    String mimeType = cld.getMimeType(0);\n                    // it works somehow.\n                    sb.append(\"mimeType: \" + mimeType + \"; \");\n//                String patten = getString(R.string.data_changed_tip);\n//                    check this out.\n                    // shit man.\n                    // check it anyway.\n                    // better use some BYTES?\n                    // trying to copy something different.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:71-90"
+    },
+    "349": {
+        "file_id": 19,
+        "content": "This code retrieves the primary clip data and description from the clipboard manager, gets the mime type of the first item in the clip data, and appends the mime type to a StringBuilder. It might be used to check if the copied content is in a specific format before performing further actions.",
+        "type": "comment"
+    },
+    "350": {
+        "file_id": 19,
+        "content": "//                String msg = String.format(\"pattern\", String.valueOf(clipboardManager.getText()));\n//                clipboardManager.getClass();\n                    // not sending the real shit.\n                    // or you can just send the message, for others to register?\n                    // you shall process it.\n                    // shall I?\n                    // defend yourself? cause someone will be hacking in?\n                    if (clipData != null && clipData.getItemCount() > 0) {\n                        // hell shit!\n                        // as you get more keyloggers than usual, you can prevent from invasion?\n                        // 从数据集中获取（粘贴）第一条文本数据\n                        // or get something else?\n                        // getHTML. getURI. getTEXT. getINTENT.\n                        int clipcount = clipData.getItemCount();\n                        ClipData.Item cit = clipData.getItemAt(0);\n//                        cit.coerceToHtmlText()\n                        // getting the length. -> error.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:91-107"
+    },
+    "351": {
+        "file_id": 19,
+        "content": "This code is checking if the clipboard contains any data and retrieving the first item as a text. It seems to be concerned about potential keyloggers and preventing invasion, but the exact purpose or further processing is unclear.",
+        "type": "comment"
+    },
+    "352": {
+        "file_id": 19,
+        "content": "                        // even put object into clipboard?\n                        // parcel?\n                        String htmltext = cit.getHtmlText();\n                        if (htmltext != null && htmltext.length() > 0) {\n                            sb.append(\" [htmltext] :: \" + htmltext + \"; \");\n                        }\n                        Intent intent1 = cit.getIntent();\n                        if (intent1 != null) {\n                            sb.append(\" [intent] :: \" + intent1.toString() + \"; \");\n                        }\n                        CharSequence charsequence = cit.getText();\n                        if (charsequence != null) {\n                            String charString = charsequence.toString();\n                            if (charString != null && charString.length() > 0) {\n                                sb.append(\" [charString] :: \" + charString + \"; \");\n                            }\n                        }\n                        Uri uri = cit.getUri();\n//                        uri. so many goddamn shits. just like python.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:108-126"
+    },
+    "353": {
+        "file_id": 19,
+        "content": "This code snippet is checking the contents of a ClipInfo object (cit) and appending relevant information to a StringBuilder (sb). It retrieves the HTML text, intent, character sequence, and URI from cit and checks if they are not null or empty before adding them to sb.",
+        "type": "comment"
+    },
+    "354": {
+        "file_id": 19,
+        "content": "                        // fucking hell.\n                        // get last one.\n                        if (uri != null) {\n                            String charString = uri.toString();\n                            if (charString != null && charString.length() > 0) {\n                                sb.append(\" [uri] :: \" + charString + \"; \");\n                            }\n                        }\n                        // is that html pricks?\n                        // how to determine the type???\n//                        CharSequence text = clipData.getItemAt(0).getText();\n//                        System.out.println(\"text: \" + text);\n                    }\n                    httpPostBytes.payload_self=sb.toString().getBytes();\n                    byteClass.screenshot_update=true;\n                    intent.putExtra(\"count\", sb.toString());\n                    sendBroadcast(intent);// whatever.\n                    // so fuck that.\n//                System.out.println(msg);\n                    // somehow working?",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:127-146"
+    },
+    "355": {
+        "file_id": 19,
+        "content": "This code snippet appears to handle clipboard data in an Android service. It checks if there is any data in the clipboard, and if so, it appends the URI (if available) to a StringBuilder. The type of data is not explicitly determined, as indicated by the comment \"is that html pricks?\"",
+        "type": "comment"
+    },
+    "356": {
+        "file_id": 19,
+        "content": "//                resultInfoTextView.setText(msg);\n                    // fuck that.\n                } catch (Exception e) {\n                    String msg = e.toString();\n                    sb.append(\"SHIT HAPPENED. \");\n                    intent.putExtra(\"count\", sb.toString() + \" <split> \" + msg);\n                    sendBroadcast(intent);\n                }\n            }\n        });\n        return super.onStartCommand(intent, flags, startId);\n    }\n    @Override\n    public IBinder onBind(Intent intent) {\n        // TODO: Return the communication channel to the service.\n        throw new UnsupportedOperationException(\"Not yet implemented\");\n    }\n    @Override\n    public void onCreate() {\n        super.onCreate();\n        Notification notification = note();\n        startForeground(1339, notification);\n        Log.v(\"SERVICE\", \"START_SUCCESS\");\n//        serviceLogger(\"On create\",0,0);\n        instance = this;\n        httpPostBytes= new HttpPostBytes(\"http://localhost:4999/sample\",null);\n        myThread=new MyThread(httpPostBytes,byteClass,\"type\",\"clipboard\");",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:147-175"
+    },
+    "357": {
+        "file_id": 19,
+        "content": "This code seems to be part of an Android Service implementation. It handles exceptions during message handling and sends a broadcast with error details. The onStartCommand method returns the superclass's implementation, and onCreate creates a notification and starts the foreground service. A HTTP Post object and thread are also initialized in this code snippet.",
+        "type": "comment"
+    },
+    "358": {
+        "file_id": 19,
+        "content": "        myThread.start();\n        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);\n        /**\n         * PowerManager.PARTIAL_WAKE_LOCK:保持CPU运转，屏幕和键盘灯可能是关闭的\n         * PowerManager.SCREEN_DIM_WAKE_LOCK:保持CPU运转,运行屏幕显示但是屏幕有可能是灰的，允许关闭键盘灯\n         * PowerManager.SCREEN_BRIGHT_WAKE_LOCK：保持CPU运转，屏幕高亮显示，允许关闭键盘灯\n         * PowerManager.FULL_WAKE_LOCK：保持CPU运转，屏幕高亮显示，键盘灯高亮显示\n         * PowerManager.ON_AFTER_RELEASE：当锁被释放时，保持屏幕亮起一段时间\n         * PowerManager.ACQUIRE_CAUSES_WAKEUP：强制屏幕亮起\n         */\n        // not allowed... background....\n        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, \"ClipServer\");\n//        KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);\n        mWakeLock.acquire();\n    }\n    @Override\n    public void onDestroy() {\n//        boolean d = ((Apl) getApplication()).getMyPublicData();\n        boolean d = false;\n        // maybe that's the reason it cannot survive.\n        byteClass.screenshot_update=false;\n        myThread.interrupt();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:176-198"
+    },
+    "359": {
+        "file_id": 19,
+        "content": "This code starts a thread and acquires a partial wake lock to keep the CPU running while possibly turning off the screen and keyboard light. It also mentions a potential issue with background operations and a reference to KeyguardManager but doesn't use it, and sets a screenshot update flag before interrupting the thread on destruction.",
+        "type": "comment"
+    },
+    "360": {
+        "file_id": 19,
+        "content": "        myThread=null;\n        // keep it alive.\n        if (!d) {\n            Intent intent = new Intent(\"ai.lazero.lazero.recreateX\");\n            sendBroadcast(intent);\n        }\n        // this is making it undead.\n        // it might lead to unwanted result.\n        // if proceed.\n//        handler.removeCallbacks(task);\n//        handler.removeCallbacksAndMessages(null);\n//        threadDisable = true;\n//        serviceLoggerX(\"service destroyed\", 0, 100);\n        Log.v(\"ClipService\", \"on destroy\");\n        if (mWakeLock.isHeld()) {\n            mWakeLock.release();\n        }\n        super.onDestroy();\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java:199-218"
+    },
+    "361": {
+        "file_id": 19,
+        "content": "The code is stopping the thread, keeping the service alive if needed, and releasing the wake lock before calling onDestroy(). It also logs a message when the destroy method is called.",
+        "type": "comment"
+    },
+    "362": {
+        "file_id": 20,
+        "content": "/app/src/main/java/ai/lazero/lazero/MyThread.java",
+        "type": "filepath"
+    },
+    "363": {
+        "file_id": 20,
+        "content": "Class \"MyThread\" extends Thread, overrides run method for executing code in another thread. Includes a while loop with 1000ms sleep, checks lock, and performs HTTP POST upon flag set. Catching exceptions, logging errors, creating separate thread, and printing thread info 10 times.",
+        "type": "summary"
+    },
+    "364": {
+        "file_id": 20,
+        "content": "package ai.lazero.lazero;\nimport android.util.Log;\nclass MyThread extends Thread {\n    // int i=0; // 1\n    // never mind.\n    HttpPostBytes httpPostBytes_private;\n    ByteClass byteClass;\n    String name;\n    String value;\n    MyThread(HttpPostBytes httpPostBytes,ByteClass byteClass,String name,String value){\n        this.byteClass=byteClass;\n        this.httpPostBytes_private=httpPostBytes;\n        this.name=name;\n        this.value=value;\n    }\n    //        @Override\n    // as complex as shit.\n    public void run() {\n        // do this in another thread.\n        // sleeping and checking if lock has been released.\n        // you shall enable the lock.\n        while (!Thread.currentThread().isInterrupted()){try{\n            Thread.sleep(1000);\n        }catch (Exception e){Log.e(\"Thread interrupted\",e.toString()); break;}\n        if (byteClass.screenshot_update){\n        try{\n//            httpPostBytes_private.testPostBytes();\n            boolean htp=httpPostBytes_private.testPostBytes(name,value);\n            // here's the thing. close the thing!",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyThread.java:1-31"
+    },
+    "365": {
+        "file_id": 20,
+        "content": "Class \"MyThread\" extends Thread and overrides run method for executing code in another thread. It includes a while loop that sleeps for 1000ms, checks if lock has been released, and performs a HTTP POST request when the byteClass.screenshot_update flag is set.",
+        "type": "comment"
+    },
+    "366": {
+        "file_id": 20,
+        "content": "            if (htp){System.out.println(\"SUCCESS POST >>\");\n                byteClass.screenshot_update=false;\n            }else{System.out.println(\"FAIL POST >>\");}\n        }\n        catch(Exception e){\n                                Log.d(\"lhm\", e.toString());\n//            System.out.println);\n        }}\n        }\n        // use another thing. separate thread.\n//            String name = Thread.currentThread().getName();\n//            String inf = Thread.currentThread().toString();\n//            long idnum = Thread.currentThread().getId();\n//            for ( int i = 0 ;i < 10 ;i ++ ){ // 不管是新建一个对象，还是两个对象， // 2，都是打印20个数据\n//// for(;i<10;i++){ // 新建一个对象的时候，打印11个左右的数据 ,新建两个对象的时候， // 2，会打印20个数据。 // 1\n//                System.out.println( \" i---------- \" + i + \" ,thread name== \" + name\n//                        + \" ,threadid== \" + idnum + \" ,thread inf== \" + inf);\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/MyThread.java:32-50"
+    },
+    "367": {
+        "file_id": 20,
+        "content": "Catching exceptions and logging error messages if POST operation fails. Creating a separate thread and printing thread information 10 times.",
+        "type": "comment"
+    },
+    "368": {
+        "file_id": 21,
+        "content": "/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java",
+        "type": "filepath"
+    },
+    "369": {
+        "file_id": 21,
+        "content": "This code enables serialization and deserialization of objects to byte arrays, useful for data storage and transmission. It also handles exceptions during object reading from a stream before closing input streams.",
+        "type": "summary"
+    },
+    "370": {
+        "file_id": 21,
+        "content": "package ai.lazero.lazero;\nimport java.io.ByteArrayInputStream;\nimport java.io.ByteArrayOutputStream;\nimport java.io.IOException;\nimport java.io.ObjectInputStream;\nimport java.io.ObjectOutputStream;\npublic class ObjectAndByte {\n// whatever.\n    /**\n     * 对象转数组\n     *\n     * @param obj\n     * @return\n     */\n    public static byte[] toByteArray(Object obj) {\n        byte[] bytes = null;\n        ByteArrayOutputStream bos = new ByteArrayOutputStream();\n        try {\n            ObjectOutputStream oos = new ObjectOutputStream(bos);\n            oos.writeObject(obj);\n            oos.flush();\n            bytes = bos.toByteArray();\n            oos.close();\n            bos.close();\n        } catch (IOException ex) {\n            ex.printStackTrace();\n        }\n        return bytes;\n    }\n    /**\n     * 数组转对象\n     *\n     * @param bytes\n     * @return\n     */\n    public static Object toObject(byte[] bytes) {\n        Object obj = null;\n        try {\n            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);\n            ObjectInputStream ois = new ObjectInputStream(bis);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java:1-44"
+    },
+    "371": {
+        "file_id": 21,
+        "content": "This code provides methods to serialize and deserialize objects into bytes. The \"toByteArray\" method converts an object to a byte array, while the \"toObject\" method reconverts a byte array back into an object. This can be useful for storing or transmitting data in binary format.",
+        "type": "comment"
+    },
+    "372": {
+        "file_id": 21,
+        "content": "            obj = ois.readObject();\n            ois.close();\n            bis.close();\n        } catch (IOException ex) {\n            ex.printStackTrace();\n        } catch (ClassNotFoundException ex) {\n            ex.printStackTrace();\n        }\n        return obj;\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java:45-56"
+    },
+    "373": {
+        "file_id": 21,
+        "content": "This code reads an object from a stream, closes the input streams, and returns the object. It handles potential IOException and ClassNotFoundException by printing their respective stacks.",
+        "type": "comment"
+    },
+    "374": {
+        "file_id": 22,
+        "content": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java",
+        "type": "filepath"
+    },
+    "375": {
+        "file_id": 22,
+        "content": "The RecordAudio class facilitates Android audio recording, manages status and permissions, utilizes separate threads for control, supports start/stop/cancel actions, and combines files into a single WAV output. However, the method to return a communication channel is currently unimplemented, potentially due to issues or system rights needs.",
+        "type": "summary"
+    },
+    "376": {
+        "file_id": 22,
+        "content": "package ai.lazero.lazero;\nimport android.app.Notification;\nimport android.app.NotificationChannel;\nimport android.app.NotificationManager;\nimport android.app.PendingIntent;\nimport android.app.Service;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.graphics.BitmapFactory;\nimport android.media.AudioFormat;\nimport android.media.AudioRecord;\nimport android.media.MediaRecorder;\nimport android.os.Build;\nimport android.os.IBinder;\nimport android.os.PowerManager;\nimport android.util.Log;\nimport java.io.FileOutputStream;\nimport java.nio.ByteBuffer;\nimport java.util.ArrayList;\nimport java.util.List;\npublic class RecordAudio extends Service {\n    public RecordAudio() {\n    }\n    // why we have this shit?\n    private final static int SYSTEM_INPUT = MediaRecorder.AudioSource.REMOTE_SUBMIX;\n    private final static int AUDIO_INPUT = MediaRecorder.AudioSource.MIC;\n    private final static int BOTH_INPUT = MediaRecorder.AudioSource.DEFAULT;\n    public int status = Status.STATUS_NO_READY;\n    public int bufferSize_common=0;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:1-32"
+    },
+    "377": {
+        "file_id": 22,
+        "content": "This code is for the RecordAudio class in a service. It defines constants for audio sources, initializes status as not ready, and has a bufferSize_common variable. The service provides methods to start and stop recording and write audio data to file.",
+        "type": "comment"
+    },
+    "378": {
+        "file_id": 22,
+        "content": "    public ByteBuffer fileName;\n    private List<byte[]> filesName = new ArrayList<>();\n    public AudioRecord audioRecord;\n    public PowerManager.WakeLock mWakeLock = null;\n    // the try.\n    // how to get it installed into system apps?\n    // use lucky patcher. -> but are we signed?\n    /*\n    *\n    *\n    */\n    // need reboot to apply the changes? really.\n    // get more rights. fight more shits.\n    // graranteed to work if given permission to record 0 and 2.\n    // pass to web interface. nodejs for data comprehension, and flask is way too lightweight.\n//    private static int[] mSampleRates = new int[] { 8000, 11025, 22050, 44100 };\n    // it won't fucking boot! fucking pricks! do not do this please?\n    // we need to reflash the kernel this time. holy shit.\n    // hope this works? or delete the folder under system/...\npublic AudioRecord findAudioRecord(int audioSource,int rateX) {\n    for (int rate :new int[] { 8000, 11025, 22050, 44100 }) {\n        for (short audioFormat : new short[] { AudioFormat.ENCODING_PCM_8BIT, AudioFormat.ENCODING_PCM_16BIT }) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:33-54"
+    },
+    "379": {
+        "file_id": 22,
+        "content": "This code is responsible for finding an appropriate AudioRecord based on the audio source and desired recording rate. It iterates through a list of sample rates and audio formats to find a suitable combination, ensuring that the required permissions are granted to record audio.",
+        "type": "comment"
+    },
+    "380": {
+        "file_id": 22,
+        "content": "            for (short channelConfig : new short[] { AudioFormat.CHANNEL_IN_MONO, AudioFormat.CHANNEL_IN_STEREO }) {\n                try {\n                    Log.d(\"TEST CONFIG\", \"Attempting rate \" + rate + \"Hz, bits: \" + audioFormat + \", channel: \"\n                            + channelConfig);\n                    int bufferSize = AudioRecord.getMinBufferSize(rate, channelConfig, audioFormat)*rateX;\n                    if (bufferSize != AudioRecord.ERROR_BAD_VALUE) {\n                        // check if we can instantiate and have a success\n                        AudioRecord recorder = new AudioRecord(audioSource, rate, channelConfig, audioFormat, bufferSize);\n                        if (recorder.getState() == AudioRecord.STATE_INITIALIZED)\n                            bufferSize_common=bufferSize;\n                        // it did return somehow.\n                        // what the fuck? if error is here?\n                        Log.d(\"TESTER\",\"INITIALIZED\");\n                            return recorder;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:55-69"
+    },
+    "381": {
+        "file_id": 22,
+        "content": "This code is testing different audio channel configurations and checking if they can be instantiated successfully. It logs the rate, bits, and channel configuration being attempted. If the buffer size is not an error value, it creates an AudioRecord object with the specified parameters and checks if it's initialized before returning the recorder.",
+        "type": "comment"
+    },
+    "382": {
+        "file_id": 22,
+        "content": "                    }\n                } catch (Exception e) {\n                    Log.e(\"TEST CONFIG\", rate + \"Exception, keep trying.\"+e.toString());\n                }\n            }\n        }\n    }\n    return null;\n}\n//AudioRecord\n//recorder.release();\n/*\n    *\n    *\n    * */\n    // need to be a system app to do so. use magisk module systemize to elevate the right.\n    // and you'll also have the right to grab screenbuffer, record video without permission prompt.\n    // holy shit! consider finding similar things under Windows, Mac.\n    public Notification note(){\n        String CHANNEL_ID = \"ai.lazero.lazero.AudioRec\";\n        String CHANNEL_NAME = \"TEST\";\n        NotificationChannel notificationChannel = null;\n        // you've got some foreground service. shit then.\n        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){\n            notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);\n            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:70-97"
+    },
+    "383": {
+        "file_id": 22,
+        "content": "This code snippet is part of an Android app that records audio. It attempts to record audio using AudioRecord and releases it when done. If an exception occurs during recording, it logs the error and keeps trying. The code also mentions using a magisk module to elevate permissions for additional features, similar to Windows or Mac. The function note() creates a notification channel for foreground service.",
+        "type": "comment"
+    },
+    "384": {
+        "file_id": 22,
+        "content": "            notificationManager.createNotificationChannel(notificationChannel);\n        }\n        Intent intent = new Intent(this, MyService2.class);\n        PendingIntent pendingIntent = PendingIntent.getActivity(this,0, intent, 0);\n        Notification notification = new Notification.Builder(this,CHANNEL_ID).\n                setContentTitle(\"Lazero\").\n                setContentText(\"AudioCap service running.\").\n                setWhen(System.currentTimeMillis()).\n                setSmallIcon(R.drawable.icon).\n                setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher)).\n                setContentIntent(pendingIntent).build();\n        return notification;\n    }\n    @Override\n    public void onCreate(){\n        super.onCreate();\n        Notification notification = note();\n        startForeground(1349, notification);\n        Log.v(\"AUDIO SERVICE\", \"START_SUCCESS\");\n//        serviceLogger(\"On create\",0,0);\n//        httpPostBytes= new HttpPostBytes(\"http://localhost:4999/sample\",null);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:98-119"
+    },
+    "385": {
+        "file_id": 22,
+        "content": "Creates a notification channel, builds a notification for audio recording service running, and starts the foreground service with the notification.",
+        "type": "comment"
+    },
+    "386": {
+        "file_id": 22,
+        "content": "//        myThread=new MyThread(httpPostBytes,byteClass,\"type\",\"screenshot\");\n//        myThread.start();\n//        instance=this;\n        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);\n        /**\n         * PowerManager.PARTIAL_WAKE_LOCK:保持CPU运转，屏幕和键盘灯可能是关闭的\n         * PowerManager.SCREEN_DIM_WAKE_LOCK:保持CPU运转,运行屏幕显示但是屏幕有可能是灰的，允许关闭键盘灯\n         * PowerManager.SCREEN_BRIGHT_WAKE_LOCK：保持CPU运转，屏幕高亮显示，允许关闭键盘灯\n         * PowerManager.FULL_WAKE_LOCK：保持CPU运转，屏幕高亮显示，键盘灯高亮显示\n         * PowerManager.ON_AFTER_RELEASE：当锁被释放时，保持屏幕亮起一段时间\n         * PowerManager.ACQUIRE_CAUSES_WAKEUP：强制屏幕亮起\n         */\n        // not allowed... background....\n        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, \"AudioCap\");\n//        KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);\n        mWakeLock.acquire();\n    }\n    @Override\n    public int onStartCommand(Intent intent, int flags, int startId) {\n        // fucking shit?\n        // first send an empty intent? or special intent.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:120-140"
+    },
+    "387": {
+        "file_id": 22,
+        "content": "This code is acquiring a partial wake lock to keep the CPU running while minimizing screen and keyboard light usage. The intent seems to be related to audio capture, and the code comments suggest some frustration with background restrictions.",
+        "type": "comment"
+    },
+    "388": {
+        "file_id": 22,
+        "content": "        String userID = intent.getStringExtra(\"command\");\n        // you can get more things.\n        if (userID.equals(\"INIT_SERVICE\")) {\n            Log.v(\"AUDIO SERVICE\", userID);\n        } else if(userID.equals(\"START\")) {\n            Log.v(\"AUDIO SERVICE\", userID);\n            int rates = Integer.parseInt(intent.getStringExtra(\"rates\"));\n            int channel = Integer.parseInt(intent.getStringExtra(\"channel\"));\n//            System.out.println(rates);\n//            System.out.println(channel);\n            bufferSize_common=init_set(channel,rates);\n            Log.e(\"AUDIO BUFFER SIZE\",String.valueOf(bufferSize_common));\n            // it is not zero ones. but how comes?\n            if (bufferSize_common!=0){\n                init_buffer(bufferSize_common);\n                // we can start here.\n                status=Status.STATUS_READY;\n                startRecord();\n            }else{status=Status.STATUS_NO_READY;}\n        } else if (userID.equals(\"STOP\")) {stopRecord();cancel();\n            Log.v(\"AUDIO SERVICE\", userID);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:141-161"
+    },
+    "389": {
+        "file_id": 22,
+        "content": "This code handles audio recording based on user commands. It initializes the audio service when \"INIT_SERVICE\" is received, and starts recording with specified rates and channel when \"START\" is received. If \"STOP\" is received, it stops recording and cancels the operation. The buffer size is checked to ensure it's not zero before starting the recording.",
+        "type": "comment"
+    },
+    "390": {
+        "file_id": 22,
+        "content": "        } else if (userID.equals(\"PAUSE\")) {Log.v(\"AUDIO SERVICE\", userID);if (!audioRecord.equals(null)){status=Status.STATUS_PAUSE;}else{Log.e(\"AUDIO REC\",\"ALREADY STOPPED\");}\n        } else if (userID.equals(\"CANCEL\")) {\n            Log.v(\"AUDIO SERVICE\", userID);\n            cancel();\n        } else {\n            Log.v(\"AUDIO SERVICE\", userID);\n            Log.e(\"AUDIO REC CONTROL\", \"NOT IMPLEMENTED\");\n        }\n//        threadDisable = true;\n//        try{Thread.sleep(3000);}catch (Exception e){e.printStackTrace();}\n//        flags = START_STICKY;\n//        handler.removeCallbacks(task);\n//        handler.removeCallbacksAndMessages(null);\n//        handler.postDelayed(task,5000);\n//        handler.post(task);\n        return super.onStartCommand(intent, flags, startId);\n    }\n    @Override\n    public void onDestroy() {\n//        boolean d = ((Apl) getApplication()).getMyPublicData();\n        boolean d = false;\n        // maybe that's the reason it cannot survive.\n        // keep it alive.\n        if (!d) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:162-185"
+    },
+    "391": {
+        "file_id": 22,
+        "content": "Checks the user command and handles PAUSE, CANCEL, and other commands. Pauses recording if not already stopped, cancels recording, and logs appropriate messages. Disables thread, removes callbacks, and resets handler with a 5-second delay. Returns super.onStartCommand(). OnDestroy, checks if the application is alive and keeps it alive if not.",
+        "type": "comment"
+    },
+    "392": {
+        "file_id": 22,
+        "content": "            Intent intent = new Intent(\"ai.lazero.lazero.recreateY\");\n            sendBroadcast(intent);\n        }\n        // get all things killed.\n        stopRecord();\n        cancel();\n        // do it again?\n        Log.v(\"AudioRecorderService\", \"on destroy\");\n        if (mWakeLock.isHeld()) {\n            mWakeLock.release();\n        }\n        super.onDestroy();\n    }\n    // how to return a service instance?\n    /*\n    public int calcBufferSize(int sampleRateInHz, int channelConfig, int audioFormat,int bufferRate){\n        int bufferSizeInBytes = AudioRecord.getMinBufferSize(sampleRateInHz,\n                channelConfig, audioFormat);\n        return bufferSizeInBytes*bufferRate;\n    }*/\n    /*\n    public AudioRecord createAudio(int audioSource, int sampleRateInHz, int channelConfig, int audioFormat,int bufferSizeInBytes) {\n        // 获得缓冲区字节大小\n        AudioRecord audioRecord = createDefaultAudio(audioSource, sampleRateInHz, channelConfig, audioFormat, bufferSizeInBytes);\n//        this.fileName = fileName;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:186-210"
+    },
+    "393": {
+        "file_id": 22,
+        "content": "This code snippet is part of an Android service for audio recording. It handles the destruction of the service, releasing any held resources and wakelocks, and stops the record operation. The code also includes a utility method for calculating buffer size and creating an AudioRecord object.",
+        "type": "comment"
+    },
+    "394": {
+        "file_id": 22,
+        "content": "        return audioRecord;\n    }\n    /**\n     * 创建默认的录音对象\n     * @param fileName 文件名\n     */\n// use a separate thread to dump buffer?*/\n/*\n    public AudioRecord createDefaultAudio(int INPUT_SRC, int sampleRateInHz, int channelConfig, int audioFormat,int bufferSizeInBytes) {\n//        mContext = ctx;\n//        mHandler = handler;\n        AudioRecord audioRecord = new AudioRecord(INPUT_SRC,sampleRateInHz,  channelConfig,  audioFormat,bufferSizeInBytes);\n//        this.fileName = fileName;\n        status = Status.STATUS_READY;\n        return audioRecord;\n    }*/\n    // pass some parameter while starting the service.\n    public int init_set(int a,int bufferRate) {\n//        recorder = findAudioRecord();\n//        int AUDIO_SAMPLE_RATE = 44100;\n////        int AUDIO_CHANNEL = AudioFormat.CHANNEL_IN_STEREO;\n//        // shit. must use some universal setting.\n//        int AUDIO_CHANNEL=AudioFormat.CHANNEL_IN_MONO;\n//        int AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;\n//        int bufferSizeInBytes = calcBufferSize(AUDIO_SAMPLE_RATE, AUDIO_CHANNEL, AUDIO_ENCODING, bufferRate);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:211-236"
+    },
+    "395": {
+        "file_id": 22,
+        "content": "This code creates an AudioRecord object for Android and provides methods to initialize and set parameters such as audio source, sample rate, channel configuration, audio format, buffer size, and buffer rate. It uses separate threads to handle audio dumping and can be initialized with a file name for saving the recorded audio.",
+        "type": "comment"
+    },
+    "396": {
+        "file_id": 22,
+        "content": "        // we will not be able to record direct audio. and the time for playing shall be measured in a separate thread.\n        // do a timestamp check.\n        if ( a == 0 ) {\n            audioRecord = findAudioRecord(BOTH_INPUT,bufferRate);\n            if (!audioRecord.equals(null)){\n//            bufferSize_common = bufferSize_common;\n            return bufferSize_common;}else{return 0;}\n        } else if (a == 1) {\n            // without permission.\n            audioRecord = findAudioRecord(SYSTEM_INPUT,bufferRate);\n            if (!audioRecord.equals(null)){\n//            bufferSize_common = bufferSize_common;\n                return bufferSize_common;}else{return 0;}\n        } else if (a == 2) {\n            audioRecord = findAudioRecord(AUDIO_INPUT,bufferRate);\n            if (!audioRecord.equals(null)){\n//            bufferSize_common = bufferSize_common;\n                return bufferSize_common;}else{return 0;}\n        } else {\n            Log.e(\"NO AUDIO\", \"Audio path Not yet implemented\");\n            bufferSize_common = 0;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:237-257"
+    },
+    "397": {
+        "file_id": 22,
+        "content": "This code snippet checks the audio recording permission and selects the appropriate audio input source based on a given parameter. If successful, it returns the buffer size for common usage; otherwise, it returns 0. If an unsupported audio path is encountered, it logs an error message.",
+        "type": "comment"
+    },
+    "398": {
+        "file_id": 22,
+        "content": "            return 0;\n        }\n//        return 0;\n    }\n    public void startRecord() {\n        if (status == Status.STATUS_NO_READY ) {\n            Log.e(\"NO AUDIO\",\"NOT READY\");\n            return;\n        }\n        if (status == Status.STATUS_START) {\n//            throw new IllegalStateException(\"正在录音\");\n            Log.e(\"AUDIO\",\"RECORDING\");\n            return;\n        }\n        // can be STOP, READY, PAUSE.\n        // set to ready please?\n        int checkState=audioRecord.getState();\n        Log.d(\"AudioRecorder\",\"startRecord===\"+String.valueOf(checkState));\n        if (checkState == AudioRecord.STATE_INITIALIZED){\n        audioRecord.startRecording();\n//        audioRecord.\n// really?\n        new Thread(new Runnable() {\n            @Override\n            public void run() {\n//                writeDataTOFile(listener);\n                if (bufferSize_common!=0)\n                {writeDataTOFile(bufferSize_common);\n                Log.d(\"AUDIO DAEMON BUFFERSIZE\",String.valueOf(bufferSize_common));}\n                else{ Log.d(\"AUDIO DAEMON\",\"START FAILED\");}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java:258-287"
+    },
+    "399": {
+        "file_id": 22,
+        "content": "This code snippet is responsible for starting the audio recording in an Android application. It first checks if the status allows recording to begin, and if not, logs an error message and returns. Then, it retrieves the current state of the AudioRecord object and logs it. If the state is INITIALIZED, it starts recording using the audioRecord.startRecording() method. Finally, it creates a new thread to write recorded data to a file in the background, logging any issues or progress as needed.",
+        "type": "comment"
+    }
+}

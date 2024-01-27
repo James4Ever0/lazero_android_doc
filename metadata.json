@@ -1,0 +1,210 @@
+{
+    "url": {
+        "full": "https://gitee.com/x00e0d991e368/lazero_android",
+        "partial": "/x00e0d991e368/lazero_android"
+    },
+    "file_mapping": {
+        "0": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java",
+            "entry_id": 0,
+            "language_id": "java"
+        },
+        "1": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java",
+            "entry_id": 30,
+            "language_id": "java"
+        },
+        "2": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java",
+            "entry_id": 36,
+            "language_id": "java"
+        },
+        "3": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/Apl.java",
+            "entry_id": 46,
+            "language_id": "java"
+        },
+        "4": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java",
+            "entry_id": 54,
+            "language_id": "java"
+        },
+        "5": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/ByteClass.java",
+            "entry_id": 62,
+            "language_id": "java"
+        },
+        "6": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java",
+            "entry_id": 66,
+            "language_id": "java"
+        },
+        "7": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java",
+            "entry_id": 78,
+            "language_id": "java"
+        },
+        "8": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/Main2Activity.java",
+            "entry_id": 88,
+            "language_id": "java"
+        },
+        "9": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/Main3Activity.java",
+            "entry_id": 106,
+            "language_id": "java"
+        },
+        "10": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/Main4Activity.java",
+            "entry_id": 130,
+            "language_id": "java"
+        },
+        "11": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/Main5Activity.java",
+            "entry_id": 148,
+            "language_id": "java"
+        },
+        "12": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/Main6Activity.java",
+            "entry_id": 156,
+            "language_id": "java"
+        },
+        "13": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MainActivity.java",
+            "entry_id": 194,
+            "language_id": "java"
+        },
+        "14": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MainClipActivity.java",
+            "entry_id": 250,
+            "language_id": "java"
+        },
+        "15": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MainXActivity.java",
+            "entry_id": 260,
+            "language_id": "java"
+        },
+        "16": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MyReceiver.java",
+            "entry_id": 272,
+            "language_id": "java"
+        },
+        "17": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MyService.java",
+            "entry_id": 282,
+            "language_id": "java"
+        },
+        "18": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MyService2.java",
+            "entry_id": 320,
+            "language_id": "java"
+        },
+        "19": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MyServiceClip.java",
+            "entry_id": 340,
+            "language_id": "java"
+        },
+        "20": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/MyThread.java",
+            "entry_id": 362,
+            "language_id": "java"
+        },
+        "21": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java",
+            "entry_id": 368,
+            "language_id": "java"
+        },
+        "22": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/RecordAudio.java",
+            "entry_id": 374,
+            "language_id": "java"
+        },
+        "23": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java",
+            "entry_id": 410,
+            "language_id": "java"
+        },
+        "24": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/ScreenshotService.java",
+            "entry_id": 424,
+            "language_id": "java"
+        },
+        "25": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/SettingsActivity.java",
+            "entry_id": 470,
+            "language_id": "java"
+        },
+        "26": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/SimpleService.java",
+            "entry_id": 492,
+            "language_id": "java"
+        },
+        "27": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/Status.java",
+            "entry_id": 518,
+            "language_id": "java"
+        },
+        "28": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/AcService.java",
+            "entry_id": 522,
+            "language_id": "java"
+        },
+        "29": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/AdService.java",
+            "entry_id": 540,
+            "language_id": "java"
+        },
+        "30": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/AeService.java",
+            "entry_id": 552,
+            "language_id": "java"
+        },
+        "31": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java",
+            "entry_id": 574,
+            "language_id": "java"
+        },
+        "32": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/ConfigClass.java",
+            "entry_id": 584,
+            "language_id": "java"
+        },
+        "33": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java",
+            "entry_id": 588,
+            "language_id": "java"
+        },
+        "34": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/Main8Activity.java",
+            "entry_id": 600,
+            "language_id": "java"
+        },
+        "35": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/PowerButtonService.java",
+            "entry_id": 606,
+            "language_id": "java"
+        },
+        "36": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/RecPlayService.java",
+            "entry_id": 614,
+            "language_id": "java"
+        },
+        "37": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/ViewService.java",
+            "entry_id": 662,
+            "language_id": "java"
+        },
+        "38": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/basic_overlay.java",
+            "entry_id": 672,
+            "language_id": "java"
+        },
+        "39": {
+            "filepath": "/app/src/main/java/ai/lazero/lazero/m6/basic_overlay_v2.java",
+            "entry_id": 678,
+            "language_id": "java"
+        }
+    },
+    "project_name": "lazero_android",
+    "split_count": 7
+}

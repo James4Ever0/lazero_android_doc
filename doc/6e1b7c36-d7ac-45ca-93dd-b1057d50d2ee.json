@@ -1,0 +1,10 @@
+{
+    "summary": "This class represents audio configuration settings with rate, channel configuration, and audio format. It provides a constructor to initialize these properties.",
+    "details": [
+        {
+            "comment": "This class represents audio configuration settings with rate, channel configuration, and audio format. It provides a constructor to initialize these properties.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/m6/ConfigClass.java\":0-11",
+            "content": "package ai.lazero.lazero.m6;\npublic class ConfigClass {\n    public int rate;\n    public short channelConfig;\n    public short audioFormat;\n    public ConfigClass(int rate, short channelConfig, short audioFormat){\n        this.audioFormat = audioFormat;\n        this.rate = rate;\n        this.channelConfig = channelConfig;\n    }\n}"
+        }
+    ]
+}

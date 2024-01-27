@@ -1,0 +1,15 @@
+{
+    "summary": "This code enables serialization and deserialization of objects to byte arrays, useful for data storage and transmission. It also handles exceptions during object reading from a stream before closing input streams.",
+    "details": [
+        {
+            "comment": "This code provides methods to serialize and deserialize objects into bytes. The \"toByteArray\" method converts an object to a byte array, while the \"toObject\" method reconverts a byte array back into an object. This can be useful for storing or transmitting data in binary format.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java\":0-43",
+            "content": "package ai.lazero.lazero;\nimport java.io.ByteArrayInputStream;\nimport java.io.ByteArrayOutputStream;\nimport java.io.IOException;\nimport java.io.ObjectInputStream;\nimport java.io.ObjectOutputStream;\npublic class ObjectAndByte {\n// whatever.\n    /**\n     * \u5bf9\u8c61\u8f6c\u6570\u7ec4\n     *\n     * @param obj\n     * @return\n     */\n    public static byte[] toByteArray(Object obj) {\n        byte[] bytes = null;\n        ByteArrayOutputStream bos = new ByteArrayOutputStream();\n        try {\n            ObjectOutputStream oos = new ObjectOutputStream(bos);\n            oos.writeObject(obj);\n            oos.flush();\n            bytes = bos.toByteArray();\n            oos.close();\n            bos.close();\n        } catch (IOException ex) {\n            ex.printStackTrace();\n        }\n        return bytes;\n    }\n    /**\n     * \u6570\u7ec4\u8f6c\u5bf9\u8c61\n     *\n     * @param bytes\n     * @return\n     */\n    public static Object toObject(byte[] bytes) {\n        Object obj = null;\n        try {\n            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);\n            ObjectInputStream ois = new ObjectInputStream(bis);"
+        },
+        {
+            "comment": "This code reads an object from a stream, closes the input streams, and returns the object. It handles potential IOException and ClassNotFoundException by printing their respective stacks.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java\":44-55",
+            "content": "            obj = ois.readObject();\n            ois.close();\n            bis.close();\n        } catch (IOException ex) {\n            ex.printStackTrace();\n        } catch (ClassNotFoundException ex) {\n            ex.printStackTrace();\n        }\n        return obj;\n    }\n}"
+        }
+    ]
+}

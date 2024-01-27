@@ -1,0 +1,10 @@
+{
+    "summary": "Status class defines five static status codes: STOP, START, READY, NO_READY, and PAUSE. These codes are used to represent different states in the app.",
+    "details": [
+        {
+            "comment": "Status class defines five static status codes: STOP, START, READY, NO_READY, and PAUSE. These codes are used to represent different states in the app.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/Status.java\":0-9",
+            "content": "package ai.lazero.lazero;\npublic class Status {\n    public static int STATUS_STOP=0;\n    public static int STATUS_START=4;\n    public static int STATUS_READY=1;\n    public static int STATUS_NO_READY=2;\n    public static int STATUS_PAUSE=3;\n}"
+        }
+    ]
+}

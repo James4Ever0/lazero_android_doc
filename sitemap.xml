@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/Apl.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/ByteClass.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/Main2Activity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/Main3Activity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/Main4Activity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/Main5Activity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/Main6Activity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MainActivity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MainClipActivity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MainXActivity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MyReceiver.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MyService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MyService2.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MyServiceClip.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/MyThread.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/ObjectAndByte.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/RecordAudio.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/ScreenShotFb.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/ScreenshotService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/SettingsActivity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/SimpleService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/Status.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/AcService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/AdService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/AeService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/BubbleService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/ConfigClass.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/Main7Activity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/Main8Activity.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/PowerButtonService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/RecPlayService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/ViewService.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/basic_overlay.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+<url>
+  <loc>https://james4ever0.github.io/lazero_android_doc?q=/app/src/main/java/ai/lazero/lazero/m6/basic_overlay_v2.java</loc>
+  <lastmod>2023-12-28T09:21:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+
+</urlset>

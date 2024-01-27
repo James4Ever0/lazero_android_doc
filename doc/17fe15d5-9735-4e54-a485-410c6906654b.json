@@ -1,0 +1,15 @@
+{
+    "summary": "Main8Activity, an Android activity class, initializes two buttons and sets their onClickListeners. When clicked, the buttons display a Toast message with a random string \"\u6211\u672a\u88ab\u52ab\u6301\".",
+    "details": [
+        {
+            "comment": "This code represents an Android activity class, Main8Activity, which extends AppCompatActivity. It initializes two buttons, button and button_v0, sets their respective onClickListeners, and displays a Toast message when the buttons are clicked. The random string is used for the toast message and has a value of \"\u6211\u672a\u88ab\u52ab\u6301\".",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/m6/Main8Activity.java\":0-46",
+            "content": "package ai.lazero.lazero.m6;\nimport android.support.v7.app.AppCompatActivity;\nimport android.os.Bundle;\nimport android.view.View;\nimport android.widget.Button;\nimport android.widget.Toast;\nimport ai.lazero.lazero.MainActivity;\nimport ai.lazero.lazero.R;\npublic class Main8Activity extends AppCompatActivity {\n    private Button button;\n    private Button button_v0;\n    private String random =\"\u6211\u672a\u88ab\u52ab\u6301\";\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main8);\n        button = (Button) findViewById(R.id.button_v0);\n        button.setOnClickListener(new View.OnClickListener() {\n            public void onClick(View v) {\n                Toast.makeText(Main8Activity.this, toastMessage(random), Toast.LENGTH_SHORT).show();\n            }\n        });\n        button_v0 = (Button) findViewById(R.id.button_v1);\n        button_v0.setOnClickListener(new View.OnClickListener() {\n            public void onClick(View v) {\n                Toast.makeText(Main8Activity.this, toastMessage_v2(random), Toast.LENGTH_SHORT).show();"
+        },
+        {
+            "comment": "Method \"onCreate\" initializes a button click listener and two toast message functions. Toast messages return the input string without any additional functionality.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/m6/Main8Activity.java\":48-65",
+            "content": "            }\n        });\n    }\n    public String toastMessage(String random) {\n        return random;\n    }\n    public String toastMessage_v2(String random) {\n        return random;\n    }\n}"
+        }
+    ]
+}

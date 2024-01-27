@@ -1,0 +1,10 @@
+{
+    "summary": "The class ByteClass serves as a container for boolean screenshot_update, possibly indicating whether the screenshot needs to be updated. The constructor takes a boolean parameter to initialize this value.",
+    "details": [
+        {
+            "comment": "The class ByteClass serves as a container for boolean screenshot_update, possibly indicating whether the screenshot needs to be updated. The constructor takes a boolean parameter to initialize this value.",
+            "location": "\"/media/root/Prima/works/generated_docs/lazero_android_doc/src/app/src/main/java/ai/lazero/lazero/ByteClass.java\":0-10",
+            "content": "package ai.lazero.lazero;\npublic class ByteClass {\n//    byte[] screenshot;\n    boolean screenshot_update;\n    ByteClass(\n            boolean screenshot_update){\n//        this.screenshot= screenshot;\n        this.screenshot_update=screenshot_update;\n    }\n}"
+        }
+    ]
+}

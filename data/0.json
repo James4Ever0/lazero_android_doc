@@ -1,0 +1,543 @@
+{
+    "0": {
+        "file_id": 0,
+        "content": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java",
+        "type": "filepath"
+    },
+    "1": {
+        "file_id": 0,
+        "content": "The AccessibilityNodeInfoDumper class in Android generates an XML dump of accessibility node information using Java libraries. It handles exceptions, allows customization, and recursively identifies non-accessibility friendly controls, removing invalid XML characters from CharSequence inputs.",
+        "type": "summary"
+    },
+    "2": {
+        "file_id": 0,
+        "content": "/*\n * Copyright (C) 2012 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */\npackage ai.lazero.lazero;\nimport android.os.Environment;\nimport android.os.SystemClock;\nimport android.util.Log;\nimport android.util.Xml;\nimport android.view.accessibility.AccessibilityNodeInfo;\nimport org.xmlpull.v1.XmlSerializer;\n// does not seems to be an issue?\nimport java.io.File;\nimport java.io.FileWriter;\nimport java.io.IOException;\nimport java.io.StringWriter;\n///**\n// *\n// * @hide\n// */\npublic class AccessibilityNodeInfoDumper {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:1-36"
+    },
+    "3": {
+        "file_id": 0,
+        "content": "This Java class, named AccessibilityNodeInfoDumper, appears to be responsible for dumping accessibility node information in a text file. It uses various Android and Java libraries such as Log, XmlSerializer, FileWriter, and StringWriter. The code snippet also mentions Environment, but its usage is unclear. Additionally, the class seems to be hidden, denoted by \"@hide\".",
+        "type": "comment"
+    },
+    "4": {
+        "file_id": 0,
+        "content": "    private static final String LOGTAG = AccessibilityNodeInfoDumper.class.getSimpleName();\n    private static final String[] NAF_EXCLUDED_CLASSES = new String[] {\n            android.widget.GridView.class.getName(), android.widget.GridLayout.class.getName(),\n            android.widget.ListView.class.getName(), android.widget.TableLayout.class.getName()\n    };\n    /**\n     * Using {@link AccessibilityNodeInfo} this method will walk the layout hierarchy\n     * and generates an xml dump into the /data/local/window_dump.xml\n     * @param root The root accessibility node.\n     * @param rotation The rotaion of current display\n     * @param width The pixel width of current display\n     * @param height The pixel height of current display\n     */\n    public static void dumpWindowToFile(AccessibilityNodeInfo root, int rotation,\n                                        int width, int height) {\n        File baseDir = new File(Environment.getDataDirectory(), \"local\");\n        if (!baseDir.exists()) {\n            baseDir.mkdir();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:38-56"
+    },
+    "5": {
+        "file_id": 0,
+        "content": "This code defines a class for dumping the accessibility node information of an Android application into an XML file located at /data/local/window_dump.xml. It takes the root accessibility node, device rotation, width, and height as input parameters. The method also creates the base directory if it doesn't exist.",
+        "type": "comment"
+    },
+    "6": {
+        "file_id": 0,
+        "content": "            baseDir.setExecutable(true, false);\n            baseDir.setWritable(true, false);\n            baseDir.setReadable(true, false);\n        }\n        dumpWindowToFile(root,\n                new File(new File(Environment.getDataDirectory(), \"local\"), \"window_dump.xml\"),\n                rotation, width, height);\n    }\n    /**\n     * Using {@link AccessibilityNodeInfo} this method will walk the layout hierarchy\n     * and generates an xml dump to the location specified by <code>dumpFile</code>\n     * @param root The root accessibility node.\n     * @param dumpFile The file to dump to.\n     * @param rotation The rotaion of current display\n     * @param width The pixel width of current display\n     * @param height The pixel height of current display\n     */\n    public static String dumpWindowToString(AccessibilityNodeInfo root, int rotation,\n                                        int width, int height) {\n        if (root == null) {\n            return null;\n        }\n        final long startTime = SystemClock.uptimeMillis();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:57-80"
+    },
+    "7": {
+        "file_id": 0,
+        "content": "This code is setting permissions for a base directory and then calling a method to dump the window layout hierarchy information into an XML file. The `dumpWindowToString` method generates this XML dump based on the provided accessibility node, dump file, rotation, width, and height parameters. If the root node is null, it returns null.",
+        "type": "comment"
+    },
+    "8": {
+        "file_id": 0,
+        "content": "        try {\n//            FileWriter writer = new FileWriter(dumpFile);\n            XmlSerializer serializer = Xml.newSerializer();\n            StringWriter stringWriter = new StringWriter();\n            serializer.setOutput(stringWriter);\n            serializer.startDocument(\"UTF-8\", true);\n            serializer.startTag(\"\", \"hierarchy\");\n            serializer.attribute(\"\", \"rotation\", Integer.toString(rotation));\n            dumpNodeRec(root, serializer, 0, width, height);\n            serializer.endTag(\"\", \"hierarchy\");\n            serializer.endDocument();\n            return stringWriter.toString();\n//            writer.write(stringWriter.toString());\n//            writer.close();\n        } catch (IOException e) {\n            Log.e(LOGTAG, \"failed to dump window to file\", e);\n        }\n        final long endTime = SystemClock.uptimeMillis();\n        Log.w(LOGTAG, \"Fetch time: \" + (endTime - startTime) + \"ms\");\n        return null;\n    }\n    public static void dumpWindowToFile(AccessibilityNodeInfo root, File dumpFile, int rotation,",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:81-104"
+    },
+    "9": {
+        "file_id": 0,
+        "content": "This code snippet is trying to dump the Android AccessibilityNodeInfo hierarchy into a file. It initializes a StringWriter and XmlSerializer, sets the output format, starts tagging the hierarchy with rotation attribute, recursively dumps child nodes, ends the hierarchy tag, and returns the serialized string or logs an error if failed.",
+        "type": "comment"
+    },
+    "10": {
+        "file_id": 0,
+        "content": "                                        int width, int height) {\n        if (root == null) {\n            return;\n            //my first line from remote machine to this server.\n        }\n        final long startTime = SystemClock.uptimeMillis();\n        try {\n            FileWriter writer = new FileWriter(dumpFile);\n            XmlSerializer serializer = Xml.newSerializer();\n            StringWriter stringWriter = new StringWriter();\n            serializer.setOutput(stringWriter);\n            serializer.startDocument(\"UTF-8\", true);\n            serializer.startTag(\"\", \"hierarchy\");\n            serializer.attribute(\"\", \"rotation\", Integer.toString(rotation));\n            dumpNodeRec(root, serializer, 0, width, height);\n            serializer.endTag(\"\", \"hierarchy\");\n            serializer.endDocument();\n            writer.write(stringWriter.toString());\n            writer.close();\n        } catch (IOException e) {\n            Log.e(LOGTAG, \"failed to dump window to file\", e);\n        }\n        final long endTime = SystemClock.uptimeMillis();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:105-127"
+    },
+    "11": {
+        "file_id": 0,
+        "content": "This code dumps the Android accessibility node information to a file. It checks if the root is null, then measures execution time and writes the dumped data to a file using XmlSerializer and FileWriter.",
+        "type": "comment"
+    },
+    "12": {
+        "file_id": 0,
+        "content": "        Log.w(LOGTAG, \"Fetch time: \" + (endTime - startTime) + \"ms\");\n    }\n//    public static void dumpWindowToString(AccessibilityNodeInfo root,StringBuilder sb,int  rotation,\n//                                        int width, int height) {\n//        if (root == null) {\n//            return;\n//        }\n//        final long startTime = SystemClock.uptimeMillis();\n//        try {\n//            FileWriter writer = new FileWriter(dumpFile);\n//            XmlSerializer serializer = Xml.newSerializer();\n//            StringWriter stringWriter = new StringWriter();\n//            serializer.setOutput(stringWriter);\n//            serializer.startDocument(\"UTF-8\", true);\n//            serializer.startTag(\"\", \"hierarchy\");\n//            serializer.attribute(\"\", \"rotation\", Integer.toString(rotation));\n//            dumpNodeRec(root, serializer, 0, width, height);\n//            serializer.endTag(\"\", \"hierarchy\");\n//            serializer.endDocument();\n//            writer.write(stringWriter.toString());\n//            writer.close();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:128-148"
+    },
+    "13": {
+        "file_id": 0,
+        "content": "The code measures the time taken to dump the AccessibilityNodeInfo and writes the XML representation of the hierarchy to a file. It uses XmlSerializer to format the output, and a FileWriter to write the string content to the specified file.",
+        "type": "comment"
+    },
+    "14": {
+        "file_id": 0,
+        "content": "//        } catch (IOException e) {\n//            Log.e(LOGTAG, \"failed to dump window to file\", e);\n//        }\n//        final long endTime = SystemClock.uptimeMillis();\n//        Log.w(LOGTAG, \"Fetch time: \" + (endTime - startTime) + \"ms\");\n//    }\n    private static void dumpNodeRec(AccessibilityNodeInfo node, XmlSerializer serializer,int index,\n                                    int width, int height) throws IOException {\n        serializer.startTag(\"\", \"node\");\n        if (!nafExcludedClass(node) && !nafCheck(node))\n            serializer.attribute(\"\", \"NAF\", Boolean.toString(true));\n        serializer.attribute(\"\", \"index\", Integer.toString(index));\n        serializer.attribute(\"\", \"text\", safeCharSeqToString(node.getText()));\n        serializer.attribute(\"\", \"resource-id\", safeCharSeqToString(node.getViewIdResourceName()));\n        serializer.attribute(\"\", \"class\", safeCharSeqToString(node.getClassName()));\n        serializer.attribute(\"\", \"package\", safeCharSeqToString(node.getPackageName()));",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:149-165"
+    },
+    "15": {
+        "file_id": 0,
+        "content": "The code snippet is part of a function that dumps accessibility information for a node to an XML file. It checks if the node should be excluded or not and adds relevant attributes such as index, text, resource-id, class, and package name to the XML file. If any IOExceptions occur during the dumping process, they are logged with error level. The time taken to fetch information is also logged with warning level.",
+        "type": "comment"
+    },
+    "16": {
+        "file_id": 0,
+        "content": "        serializer.attribute(\"\", \"content-desc\", safeCharSeqToString(node.getContentDescription()));\n        serializer.attribute(\"\", \"checkable\", Boolean.toString(node.isCheckable()));\n        serializer.attribute(\"\", \"checked\", Boolean.toString(node.isChecked()));\n        serializer.attribute(\"\", \"clickable\", Boolean.toString(node.isClickable()));\n        serializer.attribute(\"\", \"enabled\", Boolean.toString(node.isEnabled()));\n        serializer.attribute(\"\", \"focusable\", Boolean.toString(node.isFocusable()));\n        serializer.attribute(\"\", \"focused\", Boolean.toString(node.isFocused()));\n        serializer.attribute(\"\", \"scrollable\", Boolean.toString(node.isScrollable()));\n        serializer.attribute(\"\", \"long-clickable\", Boolean.toString(node.isLongClickable()));\n        serializer.attribute(\"\", \"password\", Boolean.toString(node.isPassword()));\n        serializer.attribute(\"\", \"selected\", Boolean.toString(node.isSelected()));\n        try{serializer.attribute(\"\", \"toString\", node.toString());}catch(Exception e){",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:166-177"
+    },
+    "17": {
+        "file_id": 0,
+        "content": "This code is setting various attributes of an AccessibilityNodeInfo object such as checkable, checked, clickable, enabled, focusable, focused, scrollable, long-clickable, password, and selected using the serializer attribute method. The try-catch block is used to handle any exceptions while converting the node to a string.",
+        "type": "comment"
+    },
+    "18": {
+        "file_id": 0,
+        "content": "            serializer.attribute(\"\", \"toString\", \"\");\n            Log.e(\"ACCESSIBILITY NODE DUMPER\",\"node to string failed.\");\n            Log.e(\"ACCESSIBILITY NODE DUMPER\",e.toString());\n        }\n        // what the fuck is going on?\n        serializer.attribute(\"\", \"bounds\", AccessibilityNodeInfoHelper.getVisibleBoundsInScreen(\n                node, width, height).toShortString());\n        int count = node.getChildCount();\n        for (int i = 0; i < count; i++) {\n            AccessibilityNodeInfo child = node.getChild(i);\n            if (child != null) {\n//                if (child.isVisibleToUser()) {\n                    dumpNodeRec(child, serializer, i, width, height);\n                    child.recycle();\n//                } else {\n//                    Log.i(LOGTAG, String.format(\"Skipping invisible child: %s\", child.toString()));\n//                }\n            } else {\n                Log.i(LOGTAG, String.format(\"Null child %d/%d, parent: %s\",\n                        i, count, node.toString()));\n            }",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:178-198"
+    },
+    "19": {
+        "file_id": 0,
+        "content": "This code segment appears to be part of a recursive function that dumps information about Android AccessibilityNodeInfo objects. It handles potential exceptions when converting the node to a string, logs an error message, and then proceeds to serialize the bounds attribute for the current node. The code then moves on to iterate through child nodes, skipping invisible ones and logging errors for null children.",
+        "type": "comment"
+    },
+    "20": {
+        "file_id": 0,
+        "content": "        }\n        serializer.endTag(\"\", \"node\");\n    }\n    /**\n     * The list of classes to exclude my not be complete. We're attempting to\n     * only reduce noise from standard layout classes that may be falsely\n     * configured to accept clicks and are also enabled.\n     *\n     * @param node\n     * @return true if node is excluded.\n     */\n    private static boolean nafExcludedClass(AccessibilityNodeInfo node) {\n        String className = safeCharSeqToString(node.getClassName());\n        for(String excludedClassName : NAF_EXCLUDED_CLASSES) {\n            if(className.endsWith(excludedClassName))\n                return true;\n        }\n        return false;\n    }\n    /**\n     * We're looking for UI controls that are enabled, clickable but have no\n     * text nor content-description. Such controls configuration indicate an\n     * interactive control is present in the UI and is most likely not\n     * accessibility friendly. We refer to such controls here as NAF controls\n     * (Not Accessibility Friendly)\n     *",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:199-226"
+    },
+    "21": {
+        "file_id": 0,
+        "content": "This code checks for AccessibilityNodeInfo nodes that are not accessibility friendly (NAF) by excluding certain classes and searching for enabled, clickable controls with no text or content description. If found, these NAF controls may indicate an issue in the UI's accessibility.",
+        "type": "comment"
+    },
+    "22": {
+        "file_id": 0,
+        "content": "     * @param node\n     * @return false if a node fails the check, true if all is OK\n     */\n    private static boolean nafCheck(AccessibilityNodeInfo node) {\n        boolean isNaf = node.isClickable() && node.isEnabled()\n                && safeCharSeqToString(node.getContentDescription()).isEmpty()\n                && safeCharSeqToString(node.getText()).isEmpty();\n        if (!isNaf)\n            return true;\n        // check children since sometimes the containing element is clickable\n        // and NAF but a child's text or description is available. Will assume\n        // such layout as fine.\n        return childNafCheck(node);\n    }\n    /**\n     * This should be used when it's already determined that the node is NAF and\n     * a further check of its children is in order. A node maybe a container\n     * such as LinerLayout and may be set to be clickable but have no text or\n     * content description but it is counting on one of its children to fulfill\n     * the requirement for being accessibility friendly by having one or more of",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:227-249"
+    },
+    "23": {
+        "file_id": 0,
+        "content": "This code checks if a given AccessibilityNodeInfo is Not A Friendly (NAF) by verifying its clickability, enablement, empty content description, and empty text. If it's NAF, it further checks its children to ensure the layout meets accessibility requirements.",
+        "type": "comment"
+    },
+    "24": {
+        "file_id": 0,
+        "content": "     * its children fill the text or content-description. Such a combination is\n     * considered by this dumper as acceptable for accessibility.\n     *\n     * @param node\n     * @return false if node fails the check.\n     */\n    private static boolean childNafCheck(AccessibilityNodeInfo node) {\n        try{\n        int childCount = node.getChildCount();\n        for (int x = 0; x < childCount; x++) {\n            AccessibilityNodeInfo childNode = node.getChild(x);\n            if (!safeCharSeqToString(childNode.getContentDescription()).isEmpty()\n                    || !safeCharSeqToString(childNode.getText()).isEmpty())\n                return true;\n            if (childNafCheck(childNode))\n                return true;\n        }\n        return false;}\n        catch(Exception e){\n            Log.e(\"Child NAF\",e.toString());\n            return false;\n        }\n    }\n    private static String safeCharSeqToString(CharSequence cs) {\n        if (cs == null)\n            return \"\";\n        else {\n            return stripInvalidXMLChars(cs);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:250-280"
+    },
+    "25": {
+        "file_id": 0,
+        "content": "The `childNafCheck` function checks if a given `AccessibilityNodeInfo` has acceptable children for accessibility purposes. It iterates through the node's child count, and for each child, it checks if either the content description or text is not empty. If any child passes this check or any descendant node passes the `childNafCheck`, the function returns true; otherwise, it returns false. The `safeCharSeqToString` function converts a CharSequence into a string, returning an empty string if the CharSequence is null and stripping invalid XML characters from the string.",
+        "type": "comment"
+    },
+    "26": {
+        "file_id": 0,
+        "content": "        }\n    }\n    private static String stripInvalidXMLChars(CharSequence cs) {\n        StringBuffer ret = new StringBuffer();\n        char ch;\n        // it is not caring about incomplete info.\n        // how about sending a java object?\n        /* http://www.w3.org/TR/xml11/#charsets\n        [#x1-#x8], [#xB-#xC], [#xE-#x1F], [#x7F-#x84], [#x86-#x9F], [#xFDD0-#xFDDF],\n        [#x1FFFE-#x1FFFF], [#x2FFFE-#x2FFFF], [#x3FFFE-#x3FFFF],\n        [#x4FFFE-#x4FFFF], [#x5FFFE-#x5FFFF], [#x6FFFE-#x6FFFF],\n        [#x7FFFE-#x7FFFF], [#x8FFFE-#x8FFFF], [#x9FFFE-#x9FFFF],\n        [#xAFFFE-#xAFFFF], [#xBFFFE-#xBFFFF], [#xCFFFE-#xCFFFF],\n        [#xDFFFE-#xDFFFF], [#xEFFFE-#xEFFFF], [#xFFFFE-#xFFFFF],\n        [#x10FFFE-#x10FFFF].\n         */\n        // might be useful but don't know how to do this.\n        for (int i = 0; i < cs.length(); i++) {\n            ch = cs.charAt(i);\n            if((ch >= 0x1 && ch <= 0x8) || (ch >= 0xB && ch <= 0xC) || (ch >= 0xE && ch <= 0x1F) ||\n                    (ch >= 0x7F && ch <= 0x84) || (ch >= 0x86 && ch <= 0x9f) ||",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:281-303"
+    },
+    "27": {
+        "file_id": 0,
+        "content": "This code snippet is stripping out invalid XML characters from a given CharSequence. It iterates over each character in the sequence and checks if it falls within any of the specified ranges of invalid XML characters, removing those that do.",
+        "type": "comment"
+    },
+    "28": {
+        "file_id": 0,
+        "content": "                    (ch >= 0xFDD0 && ch <= 0xFDDF) || (ch >= 0x1FFFE && ch <= 0x1FFFF) ||\n                    (ch >= 0x2FFFE && ch <= 0x2FFFF) || (ch >= 0x3FFFE && ch <= 0x3FFFF) ||\n                    (ch >= 0x4FFFE && ch <= 0x4FFFF) || (ch >= 0x5FFFE && ch <= 0x5FFFF) ||\n                    (ch >= 0x6FFFE && ch <= 0x6FFFF) || (ch >= 0x7FFFE && ch <= 0x7FFFF) ||\n                    (ch >= 0x8FFFE && ch <= 0x8FFFF) || (ch >= 0x9FFFE && ch <= 0x9FFFF) ||\n                    (ch >= 0xAFFFE && ch <= 0xAFFFF) || (ch >= 0xBFFFE && ch <= 0xBFFFF) ||\n                    (ch >= 0xCFFFE && ch <= 0xCFFFF) || (ch >= 0xDFFFE && ch <= 0xDFFFF) ||\n                    (ch >= 0xEFFFE && ch <= 0xEFFFF) || (ch >= 0xFFFFE && ch <= 0xFFFFF) ||\n                    (ch >= 0x10FFFE && ch <= 0x10FFFF))\n                ret.append(\".\");\n            else\n                ret.append(ch);\n        }\n        return ret.toString();\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoDumper.java:304-319"
+    },
+    "29": {
+        "file_id": 0,
+        "content": "This code checks if the character falls within a range of Unicode surrogate characters and appends '.' if it does, otherwise appends the character itself. The purpose might be related to handling special characters or surrogates in strings.",
+        "type": "comment"
+    },
+    "30": {
+        "file_id": 1,
+        "content": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java",
+        "type": "filepath"
+    },
+    "31": {
+        "file_id": 1,
+        "content": "The class contains helper methods for AccessibilityNodeInfo, including getVisibleBoundsInScreen which returns the node's visible bounds on screen clipped to display size, considering null node cases and calculating intersected bounds between node and display rectangle.",
+        "type": "summary"
+    },
+    "32": {
+        "file_id": 1,
+        "content": "package ai.lazero.lazero;\nimport android.graphics.Rect;\nimport android.view.accessibility.AccessibilityNodeInfo;\n/**\n * This class contains static helper methods to work with\n * {@link AccessibilityNodeInfo}\n */\nclass AccessibilityNodeInfoHelper {\n    /**\n     * Returns the node's bounds clipped to the size of the display\n     *\n     * @param node\n     * @param width pixel width of the display\n     * @param height pixel height of the display\n     * @return null if node is null, else a Rect containing visible bounds\n     */\n    static Rect getVisibleBoundsInScreen(AccessibilityNodeInfo node, int width, int height) {\n        if (node == null) {\n            return null;\n        }\n        // targeted node's bounds\n        Rect nodeRect = new Rect();\n        node.getBoundsInScreen(nodeRect);\n        Rect displayRect = new Rect();\n        displayRect.top = 0;\n        displayRect.left = 0;\n        displayRect.right = width;\n        displayRect.bottom = height;\n        if (nodeRect.intersect(displayRect)) {\n            return nodeRect;",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java:1-35"
+    },
+    "33": {
+        "file_id": 1,
+        "content": "This class contains helper methods for working with AccessibilityNodeInfo. The getVisibleBoundsInScreen method returns the node's visible bounds on screen, clipped to the display size. It takes in an AccessibilityNodeInfo object, and pixel width and height of the display as parameters. If the node is null, it returns null; otherwise, it calculates the intersected bounds between the node's bounds and the display rectangle.",
+        "type": "comment"
+    },
+    "34": {
+        "file_id": 1,
+        "content": "        } else {\n            return new Rect();\n        }\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityNodeInfoHelper.java:36-40"
+    },
+    "35": {
+        "file_id": 1,
+        "content": "Else block of the function. Returns an empty Rect if not initialized.",
+        "type": "comment"
+    },
+    "36": {
+        "file_id": 2,
+        "content": "/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java",
+        "type": "filepath"
+    },
+    "37": {
+        "file_id": 2,
+        "content": "The AccessibilityUtil class provides accessibility-related methods, including checkSetting for system settings and acquires wake locks and screen unlocks for 60 seconds.",
+        "type": "summary"
+    },
+    "38": {
+        "file_id": 2,
+        "content": "package ai.lazero.lazero;\nimport android.app.AlertDialog;\nimport android.app.KeyguardManager;\nimport android.content.Context;\nimport android.content.DialogInterface;\nimport android.content.Intent;\nimport android.os.PowerManager;\nimport android.provider.Settings;\nimport android.text.TextUtils;\nimport android.util.Log;\n/**\n * 辅助功能/无障碍相关工具\n */\npublic class AccessibilityUtil {\n    private static final String TAG = AccessibilityUtil.class.getSimpleName();\n    /**\n     * 检查系统设置，并显示设置对话框\n     *\n     * @param service 辅助服务\n     */\n    public static void checkSetting(final Context cxt, Class service) {\n        if (isSettingOpen(service, cxt))\n            return;\n        new AlertDialog.Builder(cxt)\n                .setTitle(R.string.aby_setting_title)\n                .setMessage(R.string.aby_setting_msg)\n                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {\n                    @Override\n                    public void onClick(DialogInterface dialog, int which) {\n                        jumpToSetting(cxt);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java:1-34"
+    },
+    "39": {
+        "file_id": 2,
+        "content": "This code is a part of the AccessibilityUtil class that provides methods related to accessibility and assistive technology. The checkSetting method checks if the system settings are open and displays a dialog box with a message. If the user clicks \"yes\" in the dialog, it calls jumpToSetting to navigate the user to the settings page for further configuration.",
+        "type": "comment"
+    },
+    "40": {
+        "file_id": 2,
+        "content": "                    }\n                })\n                .show();\n    }\n// get how it was applied.\n    // get another return thing.\n//    android:scrollbars = \"vertical\"\n    /**\n     * 检查系统设置：是否开启辅助服务\n     *\n     * @param service 辅助服务\n     */\n    public static boolean isSettingOpen(Class service, Context cxt) {\n        try {\n            int enable = Settings.Secure.getInt(cxt.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, 0);\n            if (enable != 1)\n                return false;\n            String services = Settings.Secure.getString(cxt.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);\n            if (!TextUtils.isEmpty(services)) {\n                TextUtils.SimpleStringSplitter split = new TextUtils.SimpleStringSplitter(':');\n                split.setString(services);\n                while (split.hasNext()) { // 遍历所有已开启的辅助服务名\n                    if (split.next().equalsIgnoreCase(cxt.getPackageName() + \"/\" + service.getName()))\n                        return true;\n                }",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java:35-59"
+    },
+    "41": {
+        "file_id": 2,
+        "content": "Checks if accessibility service is enabled in system settings and returns the status.",
+        "type": "comment"
+    },
+    "42": {
+        "file_id": 2,
+        "content": "            }\n        } catch (Throwable e) {//若出现异常，则说明该手机设置被厂商篡改了,需要适配\n            Log.e(TAG, \"isSettingOpen: \" + e.getMessage());\n        }\n        return false;\n    }\n// fuck.\n    /**\n     * 跳转到系统设置：开启辅助服务\n     */\n    public static void jumpToSetting(final Context cxt) {\n        try {\n            cxt.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));\n        } catch (Throwable e) {//若出现异常，则说明该手机设置被厂商篡改了,需要适配\n            try {\n                Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);\n                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);\n                cxt.startActivity(intent);\n            } catch (Throwable e2) {\n                Log.e(TAG, \"jumpToSetting: \" + e2.getMessage());\n            }\n        }\n    }\n    /**\n     * 唤醒点亮和解锁屏幕(60s)\n     */\n    public static void wakeUpScreen(Context context) {\n        try {\n            //唤醒点亮屏幕\n            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);\n            if (pm != null && pm.isScreenOn()) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java:60-91"
+    },
+    "43": {
+        "file_id": 2,
+        "content": "This code provides methods for accessing and modifying system settings related to accessibility, as well as waking up and unlocking the screen. It also includes error handling for cases where device manufacturers have altered the default settings, requiring custom adaptation.",
+        "type": "comment"
+    },
+    "44": {
+        "file_id": 2,
+        "content": "                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, \"wakeUpScreen\");\n                wl.acquire(60000); // 60s后释放锁\n            }\n            //解锁屏幕\n            KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);\n            if (km != null && km.inKeyguardRestrictedInputMode()) {\n                KeyguardManager.KeyguardLock kl = km.newKeyguardLock(\"unLock\");\n                kl.disableKeyguard();\n            }\n        } catch (Throwable e) {\n            Log.e(TAG, \"wakeUpScreen: \" + e.getMessage());\n        }\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AccessibilityUtil.java:92-106"
+    },
+    "45": {
+        "file_id": 2,
+        "content": "This code acquires a wake lock and unlocks the screen for 60 seconds. It first creates a wake lock with ACQUIRE_CAUSES_WAKEUP and SCREEN_DIM_WAKE_LOCK flags, then acquires it for 60 seconds. Next, it checks if in KeyguardRestrictedInputMode, and if so, disables the keyguard using a KeyguardLock. Any Throwable exceptions are logged with Log.e().",
+        "type": "comment"
+    },
+    "46": {
+        "file_id": 3,
+        "content": "/app/src/main/java/ai/lazero/lazero/Apl.java",
+        "type": "filepath"
+    },
+    "47": {
+        "file_id": 3,
+        "content": "The Apl class extends Application, manages connectivity and user presence events, provides public data like screenShotService, handles app creation, attachment, configuration changes, and memory release. It also overrides onTerminate and onLowMemory methods for garbage collection.",
+        "type": "summary"
+    },
+    "48": {
+        "file_id": 3,
+        "content": "package ai.lazero.lazero;\nimport android.app.Application;\nimport android.content.Context;\nimport android.content.IntentFilter;\nimport android.content.res.Configuration;\nimport me.weishu.reflection.Reflection;\n//import java.lang.ref.WeakReference;\npublic class Apl extends Application {\n    /*\n    Application创建时被调用，可以在该方法里进行一些初始化操作\n     */\n    private static Apl instance;\n    private MyReceiver myReceiver;\n    private IntentFilter intentFilter;\n    // does this work?\n//    Type<T> = boolean;\n    public boolean screenShotService=false;\n    public void setMyPublicData(boolean _d){\n//        screenShotService = null;\n        screenShotService = _d;\n    }\n    public boolean getMyPublicData(){\n        return screenShotService;\n    }\n    @Override\n    protected void attachBaseContext(Context base) {\n        super.attachBaseContext(base);\n        Reflection.unseal(base);\n    }\n    @Override\n    public void onCreate() {\n        super.onCreate();\n        Reflection.unseal(this);\n        instance=this;\n        System.out.println(\"MAIN APP LAUNCHED!\");",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Apl.java:1-42"
+    },
+    "49": {
+        "file_id": 3,
+        "content": "This code defines a class `Apl` extending `Application`, which is responsible for application-level operations. It has methods to manage a receiver, handle application creation and attachment, and provide public data (`screenShotService`) that can be accessed by other components.",
+        "type": "comment"
+    },
+    "50": {
+        "file_id": 3,
+        "content": "        myReceiver = new MyReceiver();\n        intentFilter = new IntentFilter();\n//        intentFilter.addAction(\"android.net.conn.CONNECTIVITY_CHANGE\");\n        //当网络发生变化的时候，系统广播会发出值为android.net.conn.CONNECTIVITY_CHANGE这样的一条广播\n        intentFilter.addAction(\"ai.lazero.lazero.recreate\");\n        intentFilter.addAction(\"android.intent.action.BOOT_COMPLETED\");\n        intentFilter.addAction(\"android.intent.action.USER_PRESENT\");\n        registerReceiver(myReceiver,intentFilter);\n//        myReceiver.onReceive();\n        // the api has been modified.\n        // no easy way?\n        // check it out later on.\n    }\n    // 获取Application\n    public static Context getApplication() {\n        return instance;\n    }\n    // no zero argument constructor.\n    /*\n    系统配置发生变更 的时候被调用 如：屏幕方向更改 、系统语言更改\n     */\n    @Override\n    public void onConfigurationChanged(Configuration newConfig) {\n        super.onConfigurationChanged(newConfig);\n    }\n    /*\n    系统内存吃紧时被调用，用于释放内存\n     */\n    @Override\n    public void onTerminate(){\n        unregisterReceiver(myReceiver);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Apl.java:43-74"
+    },
+    "51": {
+        "file_id": 3,
+        "content": "Code snippet from Apl.java registers a receiver to listen for connectivity changes, boot completion, and user presence events. It also provides a getApplication method and overrides configurationChanged and terminate methods for handling system configurations and memory release respectively.",
+        "type": "comment"
+    },
+    "52": {
+        "file_id": 3,
+        "content": "        super.onTerminate();\n    }\n    @Override\n    public void onLowMemory() {\n        super.onLowMemory();\n        System.out.println(\"SYSTEM GARBAGE COLLECTION\");\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Apl.java:75-82"
+    },
+    "53": {
+        "file_id": 3,
+        "content": "The code snippet is a part of the \"Apl.java\" class, where it extends the default functionality of onTerminate and onLowMemory methods from its superclass. In the case of low memory, the System.out.println statement triggers a garbage collection message.",
+        "type": "comment"
+    },
+    "54": {
+        "file_id": 4,
+        "content": "/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java",
+        "type": "filepath"
+    },
+    "55": {
+        "file_id": 4,
+        "content": "AppCompatPreferenceActivity is an abstract class that extends PreferenceActivity and utilizes AppCompatDelegate for compatibility. It overrides onCreate(), installs view factory, and handles lifecycle events including app configuration changes.",
+        "type": "summary"
+    },
+    "56": {
+        "file_id": 4,
+        "content": "package ai.lazero.lazero;\nimport android.content.res.Configuration;\nimport android.os.Bundle;\nimport android.preference.PreferenceActivity;\nimport android.support.annotation.LayoutRes;\nimport android.support.annotation.Nullable;\nimport android.support.v7.app.ActionBar;\nimport android.support.v7.app.AppCompatDelegate;\nimport android.support.v7.widget.Toolbar;\nimport android.view.MenuInflater;\nimport android.view.View;\nimport android.view.ViewGroup;\n/**\n * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls\n * to be used with AppCompat.\n */\npublic abstract class AppCompatPreferenceActivity extends PreferenceActivity {\n    private AppCompatDelegate mDelegate;\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        getDelegate().installViewFactory();\n        getDelegate().onCreate(savedInstanceState);\n        super.onCreate(savedInstanceState);\n    }\n    @Override\n    protected void onPostCreate(Bundle savedInstanceState) {\n        super.onPostCreate(savedInstanceState);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java:1-32"
+    },
+    "57": {
+        "file_id": 4,
+        "content": "AppCompatPreferenceActivity is an abstract class that extends PreferenceActivity and utilizes AppCompatDelegate to enable compatibility with older Android versions. It overrides onCreate() and onPostCreate() methods to install the view factory and handle lifecycle events.",
+        "type": "comment"
+    },
+    "58": {
+        "file_id": 4,
+        "content": "        getDelegate().onPostCreate(savedInstanceState);\n    }\n    public ActionBar getSupportActionBar() {\n        return getDelegate().getSupportActionBar();\n    }\n    public void setSupportActionBar(@Nullable Toolbar toolbar) {\n        getDelegate().setSupportActionBar(toolbar);\n    }\n    @Override\n    public MenuInflater getMenuInflater() {\n        return getDelegate().getMenuInflater();\n    }\n    @Override\n    public void setContentView(@LayoutRes int layoutResID) {\n        getDelegate().setContentView(layoutResID);\n    }\n    @Override\n    public void setContentView(View view) {\n        getDelegate().setContentView(view);\n    }\n    @Override\n    public void setContentView(View view, ViewGroup.LayoutParams params) {\n        getDelegate().setContentView(view, params);\n    }\n    @Override\n    public void addContentView(View view, ViewGroup.LayoutParams params) {\n        getDelegate().addContentView(view, params);\n    }\n    @Override\n    protected void onPostResume() {\n        super.onPostResume();\n        getDelegate().onPostResume();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java:33-72"
+    },
+    "59": {
+        "file_id": 4,
+        "content": "This code is part of an Android app's main activity class, extending the AppCompatPreferenceActivity. It provides methods to interact with the action bar, set content views, and handle post-resume events.",
+        "type": "comment"
+    },
+    "60": {
+        "file_id": 4,
+        "content": "    }\n    @Override\n    protected void onTitleChanged(CharSequence title, int color) {\n        super.onTitleChanged(title, color);\n        getDelegate().setTitle(title);\n    }\n    @Override\n    public void onConfigurationChanged(Configuration newConfig) {\n        super.onConfigurationChanged(newConfig);\n        getDelegate().onConfigurationChanged(newConfig);\n    }\n    @Override\n    protected void onStop() {\n        super.onStop();\n        getDelegate().onStop();\n    }\n    @Override\n    protected void onDestroy() {\n        super.onDestroy();\n        getDelegate().onDestroy();\n    }\n    public void invalidateOptionsMenu() {\n        getDelegate().invalidateOptionsMenu();\n    }\n    private AppCompatDelegate getDelegate() {\n        if (mDelegate == null) {\n            mDelegate = AppCompatDelegate.create(this, null);\n        }\n        return mDelegate;\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/AppCompatPreferenceActivity.java:73-109"
+    },
+    "61": {
+        "file_id": 4,
+        "content": "This code overrides various methods to handle app compatibility and configuration changes, including onTitleChanged, onConfigurationChanged, onStop, onDestroy, and invalidateOptionsMenu. It also contains a private method getDelegate() to create and return an instance of AppCompatDelegate if necessary.",
+        "type": "comment"
+    },
+    "62": {
+        "file_id": 5,
+        "content": "/app/src/main/java/ai/lazero/lazero/ByteClass.java",
+        "type": "filepath"
+    },
+    "63": {
+        "file_id": 5,
+        "content": "The class ByteClass serves as a container for boolean screenshot_update, possibly indicating whether the screenshot needs to be updated. The constructor takes a boolean parameter to initialize this value.",
+        "type": "summary"
+    },
+    "64": {
+        "file_id": 5,
+        "content": "package ai.lazero.lazero;\npublic class ByteClass {\n//    byte[] screenshot;\n    boolean screenshot_update;\n    ByteClass(\n            boolean screenshot_update){\n//        this.screenshot= screenshot;\n        this.screenshot_update=screenshot_update;\n    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/ByteClass.java:1-11"
+    },
+    "65": {
+        "file_id": 5,
+        "content": "The class ByteClass serves as a container for boolean screenshot_update, possibly indicating whether the screenshot needs to be updated. The constructor takes a boolean parameter to initialize this value.",
+        "type": "comment"
+    },
+    "66": {
+        "file_id": 6,
+        "content": "/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java",
+        "type": "filepath"
+    },
+    "67": {
+        "file_id": 6,
+        "content": "This code creates an OkHttpClient for handling HTTP POST requests with byte arrays, logs progress while streaming large files asynchronously in 2048-byte chunks and handles unknown errors.",
+        "type": "summary"
+    },
+    "68": {
+        "file_id": 6,
+        "content": "package ai.lazero.lazero;\nimport android.util.Log;\nimport java.io.ByteArrayInputStream;\nimport java.io.IOException;\nimport okhttp3.Call;\nimport okhttp3.Callback;\nimport okhttp3.MediaType;\nimport okhttp3.MultipartBody;\nimport okhttp3.OkHttpClient;\nimport okhttp3.Request;\nimport okhttp3.RequestBody;\nimport okhttp3.Response;\nimport okio.BufferedSink;\nimport okio.Okio;\nimport okio.Buffer;\nimport okio.Source;\npublic class HttpPostBytes {\n    private String url_self;\n    public byte[] payload_self;\n    public HttpPostBytes(String url, byte[] payload) {\n        this.url_self = url;\n        this.payload_self = payload;\n// you've cracked the code! congrats!\n    }\n    public <T> RequestBody createProgressRequestBody(final MediaType contentType, final byte[] file) {\n        return new RequestBody() {\n            @Override\n            public MediaType contentType() {\n                return contentType;\n            }\n            @Override\n            public long contentLength() {\n                return (long) file.length;\n            }",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java:1-44"
+    },
+    "69": {
+        "file_id": 6,
+        "content": "This code defines a class \"HttpPostBytes\" that handles HTTP POST requests for sending byte arrays. It takes a URL and payload byte array as input, creates a progress-tracking RequestBody, and uses OkHttpClient to send the request.",
+        "type": "comment"
+    },
+    "70": {
+        "file_id": 6,
+        "content": "            @Override\n            public void writeTo(BufferedSink sink) throws IOException {\n                Source source;\n                String TAG = \"tagger>>> \";\n                try {\n                    source = Okio.source(new ByteArrayInputStream(file));\n                    Buffer buf = new Buffer();\n                    long remaining = contentLength();\n                    long current = 0;\n                    for (long readCount; (readCount = source.read(buf, 2048)) != -1; ) {\n                        sink.write(buf, readCount);\n                        current += readCount;\n                        Log.e(TAG, \"current------>\" + current);\n                        Log.e(TAG, \"remaining------>\" + remaining);\n//                        progressCallBack(remaining, current, callBack);\n                    }\n                } catch (Exception e) {\n                    e.printStackTrace();\n                }\n            }\n        };\n    }\n    /**\n     * 上传文件\n     *\n     * @param actionUrl 接口地址\n     * @param filePath  本地文件地址",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java:46-73"
+    },
+    "71": {
+        "file_id": 6,
+        "content": "This code defines an asynchronous HTTP POST request to upload a file. It uses the Okio library and handles streaming large files by reading the file in chunks of 2048 bytes, updating progress, and sending data to the server until it reaches the end of the file. The progress is logged using Log.e with tag \"tagger>>> \".",
+        "type": "comment"
+    },
+    "72": {
+        "file_id": 6,
+        "content": "     */\n    public Boolean testPostBytes(String name, String value) {\n        try {\n            OkHttpClient client = new OkHttpClient();\n            System.out.println(\">> 3\");\n            RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)\n                    .addFormDataPart(\"file\", \"randomFile\",\n                            this.createProgressRequestBody(MediaType.parse(\"application/octet-stream\"), this.payload_self))\n                    .addFormDataPart(name, value)\n                    .build();\n            System.out.println(\">> 4\");\n            Request request = new Request.Builder()\n                    .url(this.url_self)\n                    .post(requestBody)\n                    .build();\n            System.out.println(\">> 5\");\n            client.newCall(request).enqueue(new Callback() {\n                // so what?\n                // time to find a router that will always work. the lazero router!\n                // so that we can hard-code localhost everywhere to get response back. pre-register some ports, or use ipv6 instead?",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java:74-93"
+    },
+    "73": {
+        "file_id": 6,
+        "content": "This code snippet creates an OkHttpClient instance, builds a MultipartBody request with form data parts, and sends a POST request to the specified URL. The code is part of a testPostBytes method that performs HTTP POST operations.",
+        "type": "comment"
+    },
+    "74": {
+        "file_id": 6,
+        "content": "                @Override\n                public void onFailure(final Call call, final IOException e) {\n                    // Handle the error\n//                    Log.e(\"sed\")\n                    // what the heck?\n                    System.out.println(\"failed to post data: \" + e.toString());\n//                    System.out.println(\"failed to post data\"+);\n                }\n                @Override\n                public void onResponse(final Call call, final Response response) throws IOException {\n                    if (!response.isSuccessful()) {\n                        // Handle the error\n                        System.out.println(\"failed to get response\");\n                    }\n                    // Upload successful\n                    response.close();\n                    // nothing to do with response.\n                }\n            });\n//            bis.close();\n//            ois.close();\n//            fs.close();\n            return true;\n        } catch (Exception ex) {\n            // Handle the error",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java:94-119"
+    },
+    "75": {
+        "file_id": 6,
+        "content": "This code handles HTTP POST requests and responses. On failure, it prints the error message, and on successful response, it closes the response and returns true. The catch block is used to handle any exceptions that may occur during execution.",
+        "type": "comment"
+    },
+    "76": {
+        "file_id": 6,
+        "content": "            System.out.println(\"unknown error\");\n            System.out.println(ex.toString());\n        }\n        return false;\n    }\n    //\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/HttpPostBytes.java:120-126"
+    },
+    "77": {
+        "file_id": 6,
+        "content": "Handling unknown errors, printing the error message to console and returning false.",
+        "type": "comment"
+    },
+    "78": {
+        "file_id": 7,
+        "content": "/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java",
+        "type": "filepath"
+    },
+    "79": {
+        "file_id": 7,
+        "content": "The code provides login authentication via GET, uses JobIntentService for background tasks, and handles HTTP requests/exceptions with a job ID. It's an Android background job scheduling service checking server updates and logging responses managed by JobSchedulerService.",
+        "type": "summary"
+    },
+    "80": {
+        "file_id": 7,
+        "content": "package ai.lazero.lazero;\n//import android.app.job.JobParameters;\n//import android.app.job.JobService;\n//import android.os.Handler;\n//import android.os.Message;\n//import android.widget.Toast;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.support.v4.app.JobIntentService;\nimport android.util.Log;\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStream;\nimport java.io.InputStreamReader;\nimport java.net.HttpURLConnection;\nimport java.net.MalformedURLException;\nimport java.net.URL;\n/**\n * Created by paulruiz on 3/7/15.\n */\npublic class JobSchedulerService extends JobIntentService {\n    public static String loginByGet(String path) {\n        try {\n            URL url = new URL(path);\n            HttpURLConnection connection = (HttpURLConnection) url.openConnection();\n            connection.setConnectTimeout(5000);\n            connection.setRequestMethod(\"GET\");\n            //获得结果码\n            int responseCode = connection.getResponseCode();\n            if (responseCode == 200) {",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java:1-34"
+    },
+    "81": {
+        "file_id": 7,
+        "content": "This code is implementing a login authentication using HTTP GET method by creating a URL, establishing a connection to it, and checking the response code. The service uses JobIntentService class for handling background tasks with job parameters.",
+        "type": "comment"
+    },
+    "82": {
+        "file_id": 7,
+        "content": "                //请求成功 获得返回的流\n                InputStream inputStream = connection.getInputStream();\n                StringBuilder sb = new StringBuilder();\n                String line;\n                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));\n                while ((line = br.readLine()) != null) {\n                    sb.append(line);\n                }\n//                String str = sb.toString();\n                return sb.toString();\n            } else {\n                //请求失败\n                return null;\n            }\n        } catch (MalformedURLException e) {\n            e.printStackTrace();\n        } catch (IOException e) {\n            e.printStackTrace();\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n        return null;\n    }\n    static final int JOB_ID = 10111;\n    /**\n     * Convenience method for enqueuing work in to this service.\n     */\n    static void enqueueWork(Context context, Intent work) {\n        enqueueWork(context, JobSchedulerService.class, JOB_ID, work);",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java:35-66"
+    },
+    "83": {
+        "file_id": 7,
+        "content": "This code is handling HTTP requests and returning the response in the form of a string. It also includes an exception handler for potential errors. The static method enqueues work into this service using a specified job ID.",
+        "type": "comment"
+    },
+    "84": {
+        "file_id": 7,
+        "content": "    }\n    @Override\n    protected void onHandleWork(Intent intent) {\n        while (true) {\n            try {\n                try {\n                    Thread.sleep(1000);\n                } catch (Exception e) {\n                    e.printStackTrace();\n                    break;\n                }\n                long tm= System.currentTimeMillis() / 1000;\n                String ts = String.valueOf(tm);\n                String rt = loginByGet(\"http://localhost:7777/\"+ts);\n                if (rt!=null){Log.d(\"house_return\",rt);}else{Log.d(\"house_return\",\"server not present.\");}\n                Log.d(\"houson\", \"onHandleWork: \" + intent.getStringExtra(\"work\"));\n            } catch (Exception e) {\n                e.printStackTrace();\n                break;\n            }\n        }\n    }\n//    private Handler mJobHandler = new Handler( new Handler.Callback() {\n//        @Override\n//        public boolean handleMessage( Message msg ) {\n//            Toast.makeText( getApplicationContext(), \"JobService task running\", Toast.LENGTH_SHORT ).show();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java:67-93"
+    },
+    "85": {
+        "file_id": 7,
+        "content": "This code is part of a background job scheduling service in Android. It continuously checks the server for updates every second, and if an update is found, it logs the response. If the server is not present or there's an exception during this process, it logs an appropriate message. The code also includes a handler that shows a toast message indicating the JobService task is running.",
+        "type": "comment"
+    },
+    "86": {
+        "file_id": 7,
+        "content": "//            jobFinished( (JobParameters) msg.obj, false );\n//            return true;\n//        }\n//    } );\n//\n//    @Override\n//    public boolean onStartJob(JobParameters params ) {\n//        // what job is starting?\n//        mJobHandler.sendMessage( Message.obtain( mJobHandler, 1, params ) );\n//        return true;\n//    }\n//\n//    @Override\n//    public boolean onStopJob( JobParameters params ) {\n//        mJobHandler.removeMessages( 1 );\n//        return false;\n//    }\n}",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/JobSchedulerService.java:94-112"
+    },
+    "87": {
+        "file_id": 7,
+        "content": "JobSchedulerService handles job execution and communication between JobHandler and JobParameters. In onStartJob, it sends a message to JobHandler with the parameters. If the job finishes, it returns true; otherwise, onStopJob removes the message and returns false.",
+        "type": "comment"
+    },
+    "88": {
+        "file_id": 8,
+        "content": "/app/src/main/java/ai/lazero/lazero/Main2Activity.java",
+        "type": "filepath"
+    },
+    "89": {
+        "file_id": 8,
+        "content": "The code aims to capture an Android app's specific area screenshot, using StringBuilder for data storage and root permissions. However, it encounters exceptions due to dependencies issues and relies on Surface, MediaProjectionManager, and exception handling.",
+        "type": "summary"
+    },
+    "90": {
+        "file_id": 8,
+        "content": "package ai.lazero.lazero;\nimport android.graphics.Bitmap;\nimport android.graphics.PixelFormat;\nimport android.os.Bundle;\nimport android.support.v7.app.AppCompatActivity;\nimport android.util.DisplayMetrics;\nimport android.widget.ImageView;\nimport android.widget.TextView;\n//import android.media.projection.MediaProjection;\npublic class Main2Activity extends AppCompatActivity {\n// we are under UTF!\n//    private static final int REQUEST_MEDIA_PROJECTION = 201;\n//private LogService logService;\n//    public String str = \"\";\n    // I mean it. if you want to build something on top of this, you've got to write some services.\n    // what is the problem?\n    // maybe we should not do this?\n    // only one shot done here?\n    public StringBuilder str = new StringBuilder();\n//    public static Main2Activity activity = null;\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main2);\n//        try{\n        // that is a system package.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Main2Activity.java:1-28"
+    },
+    "91": {
+        "file_id": 8,
+        "content": "This code is part of the Main2Activity class in an Android app. It extends the AppCompatActivity and sets the content view for the activity. The code also creates a StringBuilder object to store some data, possibly related to logging or service operations.",
+        "type": "comment"
+    },
+    "92": {
+        "file_id": 8,
+        "content": "        // check it out.\n        // sound, image and more?\n        // what about settings? a great pivot point.\n        // the context is this.\n        // this is a toy project.\n        // pretty much like it.\n        // check how to record screen without root permission.\n        // hacked version of Android, Windows or Linux?\n//        Process p = Runtime.getRuntime().exec(\"su\");\n////然后，在向这个进程的写入要执行的命令，即可达到以root权限执行命令：\n//        DataOutputStream dos = new DataOutputStream(p.getOutputStream());\n//        String cmd=\"chmod +x /dev/graphics\";\n//        dos.writeBytes(cmd + \"\\n\");//cmd命令可为空\n//            str.append(\"|\");\n//            str.append(dos.toString());\n//            str.append(\"|\");\n//        dos.flush();\n//            str.append(dos.toString());\n//            str.append(\"|\");} catch (Exception e){str.append(e.toString());e.printStackTrace();}\n        // shit.\n        // what the heck?\n        // get the name changed.\n//        int cls=Reflection.unseal(Main2Activity.this);\n//        str.append(\"result: \");",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Main2Activity.java:29-52"
+    },
+    "93": {
+        "file_id": 8,
+        "content": "This code attempts to execute a command with root permissions on Android without using \"su\" binary. It tries to grant execute permission to \"/dev/graphics\" but fails due to possible exceptions, resulting in error handling and logging.",
+        "type": "comment"
+    },
+    "94": {
+        "file_id": 8,
+        "content": "//        str.append(String.valueOf(cls));\n//        str.append(\"|\");\n//        // what is this one?\n////        Reflection.\n        // must change the permission on that file.\n        // or do some redirection?\n        // so do it here??\n        // it is alright.\n        str.append(\"sample_text_\");\n// is this how debug works?\n        ImageView imageview = (ImageView) findViewById(R.id.sample);\n        try{\n//            DisplayMetrics mDisplayMetrics = new DisplayMetrics();\n//        Activity activity= Main2Activity.this;\n            str.append(\"0_\");\n//            activity=this;\n            str.append(\"1_\");\n//            Display display = activity.getWindowManager().getDefaultDisplay();\n            str.append(\"2_\");\n            str.append(\"3_\");\n            // but we need the whole screen.\n            // really.\n            int[] dims = { getResources().getDisplayMetrics().widthPixels,getResources().getDisplayMetrics().heightPixels};\n            str.append(\"4_\");\n            ScreenShotFb sfb= new ScreenShotFb();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Main2Activity.java:53-78"
+    },
+    "95": {
+        "file_id": 8,
+        "content": "This code appears to be collecting information for a screen capture. It appends various data to a string, such as \"sample_text\\_\", followed by debugging information including the display width and height. The final step seems to involve creating an instance of the ScreenShotFb class.",
+        "type": "comment"
+    },
+    "96": {
+        "file_id": 8,
+        "content": "            str.append(\"5_\");\n//            sfb.init((int) dims[0],(int) dims[1], PixelFormat.RGBA_8888);\n            str.append(\"6_\");\n            Bitmap btm=sfb.getScreenShotBitmap();\n            str.append(\"7_\");\n            if (btm==null){str.append(\"null_picture_\");}\n            // why we do not have picture at all?\n            // holy shit.\n            imageview.setImageBitmap(btm);\n            // does not have anything in return?\n            // what is this one?\n            // these two sucks.\n            try{\n                str.append(String.valueOf(dims[0]));\n                str.append(\" \");\n                str.append(String.valueOf(dims[1]));\n                str.append(\" \");\n                str.append(String.valueOf(PixelFormat.RGBA_8888));\n                str.append(\" [SHOT_END]\");} catch (Exception e0){e0.printStackTrace();str.append(\"___[ERROR_SPLITER]___\");str.append(e0.toString());str.append(\"___[ERROR_SPLITER]___\");}\n        } catch (Exception e){\n            str.append(e.toString());\n            e.printStackTrace();",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Main2Activity.java:79-100"
+    },
+    "97": {
+        "file_id": 8,
+        "content": "The code appends \"5_\" to the string, initializes a Bitmap object from the surface view, checks if it's null and adds \"null_picture_\" if so, sets the image view with the bitmap, appends dimensions and pixel format to the string, and catches exceptions during this process.",
+        "type": "comment"
+    },
+    "98": {
+        "file_id": 8,
+        "content": "        }\n//        tv.setText(str.toString());\n        try{TextView tv = (TextView) findViewById(R.id.txtOne);\n        tv.setText(str.toString());}catch (Exception e){e.printStackTrace();}\n//        i guess this is the problem.\n//        (dims[0],dims[1],display.getPixelFormat());\n//        sfb.init();\n//        ScreenShotFb.class;\n//        setContentView(R.layout.activity_main2);\n//        Class<?> demo = null;\n//        try {\n//            demo = Class.forName(\"android.view.SurfaceControl\");\n////            great.\n//            TextView tv = (TextView) findViewById(R.id.txtOne);\n//            str.append(\"nothing here|\");\n//        } catch (Exception e) {\n// expect too much?\n//        }\n//        try{\n//            Method method=demo.getMethod(\"screenshot\",new Class[]{Rect.class,int.class,int.class,int.class});\n////            // not even this step.\n//            // base context already set?\n//////            demo.get\n//////            Bitmap bitmap = (Bitmap) demo.screenshot((int) dims[0],(int) dims[1]);\n//////            this is the step.",
+        "type": "code",
+        "location": "/app/src/main/java/ai/lazero/lazero/Main2Activity.java:101-125"
+    },
+    "99": {
+        "file_id": 8,
+        "content": "Code attempts to initialize a ScreenShotFb class, set content view, and call screenshot method on SurfaceControl class. However, it encounters an exception, possibly due to missing or incompatible dependencies. The goal might be to capture a screenshot of a specific area with a certain pixel format.",
+        "type": "comment"
+    }
+}
